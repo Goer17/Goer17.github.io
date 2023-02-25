@@ -16,12 +16,12 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="方法一：直接在 package.json 中追加配置例如，当前服务器端口为 3000，若要向端口 5000 的服务器发送请求，我们可以在  package.json 中添加如下配置： 1&quot;proxy&quot;: &quot;http:&#x2F;&#x2F;localhost:5000&quot;  此后，当请求了 3000 端口不存在的资源时，那么请求就会转发给 5000 端口。 示例： 例如一个 cr">
+    <meta name="description" content="方法一：直接在 package.json 中追加配置 例如，当前服务器端口为 3000，若要向端口 5000 的服务器发送请求，我们可以在 package.json 中添加如下配置： 1&quot;proxy&quot;: &quot;http:&#x2F;&#x2F;localhost:5000&quot; 此后，当请求了 3000 端口不存在的资源时，那么请求就会转发给 5000 端口。 示例： 例如一个 cre">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React 脚手架配置代理的方法">
 <meta property="og:url" content="http://example.com/2023/02/07/React%20%E8%84%9A%E6%89%8B%E6%9E%B6%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E7%9A%84%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee 的个人博客">
-<meta property="og:description" content="方法一：直接在 package.json 中追加配置例如，当前服务器端口为 3000，若要向端口 5000 的服务器发送请求，我们可以在  package.json 中添加如下配置： 1&quot;proxy&quot;: &quot;http:&#x2F;&#x2F;localhost:5000&quot;  此后，当请求了 3000 端口不存在的资源时，那么请求就会转发给 5000 端口。 示例： 例如一个 cr">
+<meta property="og:description" content="方法一：直接在 package.json 中追加配置 例如，当前服务器端口为 3000，若要向端口 5000 的服务器发送请求，我们可以在 package.json 中添加如下配置： 1&quot;proxy&quot;: &quot;http:&#x2F;&#x2F;localhost:5000&quot; 此后，当请求了 3000 端口不存在的资源时，那么请求就会转发给 5000 端口。 示例： 例如一个 cre">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://p.ipic.vip/vyhdeu.png">
 <meta property="og:image" content="https://p.ipic.vip/hxjhru.png">
@@ -277,36 +277,39 @@
             
               <div class="markdown-body">
                 
-                <h4 id="方法一：直接在-package-json-中追加配置"><a href="#方法一：直接在-package-json-中追加配置" class="headerlink" title="方法一：直接在 package.json 中追加配置"></a>方法一：直接在 <code>package.json</code> 中追加配置</h4><p>例如，当前服务器端口为 3000，若要向端口 5000 的服务器发送请求，我们可以在  <code>package.json</code> 中添加如下配置：</p>
+                <h4 id="方法一直接在-package.json-中追加配置">方法一：直接在
+<code>package.json</code> 中追加配置</h4>
+<p>例如，当前服务器端口为 3000，若要向端口 5000
+的服务器发送请求，我们可以在 <code>package.json</code>
+中添加如下配置：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;proxy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http://localhost:5000&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>此后，当请求了 3000 端口不存在的资源时，那么请求就会转发给 5000 端口。</p>
+<p>此后，当请求了 3000 端口不存在的资源时，那么请求就会转发给 5000
+端口。</p>
 <p>示例：</p>
-<p>例如一个 <code>create-react-app</code> 创建项目在 3001 端口运行，我们使用 <code>json-server</code> 模拟了一个 3000 端口的服务器，其中 JSON 数据如下：</p>
+<p>例如一个 <code>create-react-app</code> 创建项目在 3001
+端口运行，我们使用 <code>json-server</code> 模拟了一个 3000
+端口的服务器，其中 JSON 数据如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;students&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0001&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Tom&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">18</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0002&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Jack&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">19</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0003&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Frank&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<p><code>students</code> 数据的 URL 为 <code>http://localhost:3000/students</code>，若我们要向 3001 端口发送 GET 请求来获取 <code>students</code> 的 JSON 数据，则可以在 <code>package.json</code> 中添加配置：</p>
+<p><code>students</code> 数据的 URL 为
+<code>http://localhost:3000/students</code>，若我们要向 3001 端口发送
+GET 请求来获取 <code>students</code> 的 JSON 数据，则可以在
+<code>package.json</code> 中添加配置：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;proxy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http://localhost:3000&quot;</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p>获取 3001 端口有的资源：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br><br>  getInfo = <span class="hljs-function">() =&gt;</span> &#123;<br>    axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;http://localhost:3001/index.html&quot;</span>).<span class="hljs-title function_">then</span>(<br>      <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(response.<span class="hljs-property">data</span>);<br>      &#125;,<br>      <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>      &#125;<br>    );<br>  &#125;<br><br><br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;this.getInfo&#125;</span>&gt;</span>点击发送请求获取数据<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>此时控制台输出当前项目下的 <code>index.html</code> 文件：</p>
-<left>
-  <img src="https://p.ipic.vip/vyhdeu.png" srcset="/img/loading.gif" lazyload alt="image-20230207230919387" style="zoom: 33%;" />
-</left>
-</li>
+<p><left>
+<img src="https://p.ipic.vip/vyhdeu.png" srcset="/img/loading.gif" lazyload alt="image-20230207230919387" style="zoom: 33%;" />
+</left></p></li>
 <li><p>获取 3001 端口没有而 3000 端口有的资源：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br><br>  getInfo = <span class="hljs-function">() =&gt;</span> &#123;<br>    axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;http://localhost:3001/students&quot;</span>).<span class="hljs-title function_">then</span>(<br>      <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(response.<span class="hljs-property">data</span>);<br>      &#125;,<br>      <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>      &#125;<br>    );<br>  &#125;<br><br><br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;this.getInfo&#125;</span>&gt;</span>点击发送请求获取数据<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>此时控制台输出 3000 端口下的 <code>students</code> 数据：</p>
-<left>
-  <img src="https://p.ipic.vip/hxjhru.png" srcset="/img/loading.gif" lazyload alt="image-20230207231130393" style="zoom:50%;" />
-</left>
-</li>
-<li><p>若获取的资源 3001 端口和 3000 端口都没有，则控制台会报错。</p>
-</li>
+<p><left>
+<img src="https://p.ipic.vip/hxjhru.png" srcset="/img/loading.gif" lazyload alt="image-20230207231130393" style="zoom:50%;" />
+</left></p></li>
+<li><p>若获取的资源 3001 端口和 3000
+端口都没有，则控制台会报错。</p></li>
 </ul>
 <blockquote>
 <p>方法一优缺点：</p>
@@ -315,29 +318,25 @@
 <li>缺点：不能配置多个代理</li>
 </ul>
 </blockquote>
-<h4 id="方法二：创建-setupProxy-js-文件"><a href="#方法二：创建-setupProxy-js-文件" class="headerlink" title="方法二：创建 setupProxy.js 文件"></a>方法二：创建 <code>setupProxy.js</code> 文件</h4><ol>
-<li><p>首先在 src 目录下创建 <code>setupProxy.js</code> 文件</p>
-</li>
+<h4 id="方法二创建-setupproxy.js-文件">方法二：创建
+<code>setupProxy.js</code> 文件</h4>
+<ol type="1">
+<li><p>首先在 src 目录下创建 <code>setupProxy.js</code> 文件</p></li>
 <li><p>编写 <code>setupProxy.js</code> 配置具体代码规范：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 配置端口 8000 和端口 5001 的服务器代理</span><br><span class="hljs-comment">// setupProxy.js</span><br><br><span class="hljs-keyword">const</span> &#123; createProxyMiddleware &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http-proxy-middleware&#x27;</span>);<br><span class="hljs-comment">// 引入内置模块: HTTP 代理中间件</span><br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">app</span>) &#123;<br>    <span class="hljs-comment">// app 为服务对象</span><br>    app.<span class="hljs-title function_">use</span>(<br>        <span class="hljs-title function_">createProxyMiddleware</span>(<span class="hljs-string">&#x27;/api1&#x27;</span>, &#123;					<span class="hljs-comment">// 遇见 /api1 前缀的请求，就会触发该代理</span><br>            <span class="hljs-attr">target</span>: <span class="hljs-string">&#x27;http://localhost:8000&#x27;</span>,			<span class="hljs-comment">// 请求转发的端口地址</span><br>            <span class="hljs-attr">changeOrigin</span>: <span class="hljs-literal">true</span>,										<span class="hljs-comment">// 控制服务器收到响应头中 Host 字段的值</span><br>            <span class="hljs-attr">pathRewrite</span>: &#123;<br>                <span class="hljs-string">&#x27;^/api1&#x27;</span>: <span class="hljs-string">&#x27;&#x27;</span>											<span class="hljs-comment">// 去除请求前缀，保证交给后台服务器的是正常请求地址</span><br>            &#125;<br>        &#125;)<br>    );<br>    <br>    app.<span class="hljs-title function_">use</span>(<br>        <span class="hljs-title function_">createProxyMiddleware</span>(<span class="hljs-string">&#x27;/api2&#x27;</span>, &#123;<br>            <span class="hljs-attr">target</span>: <span class="hljs-string">&#x27;http://localhost:5001&#x27;</span>,<br>            <span class="hljs-attr">changeOrigin</span>: <span class="hljs-literal">true</span>,<br>            <span class="hljs-attr">pathRewrite</span>: &#123;<br>                <span class="hljs-string">&#x27;^/api2&#x27;</span>: <span class="hljs-string">&#x27;&#x27;</span><br>            &#125;<br>        &#125;)<br>    );<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <blockquote>
-<p><code>http-proxy-middleware</code>  1.x 版本后配置代理使用：</p>
+<p><code>http-proxy-middleware</code> 1.x 版本后配置代理使用：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> &#123; createProxyMiddleware &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http-proxy-middleware&#x27;</span>);<br></code></pre></td></tr></table></figure>
-
 <p>此前使用：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> proxy = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http-proxy-middleware&#x27;</span>);<br></code></pre></td></tr></table></figure>
-</blockquote>
-</li>
+</blockquote></li>
 <li><p>向不同端口发送请求的方法：</p>
 <ul>
 <li><p>如果要向 8000 端口发送请求，例如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;http://localhost:3000/api1/teachers&#x27;</span>).<span class="hljs-title function_">then</span>(<br>  <span class="hljs-comment">// ...</span><br>);<br></code></pre></td></tr></table></figure>
-</li>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;http://localhost:3000/api1/teachers&#x27;</span>).<span class="hljs-title function_">then</span>(<br>  <span class="hljs-comment">// ...</span><br>);<br></code></pre></td></tr></table></figure></li>
 <li><p>如果要向 5001 端口发送请求，同理：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;http://localhost:3000/api2/students&#x27;</span>).<span class="hljs-title function_">then</span>(<br>	<span class="hljs-comment">// ...</span><br>);<br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
+</ul></li>
 </ol>
 <blockquote>
 <p>方法二优缺点：</p>
@@ -415,9 +414,15 @@
             
               
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
                   <span class="hint--top hint--rounded" aria-label="BY - 署名">
                     <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
                   </span>
                 </a>
               
@@ -498,6 +503,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -676,6 +687,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
