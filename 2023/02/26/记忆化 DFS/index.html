@@ -1,0 +1,744 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="引入 记忆化 DFS，顾名思义，就是带有记忆的深度优先搜索。 总所周知，用程序实现 Fibonacci 数列求值有两种常见方式：  通过迭代即非递归的方式： 12345678910111213int Fibonacci(int n) &amp;#123;    if (n &#x3D;&#x3D; 1 || n &#x3D;&#x3D; 2) &amp;#123;        return 1;    &amp;#125;    int pre &#x3D; 1, n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记忆化 DFS">
+<meta property="og:url" content="http://example.com/2023/02/26/%E8%AE%B0%E5%BF%86%E5%8C%96%20DFS/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee 的个人博客">
+<meta property="og:description" content="引入 记忆化 DFS，顾名思义，就是带有记忆的深度优先搜索。 总所周知，用程序实现 Fibonacci 数列求值有两种常见方式：  通过迭代即非递归的方式： 12345678910111213int Fibonacci(int n) &amp;#123;    if (n &#x3D;&#x3D; 1 || n &#x3D;&#x3D; 2) &amp;#123;        return 1;    &amp;#125;    int pre &#x3D; 1, n">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-26T15:47:02.000Z">
+<meta property="article:modified_time" content="2023-02-28T04:18:57.625Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="记忆化 DFS">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>记忆化 DFS - Yuanyang-Lee 的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">记忆化 DFS</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-26 23:47" pubdate>
+          2023年2月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">记忆化 DFS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="引入">引入</h4>
+<p>记忆化
+DFS，顾名思义，就是<strong>带有记忆的深度优先搜索</strong>。</p>
+<p>总所周知，用程序实现 Fibonacci 数列求值有两种常见方式：</p>
+<ul>
+<li><p>通过迭代即非递归的方式：</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Fibonacci</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span> || n == <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-type">int</span> pre = <span class="hljs-number">1</span>, next = <span class="hljs-number">1</span>, sum = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (n-- &gt; <span class="hljs-number">2</span>) &#123;<br>        sum = pre + next;<br>        pre = next;<br>        next = sum;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> sum;<br>&#125;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>通过递归方式：</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Fibonacci</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span> || n == <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Fibonacci</span>(n - <span class="hljs-number">1</span>) + <span class="hljs-built_in">Fibonacci</span>(n - <span class="hljs-number">2</span>);<br>&#125;<br></code></pre></td></tr></table></figure></p></li>
+</ul>
+<p>上述两种方式各有优缺点，迭代方式效率更高，但是写起来比较麻烦；递归方式运行效率低，但是代码实现容易。</p>
+<p><em>有没有一种方式可以结合两者的优点呢？</em></p>
+<p>对于第二种递归方式，其主要的时间开销在于计算了许多重复内容，我们是否可以使用一个数组来维护已经计算过的值呢？</p>
+<p>答案是显然的，于是我们就有了 —— <strong>记忆化 DFS</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> fib[MAX_NUM]; <span class="hljs-comment">// 记忆数组</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Fibonacci</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (fib[n]) &#123;<br>        <span class="hljs-keyword">return</span> fib[n]; <span class="hljs-comment">// 已经计算过的值直接返回</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span> || n == <span class="hljs-number">2</span>) &#123;<br>        fib[n] = <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        fib[n] = <span class="hljs-built_in">Fibonacci</span>(n - <span class="hljs-number">1</span>) + <span class="hljs-built_in">Fibonacci</span>(n - <span class="hljs-number">2</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> fib[n];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以上代码以递归的方式实现，但是时间复杂度可以降到线性，和迭代形式一样，不同的地方在于我们需要额外的空间开销来记录已经计算过的值。</p>
+<p>可能有同学就有疑问了：</p>
+<p><em>上述例子很容易用 DP 来实现，为什么还需要记忆化 DFS 呢？</em></p>
+<p>接下来我们将给出一个实际例子加以说明。</p>
+<blockquote>
+<p>猫和老鼠</p>
+<p>Problem Description 有个小老鼠在校园里收藏了一些它最爱吃的奶酪。
+校园可以看成一个长度为n的正方形网格，每个网格可以标记为 (p, q) ，其中，0
+&lt;= p , q &lt; n。每个网格都有一个洞，里面储存了 k（0 &lt;= k &lt;=
+100）块奶酪。</p>
+<p>现在，小老鼠准备享用这些美味啦。</p>
+<p>开始的时候，他在 (0, 0)
+这个位置，每到一个地方，它都会吃光这个地方的奶酪，然后沿着水平或者垂直的方向到达另外一个地方。麻烦的是，有个很凶的猫总是在它的洞口附近，所以他每次最多移动
+k
+个位置，否则就会被这只猫吃掉。更糟糕的是，每在一个地方吃过奶酪，小老鼠都会变胖，所以，为了获得足够下一次逃跑的能量，它每次只能去比当前位置的奶酪更多的格子。
+现在已知 n 和 k
+，以及在每个网格的洞中小老鼠储存的奶酪的数量，请计算小老鼠在无法移动之前，一共最多能吃到多少块奶酪。</p>
+<p>Input 题目包含多组测试数据。</p>
+<p>每组测试数据组成如下： 首先一行包含2个不超过100的正整数 n 和 k ;
+接下来 n 行，每行包含n个数： 第一行 n 个数分别表示 (0, 0), (0, 1), … (0,
+n - 1) 这些位置储存的奶酪数量； 第二行 n 个数分别表示 (1, 0), (1, 1), …
+(1, n - 1) 这些位置储存的奶酪数量； 以此类推...</p>
+<p>输入数据以两个 -1 结束。</p>
+<p>Output 请输出小老鼠最多 能够吃到的奶酪数量，每组数据输出一行。</p>
+<p>输入案例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs input">3 1<br>1 2 5<br>10 11 6<br>12 12 7<br>-1 -1<br></code></pre></td></tr></table></figure>
+<p>输出案例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs output">37<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>分析</strong>：</p>
+<p>根据题意，我们假设从 <span class="math inline">\((x, y)\)</span>
+出发的老鼠可以吃到的最大奶酪数量为 <span class="math inline">\(ans(x,
+y)\)</span>，<span class="math inline">\((x, y)\)</span> 处的芝士储量为
+<span class="math inline">\(cheese(x, y)\)</span>，老鼠可以从 <span
+class="math inline">\((x, y)\)</span> 出发在一次 <span
+class="math inline">\(k\)</span> 步以内的移动中到达的坐标的集合为 <span
+class="math inline">\(S = \{(x_1, y_1), (x_2, y_2), (x_3, y_3),
+...\}\)</span>，不难得出状态转移方程： <span class="math display">\[
+ans(x, y) = max_{(x_n, y_n) \in S} ans(x_n, y_n) \ + \ cheese(x, y)
+\]</span>
+如果直接用动态规划求解，这个问题的代码恐怕会相当复杂，因为我们难以确定
+DP 的起点，而且该转移方程较为复杂，更是加大了其难度。</p>
+<p>于是我们便考虑到可以使用记忆化
+DFS，既保证了效率，又降低了编码难度。</p>
+<p><strong>代码</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_LENG 105</span><br><br><span class="hljs-type">int</span> cheese[MAX_LENG][MAX_LENG];<br><span class="hljs-type">int</span> ans[MAX_LENG][MAX_LENG]; <span class="hljs-comment">// 储存结果，初始化为 -1</span><br><br><span class="hljs-type">int</span> n, k;<br><span class="hljs-type">const</span> vector&lt;array&lt;<span class="hljs-type">int</span>, 2&gt;&gt; dirs = &#123;<br>    &#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;,<br>    &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;,<br>    &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>&#125;,<br>    &#123;<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;<br>&#125;; <span class="hljs-comment">// 运动方向</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> </span>&#123;<br>    <span class="hljs-comment">// 记忆化 DFS</span><br>    <span class="hljs-comment">// 返回以 (x, y) 为起点可以吃到最多的奶酪</span><br>    <span class="hljs-keyword">if</span> (ans[x][y] &gt;= <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">// 已经计算过的值</span><br>        <span class="hljs-keyword">return</span> ans[x][y];<br>    &#125;<br>    ans[x][y] = cheese[x][y];<br>    <span class="hljs-type">int</span> plusCheese = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; dir :dirs) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">1</span>; s &lt;= k; s++) &#123;<br>            <span class="hljs-type">int</span> nx = x + s * dir[<span class="hljs-number">0</span>];<br>            <span class="hljs-type">int</span> ny = y + s * dir[<span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx &lt; n &amp;&amp; ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny &lt; n &amp;&amp; cheese[nx][ny] &gt; cheese[x][y]) &#123;<br>                plusCheese = <span class="hljs-built_in">max</span>(plusCheese, <span class="hljs-built_in">dfs</span>(nx, ny));<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    ans[x][y] += plusCheese;<br>    <span class="hljs-keyword">return</span> ans[x][y];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>);<br>    <span class="hljs-keyword">while</span> (cin &gt;&gt; n &gt;&gt; k, n != <span class="hljs-number">-1</span> || k != <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">memset</span>(ans, <span class="hljs-number">0xff</span>, <span class="hljs-built_in">sizeof</span>(ans));<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) &#123;<br>                cin &gt;&gt; cheese[i][j];<br>            &#125;<br>        &#125;<br>        cout &lt;&lt; <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) &lt;&lt; endl;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/" class="category-chain-item">数据结构和算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/DFS/">#DFS</a>
+      
+        <a href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96-DFS/">#记忆化 DFS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>记忆化 DFS</div>
+      <div>http://example.com/2023/02/26/记忆化 DFS/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/25/%E4%BA%8C%E5%88%86%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/" title="二分匹配问题 —— 匈牙利算法">
+                        <span class="hidden-mobile">二分匹配问题 —— 匈牙利算法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
