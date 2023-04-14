@@ -24,12 +24,11 @@
 <meta property="og:description" content="什么是正则表达式？ 正则表达式（regular expression），又称为规则表达式，是一种文本模式，其拥有独特的语法和独立的处理引擎，可以帮助我们实现文本匹配，特别是当匹配模式比较复杂时，正则表达式有相当大的优势。 构造正则表达式的方法和创建数学表达式的方法一样。也就是用多种元字符与运算符可以将小的表达式结合在一起来创建更大的表达式。正则表达式的组件可以是单个的字符、字符集合、字符范围、字符">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-01T02:54:12.000Z">
-<meta property="article:modified_time" content="2023-04-08T13:45:46.014Z">
+<meta property="article:modified_time" content="2023-04-14T08:11:09.021Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="正则表达式">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="字符串">
-<meta property="article:tag" content="爬虫">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -223,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.7k 字
         
       </span>
     
@@ -234,7 +233,7 @@
         
         
         
-          19 分钟
+          23 分钟
         
       </span>
     
@@ -444,7 +443,7 @@ target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/regex">Re
 <p><code>boolean matches(String regex)</code>
 ，根据正则表达式，判断字符串是否能匹配成功，返回对应的布尔值</p>
 </blockquote>
-<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 匹配手机号码</span><br><span class="hljs-comment">// 以 1 开头</span><br><span class="hljs-comment">// 第二位只能是 3 到 9</span><br><span class="hljs-comment">// 任意数字 9 位 </span><br><span class="hljs-type">String</span> <span class="hljs-variable">regex_1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;1[3-9]\\d&#123;9&#125;&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;13170488669&quot;</span>.matches(regex_1)); <span class="hljs-comment">// true</span><br><br><span class="hljs-comment">// 匹配座机号码</span><br><span class="hljs-comment">// 区号 以 0 开头</span><br><span class="hljs-comment">// 中间可能有 -</span><br><span class="hljs-comment">// 号码总长度 5 到 10 位</span><br><span class="hljs-type">String</span> <span class="hljs-variable">regex_2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;0\\d&#123;2,3&#125;-?[1-9]\\d&#123;4,9&#125;&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;027-142424&quot;</span>.matches(regex_2)); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure></p></li>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 匹配手机号码</span><br><span class="hljs-comment">// 以 1 开头</span><br><span class="hljs-comment">// 第二位只能是 3 到 9</span><br><span class="hljs-comment">// 任意数字 9 位</span><br><span class="hljs-type">String</span> <span class="hljs-variable">regex_1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;1[3-9]\\d&#123;9&#125;&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;13170488669&quot;</span>.matches(regex_1)); <span class="hljs-comment">// true</span><br><br><span class="hljs-comment">// 匹配座机号码</span><br><span class="hljs-comment">// 区号 以 0 开头</span><br><span class="hljs-comment">// 中间可能有 -</span><br><span class="hljs-comment">// 号码总长度 5 到 10 位</span><br><span class="hljs-type">String</span> <span class="hljs-variable">regex_2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;0\\d&#123;2,3&#125;-?[1-9]\\d&#123;4,9&#125;&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;027-142424&quot;</span>.matches(regex_2)); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure></p></li>
 <li><p><code>replaceFirst()</code> 方法和 <code>replaceAll()</code>
 方法：</p>
 <blockquote>
@@ -469,6 +468,10 @@ n 的字符串数组</li>
 </blockquote>
 <p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">String[] member = <span class="hljs-string">&quot;张三, 李四, 王五&quot;</span>.split(<span class="hljs-string">&quot;, &quot;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> name : member) System.out.println(name);<br><span class="hljs-comment">// 张三</span><br><span class="hljs-comment">// 李四</span><br><span class="hljs-comment">// 王五</span><br></code></pre></td></tr></table></figure></p></li>
 </ul>
+<p><strong>练习</strong></p>
+<p><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matching">驼峰匹配</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> List&lt;Boolean&gt; <span class="hljs-title function_">camelMatch</span><span class="hljs-params">(String[] queries, String pattern)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">regexModel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;[a-z]*&quot;</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, len = pattern.length(); i &lt; len; i++) &#123;<br>            regexModel += (pattern.charAt(i) + <span class="hljs-string">&quot;[a-z]*&quot;</span>);<br>        &#125;<br>        ArrayList&lt;Boolean&gt; ans = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, len = queries.length; i &lt; len; i++) &#123;<br>            ans.add(queries[i].matches(regexModel));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -507,8 +510,6 @@ n 的字符串数组</li>
         <a href="/tags/Java/">#Java</a>
       
         <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
-      
-        <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
       
     </div>
   
