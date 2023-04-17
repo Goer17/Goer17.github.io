@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://p.ipic.vip/8eomc6.png">
 <meta property="og:image" content="https://p.ipic.vip/7piiru.png">
 <meta property="article:published_time" content="2023-04-10T14:58:57.000Z">
-<meta property="article:modified_time" content="2023-04-17T17:37:20.344Z">
+<meta property="article:modified_time" content="2023-04-17T17:44:23.155Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="SQL">
 <meta property="article:tag" content="MySQL">
@@ -618,11 +618,11 @@ Web 开发中尤其受欢迎。</p>
 <ul>
 <li><p>管理外键关联：</p>
 <ul>
-<li><p>创建表时添加：</p>
+<li><p>创建表时添加外键关联：</p>
 <p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">[外键名称] foreign key [外键字段名] references [主表(主表列名)] [指定行为];<br></code></pre></td></tr></table></figure></p></li>
-<li><p>创建完后添加外键关系：</p>
+<li><p>创建表后添加外键关系：</p>
 <p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">alter table [表名] add constraint [外键名称] foreign key [外键字段名] references [主表(主表列名)] [指定行为];<br></code></pre></td></tr></table></figure></p></li>
-<li><p>删除外键：</p>
+<li><p>删除外键关联：</p>
 <p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">alter table [表名] drop foreign key [外键名称];<br></code></pre></td></tr></table></figure></p></li>
 </ul></li>
 <li><p>外键删除和更新行为：</p>
