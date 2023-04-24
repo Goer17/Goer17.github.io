@@ -16,16 +16,16 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="什么是链式向前星？ 链式向前星是一种常用的图存储结构，其思路类似于邻接链表法，只是实现方式有所不同，链式向前星更像是用数组模拟链表。 与一般的邻接链表法不同，链式向前星储存的图的每条边都有编号。 以下是链式向前星的存储结构：  cnt ：用来记录当前所有边的数量 first 数组：用来存储从某个节点出发的第一条边，例如 first[0] &#x3D;&#x3D; 3 可以得出从 0 号节点出发的第一条边的编号为 3">
+    <meta name="description" content="什么是链式前向星？ 链式前向星是一种常用的图存储结构，其思路类似于邻接链表法，只是实现方式有所不同，链式向前星更像是用数组模拟链表。 与一般的邻接链表法不同，链式向前星储存的图的每条边都有编号。 以下是链式前向星的存储结构：  cnt ：用来记录当前所有边的数量 first 数组：用来存储从某个节点出发的第一条边，例如 first[0] &#x3D;&#x3D; 3 可以得出从 0 号节点出发的第一条边的编号为 3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="链式向前星介绍">
-<meta property="og:url" content="http://example.com/2023/03/06/%E9%93%BE%E5%BC%8F%E5%90%91%E5%89%8D%E6%98%9F%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:title" content="链式前向星介绍">
+<meta property="og:url" content="http://example.com/2023/03/06/%E9%93%BE%E5%BC%8F%E5%89%8D%E5%90%91%E6%98%9F%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee 的个人博客">
-<meta property="og:description" content="什么是链式向前星？ 链式向前星是一种常用的图存储结构，其思路类似于邻接链表法，只是实现方式有所不同，链式向前星更像是用数组模拟链表。 与一般的邻接链表法不同，链式向前星储存的图的每条边都有编号。 以下是链式向前星的存储结构：  cnt ：用来记录当前所有边的数量 first 数组：用来存储从某个节点出发的第一条边，例如 first[0] &#x3D;&#x3D; 3 可以得出从 0 号节点出发的第一条边的编号为 3">
+<meta property="og:description" content="什么是链式前向星？ 链式前向星是一种常用的图存储结构，其思路类似于邻接链表法，只是实现方式有所不同，链式向前星更像是用数组模拟链表。 与一般的邻接链表法不同，链式向前星储存的图的每条边都有编号。 以下是链式前向星的存储结构：  cnt ：用来记录当前所有边的数量 first 数组：用来存储从某个节点出发的第一条边，例如 first[0] &#x3D;&#x3D; 3 可以得出从 0 号节点出发的第一条边的编号为 3">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://p.ipic.vip/wvox68.png">
 <meta property="article:published_time" content="2023-03-06T08:42:40.000Z">
-<meta property="article:modified_time" content="2023-03-06T10:18:30.117Z">
+<meta property="article:modified_time" content="2023-04-23T09:08:25.310Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="图论">
 <meta property="article:tag" content="链式向前星">
@@ -34,7 +34,7 @@
   
   
   
-  <title>链式向前星介绍 - Yuanyang-Lee 的个人博客</title>
+  <title>链式前向星介绍 - Yuanyang-Lee 的个人博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">链式向前星介绍</span>
+            <span id="subtitle">链式前向星介绍</span>
           
         </div>
 
@@ -272,15 +272,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">链式向前星介绍</h1>
+            <h1 style="display: none">链式前向星介绍</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="什么是链式向前星">什么是链式向前星？</h4>
-<p><strong>链式向前星</strong>是一种常用的图存储结构，其思路类似于邻接链表法，只是实现方式有所不同，链式向前星更像是<strong>用数组模拟链表</strong>。</p>
+                <h4 id="什么是链式前向星">什么是链式前向星？</h4>
+<p><strong>链式前向星</strong>是一种常用的图存储结构，其思路类似于邻接链表法，只是实现方式有所不同，链式向前星更像是<strong>用数组模拟链表</strong>。</p>
 <p>与一般的邻接链表法不同，链式向前星储存的图的<strong>每条边都有编号</strong>。</p>
-<p>以下是链式向前星的存储结构：</p>
+<p>以下是链式前向星的存储结构：</p>
 <ul>
 <li><p><code>cnt</code> ：用来记录当前所有边的数量</p></li>
 <li><p><code>first</code> 数组：用来存储从某个节点出发的第一条边，例如
@@ -307,7 +307,7 @@
 <code>first[i]</code> 为新增的边的编号即可。</p>
 </blockquote>
 <h4 id="代码">代码</h4>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_VERTEX 100000</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_EDGE 100000</span><br><br><span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>; <span class="hljs-comment">// 边的数量</span><br><br><span class="hljs-type">int</span> first[MAX_VERTEX]; <span class="hljs-comment">// first 数组</span><br><br><span class="hljs-keyword">struct</span> &#123;<br>    <span class="hljs-type">int</span> to;<br>    <span class="hljs-type">int</span> weight;<br>    <span class="hljs-type">int</span> next;<br>&#125; edges[MAX_EDGE]; <span class="hljs-comment">// 记录边</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">initEdge</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 初始化，将 first 数组全初始化为 -1</span><br>    <span class="hljs-built_in">memset</span>(first, <span class="hljs-number">0xff</span>, <span class="hljs-built_in">sizeof</span>(first));<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-type">int</span> from, <span class="hljs-type">int</span> to, <span class="hljs-type">int</span> weight)</span> </span>&#123;<br>    edges[cnt] = &#123;to, weight, first[from]&#125;; <span class="hljs-comment">// 新增边</span><br>    first[from] = cnt; <span class="hljs-comment">// 更新 first 数组</span><br>    cnt++; <span class="hljs-comment">// 边数增加</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">traverseEdgeFrom</span><span class="hljs-params">(<span class="hljs-type">int</span> v)</span> </span>&#123;<br>    <span class="hljs-comment">// 遍历从 v 出发的所有边</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> p = first[v]; p != <span class="hljs-number">-1</span>; p = edges[p].next) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;eNo: &quot;</span> &lt;&lt; p &lt;&lt; <span class="hljs-string">&quot; to: &quot;</span> &lt;&lt; edges[p].to &lt;&lt; <span class="hljs-string">&quot; weight: &quot;</span> &lt;&lt; edges[p].weight &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_VERTEX 100000</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_EDGE 100000</span><br><br><span class="hljs-type">int</span> cnt; <span class="hljs-comment">// 边的数量</span><br><br><span class="hljs-type">int</span> first[MAX_VERTEX]; <span class="hljs-comment">// first 数组</span><br><br><span class="hljs-keyword">struct</span> &#123;<br>    <span class="hljs-type">int</span> to;<br>    <span class="hljs-type">int</span> weight;<br>    <span class="hljs-type">int</span> next;<br>&#125; edges[MAX_EDGE]; <span class="hljs-comment">// 记录边</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">initEdge</span><span class="hljs-params">()</span> </span>&#123;<br>    cnt = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 初始化，将 first 数组全初始化为 -1</span><br>    <span class="hljs-built_in">memset</span>(first, <span class="hljs-number">0xff</span>, <span class="hljs-built_in">sizeof</span>(first));<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-type">int</span> from, <span class="hljs-type">int</span> to, <span class="hljs-type">int</span> weight)</span> </span>&#123;<br>    edges[cnt] = &#123;to, weight, first[from]&#125;; <span class="hljs-comment">// 新增边</span><br>    first[from] = cnt; <span class="hljs-comment">// 更新 first 数组</span><br>    cnt++; <span class="hljs-comment">// 边数增加</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">traverseEdgeFrom</span><span class="hljs-params">(<span class="hljs-type">int</span> v)</span> </span>&#123;<br>    <span class="hljs-comment">// 遍历从 v 出发的所有边</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> p = first[v]; p != <span class="hljs-number">-1</span>; p = edges[p].next) &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;eNo: &quot;</span> &lt;&lt; p &lt;&lt; <span class="hljs-string">&quot; to: &quot;</span> &lt;&lt; edges[p].to &lt;&lt; <span class="hljs-string">&quot; weight: &quot;</span> &lt;&lt; edges[p].weight &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -355,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>链式向前星介绍</div>
-      <div>http://example.com/2023/03/06/链式向前星介绍/</div>
+      <div>链式前向星介绍</div>
+      <div>http://example.com/2023/03/06/链式前向星介绍/</div>
     </div>
     <div class="license-meta">
       
