@@ -28,8 +28,9 @@
 <meta property="og:image" content="https://p.ipic.vip/xxd1hu.png">
 <meta property="og:image" content="https://p.ipic.vip/cdyt6d.png">
 <meta property="og:image" content="https://p.ipic.vip/4vfatx.png">
+<meta property="og:image" content="https://p.ipic.vip/elwe0k.png">
 <meta property="article:published_time" content="2023-05-15T12:45:27.000Z">
-<meta property="article:modified_time" content="2023-05-19T18:00:11.189Z">
+<meta property="article:modified_time" content="2023-05-23T03:03:30.538Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="数据库系统">
 <meta property="article:tag" content="数据库规范化">
@@ -227,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          4.3k 字
         
       </span>
     
@@ -238,7 +239,7 @@
         
         
         
-          25 分钟
+          37 分钟
         
       </span>
     
@@ -374,6 +375,55 @@ class="math inline">\(B \not\to A\)</span></li>
 <p>则称 <span class="math inline">\(C\)</span> 通过 <span
 class="math inline">\(B\)</span> 函数依赖于 <span
 class="math inline">\(A\)</span> 。</p>
+<h4 id="多值依赖">多值依赖</h4>
+<p>设 <span class="math inline">\(R(U)\)</span> 是属性集 <span
+class="math inline">\(U\)</span> 上的一个关系模式。<span
+class="math inline">\(X\)</span>、<span
+class="math inline">\(Y\)</span>、<span class="math inline">\(Z\)</span>
+是 <span class="math inline">\(U\)</span> 的子集，若对 <span
+class="math inline">\(U\)</span> 的任意一对关系而言，给定一对 <span
+class="math inline">\((X, Z)\)</span> 的值，都有若干组 <span
+class="math inline">\(Y\)</span> 值与之对应，而 <span
+class="math inline">\(Y\)</span> 的取值仅仅与 <span
+class="math inline">\(X\)</span> 相关而与 <span
+class="math inline">\(Z\)</span>
+无关，这就是<strong>多值依赖（Multi-valued
+Dependency）</strong>。记作：<span class="math inline">\(X \to\!\!\!\to
+Y\)</span>。</p>
+<blockquote>
+<p>我们也可以这样描述：给定 <span class="math inline">\(X\)</span>
+的值，有多组 <span class="math inline">\((Y, Z)\)</span>
+的值与之对应，且 <span class="math inline">\(Y\)</span> 与 <span
+class="math inline">\(Z\)</span> 的取值相互独立。</p>
+</blockquote>
+<p>例如：</p>
+<p>我们给定关系 <span class="math inline">\(subject(subject\_name,
+teacher, text\_book)\)</span>
+来描述学科、老师和学科教材的关系，在该关系模型中，一门学科对应多组老师和教材，而老师和教材又是相互对立的，即老师和学科教材分别只决定于学科，所以我们有：
+<span class="math display">\[
+\begin{array}{}
+subject\_name \to\!\!\!\to teacher \\
+subject\_name \to\!\!\!\to text\_book
+\end{array}
+\]</span></p>
+<h5 id="平凡多值依赖和非平凡多值依赖">平凡多值依赖和非平凡多值依赖</h5>
+<p>进一步，我们又可以将多值依赖分为<strong>平凡多值依赖</strong>和<strong>非平凡多值依赖</strong>：</p>
+<ul>
+<li><p>平凡多值依赖（Trivial Multi-valued Dependency）：</p>
+<p>在关系模型 <span class="math inline">\(R\)</span> 的属性集为 <span
+class="math inline">\(U\)</span>，属性 <span
+class="math inline">\(A\)</span> 和 <span
+class="math inline">\(B\)</span> 满足 <span class="math inline">\(A
+\to\!\!\!\to B\)</span> 且满足以下两个条件之一：</p>
+<ul>
+<li><span class="math inline">\(A \subseteq B\)</span></li>
+<li><span class="math inline">\(A \cup B = R\)</span></li>
+</ul>
+<p>我们就称该多值依赖是平凡的。</p></li>
+<li><p>非平凡多值依赖（Nontrivial Multi-valued Dependency）：</p>
+<p>若 <span class="math inline">\(A \to\!\!\!\to B\)</span>
+且不满足以上任意一个条件，我们就称该多值依赖是非平凡的。</p></li>
+</ul>
 <h4 id="范式">范式</h4>
 <p><strong>范式（Normal Form）</strong>，简称
 NF，是一种数据库规范化评级标准，范式越高，数据模型越规范。</p>
@@ -441,6 +491,8 @@ oName$ ，因此 <span class="math inline">\(oName\)</span>
 <p><strong>BCNF（Boyce-Codd Normal
 Form）</strong>，即巴斯-科德范式。指在 3NF
 的基础上，清除了主属性对候选键的部分函数依赖。</p>
+<p><strong>即满足 BCNF
+的充要条件是关系模型中所有函数依赖的决定因子都是候选键。</strong></p>
 <blockquote>
 <p><strong>3NF <span class="math inline">\(\to\)</span> BCNF
 </strong></p>
@@ -468,6 +520,43 @@ studentGrade(\underline{class\_id}, \underline{s\_id}, grade)
 \end{array}
 \]</span> 这样，我们就消除了主属性对候选键的部分依赖，上述两张表各自符合
 BCNF。</p>
+<h5 id="nf-3">4 NF</h5>
+<p><strong>4 NF（Forth Normal Form）</strong>，即第四范式，即在 BCNF
+的基础上，消除了所有决定因子不为候选键的非平凡多值依赖。换言之，满足 4NF
+的充要条件是对于关系 <span class="math inline">\(R\)</span>
+中的每一对非平凡多值依赖 <span class="math inline">\(A \to\!\!\!\to
+B\)</span> 而言，<span class="math inline">\(A\)</span>
+都是关系中的候选键。</p>
+<blockquote>
+<p><strong>BCNF <span class="math inline">\(\to\)</span>
+4NF</strong></p>
+<ol type="1">
+<li>确定主键和候选键</li>
+<li>确定关系中的非平凡多值依赖</li>
+<li>消除所有决定因子不为候选键的非平凡多值依赖</li>
+</ol>
+</blockquote>
+<p>例如，现有如下关系：</p>
+<p><img src="https://p.ipic.vip/elwe0k.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>在如上 <span class="math inline">\(BranchStaffOwner(branchNo, sName,
+oName)\)</span> 关系中，一个 <span
+class="math inline">\(branchNo\)</span> 可以对应多组 <span
+class="math inline">\((sName, oName)\)</span> ，而 <span
+class="math inline">\(sName\)</span> 和 <span
+class="math inline">\(oName\)</span> 之间相互不影响，所以我们有： <span
+class="math display">\[
+\begin{array}{}
+branchNo \to\!\!\!\to sName \\
+branchNo \to\!\!\!\to oName
+\end{array}
+\]</span> 而 <span class="math inline">\(branchNo\)</span>
+在这里不是候选键，所以我们要消除消除这两对非平凡多值依赖，因此将该关系拆分为两张表：</p>
+<p>这样我们就消除了上面提到的两对非平凡多值依赖，以上两张表 <span
+class="math inline">\(Branch(branchNo, sName)\)</span>、<span
+class="math inline">\(BranchOwner(BranchNo, oName)\)</span>
+分别满足第四范式。</p>
+<p>事实上第四范式之上还有<strong>第五范式（Fifth Normal
+Form）</strong>，但第四范式已经是相当规范的等级了，因此第五范式笔者在此就不赘述了。😃</p>
 
                 
               </div>
