@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://p.ipic.vip/8eomc6.png">
 <meta property="og:image" content="https://p.ipic.vip/7piiru.png">
 <meta property="article:published_time" content="2023-04-10T14:58:57.000Z">
-<meta property="article:modified_time" content="2023-05-16T17:30:12.078Z">
+<meta property="article:modified_time" content="2023-05-31T13:11:40.941Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="SQL">
 <meta property="article:tag" content="MySQL">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.5k 字
+          9k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          72 分钟
+          75 分钟
         
       </span>
     
@@ -1175,6 +1175,26 @@ Language）用来管理数据库用户控制数据库的访问权限。</p>
 </tr>
 </tbody>
 </table>
+<h3 id="mysql-事务操作">MySQL 事务操作</h3>
+<p><strong>事务（Transaction）</strong>是一组操作的集合，它是一个不可分割的工作单位，事务会把所有操作作为一个整体一起向系统提交或撤销操作请求，即这些操作要么<strong>同时成功，要么同时失败</strong>。</p>
+<p><strong>事务 4 大特性（ACID）</strong>：</p>
+<ul>
+<li>原子性（Atomicity）：事务是不可分割的最小操作单元，要么全部成功，要么全部失败</li>
+<li>一致性（Consistency）：事务完成时，必须使所有的数据都保持一致状态</li>
+<li>隔离性（Isolation）：数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行</li>
+<li>持久性（Durability）：事务一旦提交或回滚，它对数据库中的数据的改变就是永久的</li>
+</ul>
+<h4 id="事务操作">事务操作</h4>
+<ul>
+<li><p>查看 / 设置事务提交方式</p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select @@autocommit;<br>set @@autocommit = 0; # 将事务设置为手动提交<br></code></pre></td></tr></table></figure></p></li>
+<li><p>开启事务</p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">start transaction; # 我们也可以不更改 @@autocommit 参数<br></code></pre></td></tr></table></figure></p></li>
+<li><p>提交事务</p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">commit; # 设置为手动提交后必须要手动提交才能更新数据<br></code></pre></td></tr></table></figure></p></li>
+<li><p>回滚事务</p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">rollback; # 回滚 / 撤销事务<br></code></pre></td></tr></table></figure></p></li>
+</ul>
 
                 
               </div>
