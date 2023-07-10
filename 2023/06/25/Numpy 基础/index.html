@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-081309.png">
 <meta property="article:published_time" content="2023-06-25T11:44:47.000Z">
-<meta property="article:modified_time" content="2023-07-10T08:52:55.949Z">
+<meta property="article:modified_time" content="2023-07-10T18:08:09.081Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="数值运算">
@@ -363,7 +363,7 @@ MATLAB 十分相似，我们可以结合 Octave 的语法来理解 NumPy。</p>
 <code>matrix2</code>。通过使用 <code>np.concatenate()</code> 函数，并将
 <code>axis = 1</code>
 参数传递给它，我们可以将这两个矩阵在水平方向上拼接起来。输出结果如下：</p>
-<p><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-string">[[1 2 5 6]</span><br><span class="hljs-string"> [3 4 7 8]]</span><br></code></pre></td></tr></table></figure></p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs output">[[1 2 5 6]<br> [3 4 7 8]]<br></code></pre></td></tr></table></figure></p>
 <ol start="2" type="1">
 <li>上下拼接（垂直拼接）： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br>matrix1 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>],<br>                    [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]])<br><br>matrix2 = np.array([[<span class="hljs-number">5</span>, <span class="hljs-number">6</span>],<br>                    [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>]])<br><br>result = np.concatenate((matrix1, matrix2), axis = <span class="hljs-number">0</span>)<br><br><span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure></li>
 </ol>
@@ -371,7 +371,7 @@ MATLAB 十分相似，我们可以结合 Octave 的语法来理解 NumPy。</p>
 <code>matrix2</code>。通过使用 <code>np.concatenate()</code> 函数，并将
 <code>axis = 0</code>
 参数传递给它，我们可以将这两个矩阵在垂直方向上拼接起来。输出结果如下：</p>
-<p><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-comment">[<span class="hljs-comment">[1 2]</span></span><br><span class="hljs-comment"> <span class="hljs-comment">[3 4]</span></span><br><span class="hljs-comment"> <span class="hljs-comment">[5 6]</span></span><br><span class="hljs-comment"> <span class="hljs-comment">[7 8]</span>]</span><br></code></pre></td></tr></table></figure></p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs output">[[1 2]<br> [3 4]<br> [5 6]<br> [7 8]]<br></code></pre></td></tr></table></figure></p>
 <p>无论是左右拼接还是上下拼接，都可以使用 <code>np.concatenate()</code>
 函数，并指定合适的 <code>axis</code>
 参数来实现。注意，两个矩阵在除了指定拼接方向的轴以外的其他轴上的维度必须是一致的，这样才能成功进行拼接。</p></li>
