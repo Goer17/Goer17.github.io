@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-125638.png">
 <meta property="article:published_time" content="2023-07-10T12:55:04.000Z">
-<meta property="article:modified_time" content="2023-07-13T06:43:32.689Z">
+<meta property="article:modified_time" content="2023-07-14T08:43:36.196Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="Python">
@@ -589,11 +589,12 @@ id="基于反向传播的二层神经网络实现">基于反向传播的二层�
 class="math inline">\(97 \%\)</span> 。这样，我们就完成了 MINIST
 数据集的学习过程了。</p>
 <h3 id="神经网络学习技巧">神经网络学习技巧</h3>
+<h4 id="更优的梯度下降策略">更优的梯度下降策略</h4>
 <p>神经网络的学习目的可以概括为找到使损失函数的值尽可能小的参数。这个过程被称为<strong>最优化（Optimization）</strong>。</p>
 <p>前几章我们讨论了<strong>随机梯度下降法（Stochastic Gradient
 Descent）</strong>，即 SGD。</p>
 <p>本章我们将讨论其他优化的梯度下降法。</p>
-<h4 id="sgd-的缺点">SGD 的缺点</h4>
+<h5 id="sgd-的缺点">SGD 的缺点</h5>
 <p>如果函数的形状<strong>非均向（anisotropic）</strong>，收敛会很慢。</p>
 <p>以函数 <span class="math inline">\(f(x, y) = \frac{1}{100} x^2 +
 y^2\)</span> 为例子，我们采取 SGD 方法求其最小值，假设初始值为 <span
@@ -606,7 +607,7 @@ class="math inline">\((0, 0)\)</span>
 有一定距离，最后参数的移动路径近似于 Z 字形，收敛十分缓慢。</p>
 <p>可见，随机梯度下降在本例中效率很低。从数学的层面理解，可以认为是 x
 的梯度分量过小导致的。</p>
-<h4 id="momentum">Momentum</h4>
+<h5 id="momentum">Momentum</h5>
 <p><strong>Momentum</strong>，即动量，相当于我们给梯度下降引入了物理规则，具体算法如下：
 <span class="math display">\[
 \begin{array}{}
@@ -631,7 +632,7 @@ x 分量上的值很小，但其在 x
 SGD
 是无记忆的，这也就意味着其更新速度只取决于当前的梯度，就容易导致收敛过慢的情况。
 </p>
-<h4 id="adagrad">AdaGrad</h4>
+<h5 id="adagrad">AdaGrad</h5>
 <p>在神经网络的学习中，学习率的选取非常重要。学习率过小，可能导致学习花费时长过多，学习率过大，可能导致学习过程无法收敛。所以我们给出
 AdaGrad，即适应性调整学习率的梯度下降。</p>
 <p>我们引入<strong>学习衰减率（Learning Rate Decay）</strong><span
@@ -651,6 +652,7 @@ AdaGrad
 的思路其实就是将更新过程中变化较大的参数的学习率降低，从而调整学习的尺寸。整体而言都是先快后慢，但如果无止境地学习，更新速度就会变成
 0。为了改善这个问题，可以使用 RMSProp 方法。
 </p>
+<h4 id="关于权重的初始值">关于权重的初始值</h4>
 
                 
               </div>
