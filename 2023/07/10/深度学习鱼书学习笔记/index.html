@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-125638.png">
 <meta property="article:published_time" content="2023-07-10T12:55:04.000Z">
-<meta property="article:modified_time" content="2023-07-16T02:07:58.156Z">
+<meta property="article:modified_time" content="2023-08-30T13:55:40.506Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="NumPy">
 <meta property="article:tag" content="深度学习">
@@ -241,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k 字
+          15k 字
         
       </span>
     
@@ -252,7 +252,7 @@
         
         
         
-          113 分钟
+          122 分钟
         
       </span>
     
@@ -653,6 +653,68 @@ AdaGrad
 0。为了改善这个问题，可以使用 RMSProp 方法。
 </p>
 <h4 id="关于权重的初始值">关于权重的初始值</h4>
+<h5 id="权重初始值是否可以设置为-0">权重初始值是否可以设置为 0 ？</h5>
+<p>答案是否定的，假设初始状态权重为
+0，则第二层神经元会被传递相同的值，第二层神经元全部输入相同的值，这意味着反向传播时第二层的权重会进行相同的更新。这样一来，权重将会维持均一化，为了防止这种情况发生，必须随机生成初始值。</p>
+<h3 id="卷积神经网络">卷积神经网络</h3>
+<h4 id="整体结构">整体结构</h4>
+<p><strong>卷积神经网络（Convolutional Nerual Network）</strong>，简称
+<strong>CNN 神经网络</strong>，相比于全连接神经网络，CNN
+神经网络新出现了卷积（Convolution）层和池化（Pooling）层。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-08-21-032718.png" srcset="/img/loading.gif" lazyload alt="一个 CNN 神经网络示例" /></p>
+<h4 id="卷积层">卷积层</h4>
+<h5 id="卷积运算">卷积运算</h5>
+<p>卷积层进行的处理就是卷积运算。卷积运算相当于图像处理中的
+“滤波器运算”。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-08-21-034519.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>如上图，卷积运算以一定间隔滑动滤波器的窗口，每次将滤波器的元素和输入的对应元素相乘然后求和，将这个结果保存到输出的对应位置，就可以得到卷积的结果。</p>
+<p>对于 CNN 神经网络而言，卷积运算结束后一般会加上一个偏置，如下图：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-08-21-035234.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h5 id="填充">填充</h5>
+<p>在进行卷积运算的处理之前，有时要向输入数据的周围填入固定的数据，比如
+0
+等，这就称为<strong>填充（padding）</strong>。通过合适的填充，可以保证卷积运算后的结果相对于输入空间大小不变。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-08-21-040511.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h5 id="步幅">步幅</h5>
+<p>应用滤波器的位置间隔称为<strong>步幅（stride）</strong>，前面的例子中，滤波器的步幅都为
+1，若步幅设置为 2，则滤波器每次移动 2 个像素。</p>
+<p>假设输入大小为 <span class="math inline">\((H, W)\)</span>，填充为
+<span class="math inline">\(P\)</span> ，步幅为 <span
+class="math inline">\(S\)</span> ，滤波器大小为 <span
+class="math inline">\((FH, FW)\)</span> 。</p>
+<p>设输出大小为 <span class="math inline">\((OH, OW)\)</span> ，则有：
+<span class="math display">\[
+OH = \frac{H + 2P - FH}{S} + 1
+\]</span></p>
+<p><span class="math display">\[
+OW = \frac{W + 2P - FW}{S} + 1
+\]</span></p>
+<h5 id="三维数据的卷积运算">三维数据的卷积运算</h5>
+<p>相对于二维数据的卷积运算，三维卷积运算除了处理长、宽之外还要处理通道方向。通道方向有多个特征图时，会按照通道进行数据和滤波器的卷积运算，然后相加。</p>
+<p>输入数据和滤波器的通道数必须相等，输出数据会得到一张特征图，即通道数为
+1
+的输出数据。如果要在通道方向也拥有多个卷积运算的输出，就需要多个滤波器。</p>
+<p>假设输入数据大小为 <span class="math inline">\((C, H, W)\)</span>
+，即通道数为 <span class="math inline">\(C\)</span> ，高为 <span
+class="math inline">\(H\)</span> ，宽为 <span
+class="math inline">\(W\)</span> ；滤波器数据大小为 <span
+class="math inline">\((FN, C, FH, FW)\)</span> ，即滤波器个数为 <span
+class="math inline">\(FN\)</span> 个，通道数为 <span
+class="math inline">\(C\)</span> ，高为 <span
+class="math inline">\(FH\)</span> ，宽为 <span
+class="math inline">\(FW\)</span> ；则输出数据的大小可以表示为 <span
+class="math inline">\((FN, OH, OW)\)</span>
+，即输出数据的通道数为滤波器的数量 <span
+class="math inline">\(FN\)</span> 。</p>
+<h4 id="池化层">池化层</h4>
+<p>池化是缩小高、宽方向上空间的操作。常见的池化有 Max 池化和 Average
+池化。</p>
+<p>对于一个 <span class="math inline">\(n \times n\)</span> 的 Max
+池化操作，每次选取一个 <span class="math inline">\(n \times n\)</span>
+的区域，从该区域中取出最大值并记录到最终答案。一般而言，步幅和池化窗口大小会设置为同样的值。</p>
+<p>下图演示了一个 <span class="math inline">\(2 \times 2\)</span>
+的池化操作：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-08-21-050234.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 
                 
               </div>
