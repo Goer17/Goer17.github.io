@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-24-055541.png">
 <meta property="article:published_time" content="2023-09-24T05:13:21.000Z">
-<meta property="article:modified_time" content="2023-10-02T15:07:29.481Z">
+<meta property="article:modified_time" content="2023-10-02T15:15:26.754Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="进程管理">
@@ -355,7 +355,7 @@ MS-DOS），这种程序完全控制系统，并且访问所有系统资源。</
 <li><p><strong>Exit</strong></p>
 <p>即进程结束退出系统。</p></li>
 </ul>
-<p note note-info>
+<p class="note note-info">
 二状态模型具有很大的漏洞，即如果存在一些处于运行状态但已经就绪等待执行的进程，同时还存在一些阻塞状态例如等待
 I/O
 结束的进程，又由于该模型使用单队列，<strong>因此无法区分出未被阻塞的进程从而在阻塞状态的进程上浪费大量处理器资源</strong>。具体来说就是若进程
@@ -676,13 +676,13 @@ CPU。</p></li>
 <p>这个问题有很多解决方案，比如对于不同的优先级的队列，我们设置不同的抢占时间。</p>
 <p>例如，对于 <span class="math inline">\(RQ_i\)</span>
 队列，我们将抢占时间设定为 <span class="math inline">\(2 ^
-i\)</span>，从而给低优先级队列的进程更多执行时间。</p>
-<p class="note note-info">
-<p>抢占时间（Preemption
-time）是指一个进程在被操作系统抢占（即中断并停止执行）之前能够持续执行的时间长度。这个概念在抢占式进程调度策略中非常重要，因为它决定了操作系统何时可以选择停止当前正在执行的进程，以分配
-CPU 时间给其他等待的进程。</p>
-</p></li>
+i\)</span>，从而给低优先级队列的进程更多执行时间。</p></li>
 </ul>
+<p class="note note-info">
+抢占时间（Preemption
+time）是指一个进程在被操作系统抢占（即中断并停止执行）之前能够持续执行的时间长度。这个概念在抢占式进程调度策略中非常重要，因为它决定了操作系统何时可以选择停止当前正在执行的进程，以分配
+CPU 时间给其他等待的进程。
+</p>
 <blockquote>
 <p><strong>进程优先级在 Unix/Linux 操作系统的具体体现 ——
 Niceness</strong></p>
