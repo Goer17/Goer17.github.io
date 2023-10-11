@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-21-174656.png">
 <meta property="article:published_time" content="2023-09-21T10:02:30.000Z">
-<meta property="article:modified_time" content="2023-10-02T15:17:19.414Z">
+<meta property="article:modified_time" content="2023-10-11T16:53:21.945Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          3.7k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          25 分钟
+          31 分钟
         
       </span>
     
@@ -905,6 +905,179 @@ print out the line" 的缩写，是一个强大的文本搜索工具。</p>
 </tbody>
 </table>
 <h4 id="系统管理">系统管理</h4>
+<h5 id="find-命令"><code>find</code> 命令</h5>
+<p><code>find</code>
+命令的功能是用于根据给定的路径和条件查找相关文件或目录，参数灵活方便，且<strong>支持正则表达式</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find [路径] [条件] 文件名<br></code></pre></td></tr></table></figure>
+<p><strong>常用参数：</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-name</code></td>
+<td>匹配文件名</td>
+</tr>
+<tr class="even">
+<td><code>-perm</code></td>
+<td>匹配文件权限</td>
+</tr>
+<tr class="odd">
+<td><code>-user</code></td>
+<td>匹配文件所属主</td>
+</tr>
+<tr class="even">
+<td><code>-group</code></td>
+<td>匹配文件所属组</td>
+</tr>
+<tr class="odd">
+<td><code>-mtime</code></td>
+<td>匹配最后修改文件内容的时间</td>
+</tr>
+<tr class="even">
+<td><code>-atime</code></td>
+<td>匹配最后读取文件内容的时间</td>
+</tr>
+<tr class="odd">
+<td><code>-ctime</code></td>
+<td>匹配最后修改文件属性的时间</td>
+</tr>
+<tr class="even">
+<td><code>-type</code></td>
+<td>匹配文件类型</td>
+</tr>
+<tr class="odd">
+<td><code>-size</code></td>
+<td>匹配文件大小</td>
+</tr>
+<tr class="even">
+<td><code>-exec ... &#123;&#125; \</code></td>
+<td>进一步执行语句</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例：</strong></p>
+<ol type="1">
+<li><p>查找当前目录下所有 <code>zip</code> 压缩包：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find ./ -name *.zip<br></code></pre></td></tr></table></figure></p></li>
+<li><p>查找当前目录下 <code>demo_dir</code> 文件夹下所有大于 1M
+的文件：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find ./demo_dir -size +1M<br></code></pre></td></tr></table></figure></p></li>
+<li><p>查找工作目录最近 3 天被修改过的文件并且打印其长格式：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">find ./ -mtime +3 -exec ls -l &#123;&#125; \;<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<h5 id="ps-命令"><code>ps</code> 命令</h5>
+<p><code>ps</code> 命令是 "process" 的缩写，用于显示进程信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ps [参数]<br></code></pre></td></tr></table></figure>
+<p><strong>常用参数：</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-a</code></td>
+<td>显示当前终端会话的所有进程</td>
+</tr>
+<tr class="even">
+<td><code>-x</code></td>
+<td>显示没有控制终端的进程</td>
+</tr>
+<tr class="odd">
+<td><code>-e</code></td>
+<td>显示系统所有进程</td>
+</tr>
+<tr class="even">
+<td><code>aux</code></td>
+<td>也是显示系统所有进程，但输出格式更加详细</td>
+</tr>
+<tr class="odd">
+<td><code>-u</code></td>
+<td>显示某个用户的进程</td>
+</tr>
+<tr class="even">
+<td><code>-p</code></td>
+<td>显示特定 PID 的进程</td>
+</tr>
+<tr class="odd">
+<td><code>-o</code></td>
+<td>自定义输出进程格式</td>
+</tr>
+<tr class="even">
+<td><code>-t</code></td>
+<td>显示在特定终端运行的进程</td>
+</tr>
+<tr class="odd">
+<td><code>-H</code></td>
+<td>显示进程的层次结构，包括父进程和子进程</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例：</strong></p>
+<ol type="1">
+<li><p>显示系统所有进程，展示其 PID 和控制终端：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ps -eo pid,tty<br></code></pre></td></tr></table></figure></p></li>
+<li><p>显示 PID 为 100 的进程信息：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ps -p 100<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<h5 id="uname-命令"><code>uname</code> 命令</h5>
+<p><code>uname</code> 命令来自英文中的 "Unix
+name"，用于查看系统主机名、内核及硬件架构等信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">uname [参数]<br></code></pre></td></tr></table></figure>
+<p><strong>常用参数：</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-s</code></td>
+<td>显示内核名称（默认）</td>
+</tr>
+<tr class="even">
+<td><code>-a</code></td>
+<td>显示系统所有相关信息</td>
+</tr>
+<tr class="odd">
+<td><code>-i</code></td>
+<td>显示硬件平台</td>
+</tr>
+<tr class="even">
+<td><code>-m</code></td>
+<td>显示计算机硬件架构</td>
+</tr>
+<tr class="odd">
+<td><code>-n</code></td>
+<td>显示主机名称</td>
+</tr>
+<tr class="even">
+<td><code>-o</code></td>
+<td>显示操作系统名称</td>
+</tr>
+<tr class="odd">
+<td><code>-p</code></td>
+<td>显示主机处理器类型</td>
+</tr>
+<tr class="even">
+<td><code>-r</code></td>
+<td>显示内核发行版本号</td>
+</tr>
+<tr class="odd">
+<td><code>-v</code></td>
+<td>显示内核版本</td>
+</tr>
+</tbody>
+</table>
 
                 
               </div>

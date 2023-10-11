@@ -16,30 +16,25 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Servlet 简介 Servlet 是 Java EE（Java Platform, Enterprise Edition）中的一种 Java 程序组件，用于处理 Web 应用程序中的 HTTP 请求和响应。Servlet 通常运行在 Web 服务器或 Servlet 容器中，并提供了一种有效的方式来创建动态的 Web 内容。   Servlets were Java’s answer to C">
+    <meta name="description" content="简介 Qt 是一个跨平台的 C++ 开发库，主要用于开发 GUI 程序。Qt 本身是纯 C++ 开发的，但开源社区提供了 Python 等语言的接口。 Qt 支持许多操作系统，例如 Windows、MacOS、Linux 和智能手机的 Android 和 IOS 等等。 PyQt 而 PyQt 是一个用于 Python 编程语言的跨平台 GUI 工具包，它允许开发者创建强大的桌面应用程序和嵌入式应">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Servlet 学习笔记">
-<meta property="og:url" content="http://example.com/2023/10/03/Servlet%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="PyQt 学习笔记">
+<meta property="og:url" content="http://example.com/2023/10/09/PyQt%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="Servlet 简介 Servlet 是 Java EE（Java Platform, Enterprise Edition）中的一种 Java 程序组件，用于处理 Web 应用程序中的 HTTP 请求和响应。Servlet 通常运行在 Web 服务器或 Servlet 容器中，并提供了一种有效的方式来创建动态的 Web 内容。   Servlets were Java’s answer to C">
+<meta property="og:description" content="简介 Qt 是一个跨平台的 C++ 开发库，主要用于开发 GUI 程序。Qt 本身是纯 C++ 开发的，但开源社区提供了 Python 等语言的接口。 Qt 支持许多操作系统，例如 Windows、MacOS、Linux 和智能手机的 Android 和 IOS 等等。 PyQt 而 PyQt 是一个用于 Python 编程语言的跨平台 GUI 工具包，它允许开发者创建强大的桌面应用程序和嵌入式应">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055254.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055757.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-070211.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-060132.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-065137.png">
-<meta property="article:published_time" content="2023-10-03T05:46:39.000Z">
-<meta property="article:modified_time" content="2023-10-05T10:21:49.753Z">
+<meta property="article:published_time" content="2023-10-08T16:07:17.000Z">
+<meta property="article:modified_time" content="2023-10-11T15:05:06.046Z">
 <meta property="article:author" content="Captain_Lee">
-<meta property="article:tag" content="Servlet">
+<meta property="article:tag" content="Qt">
+<meta property="article:tag" content="GUI">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055254.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Servlet 学习笔记 - Yuanyang-Lee&#39;s Blog</title>
+  <title>PyQt 学习笔记 - Yuanyang-Lee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Servlet 学习笔记</span>
+            <span id="subtitle">PyQt 学习笔记</span>
           
         </div>
 
@@ -243,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-03 13:46" pubdate>
-          2023年10月3日 下午
+        <time datetime="2023-10-09 00:07" pubdate>
+          2023年10月9日 凌晨
         </time>
       </span>
     
@@ -255,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k 字
+          2.2k 字
         
       </span>
     
@@ -266,7 +261,7 @@
         
         
         
-          33 分钟
+          19 分钟
         
       </span>
     
@@ -304,120 +299,87 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Servlet 学习笔记</h1>
+            <h1 style="display: none">PyQt 学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="servlet-简介">Servlet 简介</h4>
-<p>Servlet 是 Java EE（Java Platform, Enterprise Edition）中的一种 Java
-程序组件，用于处理 Web 应用程序中的 HTTP 请求和响应。Servlet 通常运行在
-Web 服务器或 Servlet 容器中，并提供了一种有效的方式来创建动态的 Web
-内容。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055254.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p class="note note-info">
-Servlets were Java’s answer to CGI (Common Gateway Interface), and
-<strong>programs that run on web server acting as middle layer between
-HTTP request and databases or other applications.</strong>
-</p>
-<h5 id="mvc-模型">MVC 模型</h5>
-<p>MVC（Model-View-Controller）是一种软件架构模式，用于组织和分离应用程序的不同组成部分，以提高应用程序的可维护性、可扩展性和可重用性。MVC模型将应用程序分为三个主要组件，每个组件都有不同的责任。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055757.png" srcset="/img/loading.gif" lazyload alt="MVC Model" style="zoom:50%;" /></p>
-<p class="note note-info">
-Java classes/beans —— The business logic (Model)<br> JSP —— The
-presentation logic (View)<br> Servlet —— Handling the HTTP protocol and
-coordination (Controller)
-</p>
+                <h4 id="简介">简介</h4>
+<p>Qt 是一个跨平台的 C++ 开发库，主要用于开发 GUI 程序。Qt 本身是纯 C++
+开发的，但开源社区提供了 Python 等语言的接口。</p>
+<p>Qt 支持许多操作系统，例如 Windows、MacOS、Linux 和智能手机的 Android
+和 IOS 等等。</p>
+<p><strong>PyQt</strong></p>
+<p>而 PyQt 是一个用于 Python 编程语言的跨平台 GUI
+工具包，它允许开发者创建强大的桌面应用程序和嵌入式应用程序。PyQt 是一个
+Python 绑定，提供了对 Qt 库的完整访问。</p>
+<p><a target="_blank" rel="noopener" href="https://www.riverbankcomputing.com/static/Docs/PyQt5/">PyQt5
+官方文档</a></p>
+<p>安装 <code>PyQt5</code> ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install pyqt5<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注：对于 M 系列芯片的 MacOS 而言是无法使用 <code>pip</code> 安装
+<code>PyQt5</code> 模块的，可以考虑以下替代方式：</p>
 <ol type="1">
-<li><strong>模型（Model）</strong>：
-<ul>
-<li>模型代表应用程序的数据和业务逻辑。</li>
-<li>模型负责处理数据的获取、存储、验证和操作，以确保数据的完整性和一致性。</li>
-<li>模型通常不直接与用户界面交互，而是通过控制器来处理数据的请求和响应。</li>
-</ul></li>
-<li><strong>视图（View）</strong>：
-<ul>
-<li>视图负责呈现数据给用户，并负责用户界面的显示。</li>
-<li>视图通常不包含应用程序的业务逻辑，它只负责显示数据和接收用户输入。</li>
-<li>视图可以是图形用户界面（GUI）、Web
-页面、命令行界面或其他任何用户界面形式。</li>
-</ul></li>
-<li><strong>控制器（Controller）</strong>：
-<ul>
-<li>控制器充当模型和视图之间的中介，它接收来自用户界面的用户输入。</li>
-<li>控制器负责解释用户输入，并相应地调用模型的方法来执行业务逻辑。</li>
-<li>控制器还可以更新视图以反映模型的状态变化。</li>
-</ul></li>
+<li>使用 Homebrew 安装 <code>PyQt5</code> ：</li>
 </ol>
-<h5 id="servlet-优点">Servlet 优点</h5>
-<ul>
-<li><p>高效性（Efficient，lower overhead）</p>
-<p>Servlet 在 JVM
-上运行，<strong>每一个请求都使用线程而不是开启一个新的进程</strong>。</p></li>
-<li><p>便利（Convenient）</p>
-<p>提供解析和解码 HTML 表单的基础设施。</p></li>
-<li><p>功能强大（Powerful）</p>
-<ul>
-<li><strong>可以直接和 Web Server 连接</strong>；</li>
-<li><strong>多个 Servlet 可以共享数据库链接</strong>。</li>
-</ul></li>
-<li><p>跨平台（Portable）</p>
-<ul>
-<li>使用 Java 编写，可移植性强。</li>
-</ul></li>
-</ul>
-<h5 id="tomcat">Tomcat</h5>
-<p>Apache Tomcat（通常称为Tomcat）是一个开源的 Servlet
-容器，用于实现和管理 Java Servlet 和 JSP。它是 Apache
-软件基金会的一个项目，作为一个轻量级的 Web 服务器，被广泛用于运行 Java
-Web 应用程序。</p>
-<p>目录结构：</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-070211.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<h4 id="servlet-生命周期">Servlet 生命周期</h4>
-<p>Servlet 生命周期可被定义为从创建直到毁灭的整个过程。以下是 Servlet
-遵循的过程：</p>
-<ul>
-<li><p>Servlet 初始化后调用 <code>init()</code> 方法。</p>
-<blockquote>
-<p>注：<code>init()</code>
-方法不等同于构造方法，构造方法只会创建一个对象，只有调用完
-<code>init()</code> 方法后对象才是一个合格的 Servlet。</p>
-</blockquote></li>
-<li><p>Servlet 调用 <code>service()</code>
-方法来处理客户端的请求。</p></li>
-<li><p>Servlet 销毁前调用 <code>destroy()</code> 方法。</p></li>
-</ul>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-060132.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-065137.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
-<h4 id="第一个-servlet-实例">第一个 Servlet 实例</h4>
-<p>通过 IDEA 构建一个 Jakarta EE 项目，创建一个简单的 Servlet 实例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.Servlet_demo;<br><br><span class="hljs-meta">@WebServlet(name = &quot;helloServlet&quot;, value = &quot;/hello-servlet&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    <span class="hljs-keyword">private</span> String message;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span> &#123;<br>        message = <span class="hljs-string">&quot;Hello World!&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">service</span><span class="hljs-params">(ServletRequest req, ServletResponse res)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br>        <span class="hljs-built_in">super</span>.service(req, res);<br>        System.out.println(<span class="hljs-string">&quot;Hello World!&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        response.setContentType(<span class="hljs-string">&quot;text/html&quot;</span>);<br><br>        <span class="hljs-comment">// Hello</span><br>        <span class="hljs-type">PrintWriter</span> <span class="hljs-variable">out</span> <span class="hljs-operator">=</span> response.getWriter();<br>        out.println(<span class="hljs-string">&quot;&lt;html&gt;&lt;body&gt;&quot;</span>);<br>        out.println(<span class="hljs-string">&quot;&lt;h1&gt;&quot;</span> + message + <span class="hljs-string">&quot;&lt;/h1&gt;&quot;</span>);<br>        out.println(<span class="hljs-string">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">destroy</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Servlet is destroyed&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>配置 <code>web.xml</code> 文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;https://jakarta.ee/xml/ns/jakartaee&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;5.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>com.example.Servlet_demo.HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<blockquote>
-<p>Servlet 中的部署描述符（Deployment Descriptor，DD）是一个 XML
-文件，通常命名为 <code>web.xml</code>，用于配置和管理 Web 应用程序中的
-Servlet 组件。Deployment Descriptor 提供了一种在 Servlet 容器中配置
-Servlet 和其他 Web 应用程序组件的方式，这样 Web
-服务器可以正确地加载和运行这些组件。</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew install pyqt@5<br></code></pre></td></tr></table></figure></p>
+<ol start="2" type="1">
+<li>将 <code>PyQt@5</code> 中 <code>site-packages</code>
+的所有子文件移动到 Python 运行环境的 <code>site-packages</code>
+文件夹下。</li>
+</ol>
 </blockquote>
-<p><code>index.jsp</code> 文件：</p>
-<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span> %&gt;<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>    &lt;title&gt;JSP - Hello World&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&lt;h1&gt;&lt;%= <span class="hljs-string">&quot;Hello World!&quot;</span> %&gt;<br>&lt;/h1&gt;<br>&lt;br/&gt;<br>&lt;a href=<span class="hljs-string">&quot;hello-servlet&quot;</span>&gt;Hello Servlet&lt;/a&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
-<p>在生成的 HTML 网页中点击超链接 "Hello Servlet" ，即调用
-<code>HelloServlet</code> 的 <code>doGet()</code> 方法，在页面打印
-"Hello World!"，同时每次刷新页面都会调用 <code>service()</code>
-方法，在控制台窗口打印 "Hello World!"。</p>
-<p>执行原理：</p>
-<ol type="1">
-<li>当服务器接收到客户浏览器的请求后，会解析请求 URL 路径，获取访问的
-Servlet 的资源路径</li>
-<li>查找 <code>web.xml</code> 文件，查找是否存在
-<code>&lt;url-pattern&gt;</code> 标签体内容</li>
-<li>如果有，则在找到对应的 <code>&lt;servlet-class&gt;</code>
-全类名</li>
-<li>Tomcat 会将类的字节码文件加载进内存，并且创建其对象</li>
-<li>调用对应方法</li>
-</ol>
+<h4 id="基本-ui">基本 UI</h4>
+<h5 id="第一个-pyqt-程序">第一个 PyQt 程序</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QWidget, QApplication<br><br>app = QApplication(sys.argv) <span class="hljs-comment"># 给程序传递的参数，创建一个 QApplication 对象</span><br>widget = QWidget()<br>widget.resize(<span class="hljs-number">600</span>, <span class="hljs-number">400</span>) <span class="hljs-comment"># 设置窗口大小</span><br>widget.setWindowTitle(<span class="hljs-string">&quot;PyQt5 测试窗体&quot;</span>)<br>widget.show()<br>app.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
+<h5 id="常用模块">常用模块</h5>
+<p>PyQt 有许多功能模块，最常见的模块有以下 3 个：</p>
+<ul>
+<li><code>QtCore</code> ：包含了核心的非 GUI
+功能，包括一些系统级调用等等；</li>
+<li><code>QtGUI</code> ：包含了窗口系统、事件处理、2D
+图像、基本绘制、字体文字等等功能；</li>
+<li><code>QtWidgets</code> ：包含了一些创建桌面应用的 UI 元素。</li>
+</ul>
+<h5 id="控件">控件</h5>
+<h6 id="按钮系列">按钮系列</h6>
+<ul>
+<li><strong><code>QPushButton</code>（普通按钮）：</strong>
+最常见的按钮控件，用于触发各种操作或事件。</li>
+<li><strong><code>QCheckBox</code>（复选框）：</strong>用于选择一个或多个选项的控件，通常用于启用/禁用功能或选择多个选项。</li>
+<li><strong><code>QRadioButton</code>（单选按钮）：</strong>
+用于从一组选项中选择一个单一选项。通常与其他单选按钮一起使用，以便用户从一组互斥的选项中选择一个。</li>
+<li><strong><code>QToolButton</code>（工具按钮）：</strong>通常用于工具栏或工具箱中，它们可以包含图标、文本或两者结合，用于执行各种操作。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QWidget, QApplication, QPushButton<br><br>app = QApplication(sys.argv)<br>widget = QWidget()<br>widget.resize(<span class="hljs-number">600</span>, <span class="hljs-number">400</span>)<br>widget.setWindowTitle(<span class="hljs-string">&quot;PyQt5 测试窗体&quot;</span>)<br><br>btn = QPushButton(<span class="hljs-string">&#x27;按钮&#x27;</span>)<br>btn.setParent(widget) <span class="hljs-comment"># 设置父组件</span><br><br><span class="hljs-comment"># 等价于 btn = QPushButton(&#x27;按钮&#x27;, widget)</span><br><br>widget.show()<br>app.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
+<h6 id="qlabel"><code>QLabel</code></h6>
+<p><code>QLabel</code> 是 PyQt5
+中的一个标签控件，用于显示文本或图像。它通常用于显示静态文本或图像，并且不接受用户输入。</p>
+<ul>
+<li><strong>显示文本或 HTML 内容：</strong> <code>QLabel</code>
+可以显示纯文本或富文本（HTML）内容。这意味着你可以在标签上显示格式化的文本、链接、图标等。</li>
+<li><strong>显示图像：</strong> 除了文本，<code>QLabel</code>
+也可以用于显示图像，如 PNG、JPEG、SVG 等格式的图像。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QWidget, QApplication, QLabel<br><br>app = QApplication(sys.argv)<br>widget = QWidget()<br>widget.resize(<span class="hljs-number">600</span>, <span class="hljs-number">400</span>)<br>widget.setWindowTitle(<span class="hljs-string">&quot;PyQt5 测试窗体&quot;</span>)<br><br>info = QLabel(<span class="hljs-string">&#x27;&lt;h1&gt;Hello, world!&lt;/h1&gt;&#x27;</span>, widget)<br><br>widget.show()<br>app.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
+<h6 id="qlineedit"><code>QLineEdit</code></h6>
+<p><code>QLineEdit</code> 是 PyQt
+中用于创建单行文本输入框的部件，它允许用户在单行中输入文本。这个小部件是很常见的，用于创建各种应用程序中的输入表单、搜索框、用户名密码输入等。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QWidget, QApplication, QLineEdit<br><br>app = QApplication(sys.argv)<br>widget = QWidget()<br>widget.resize(<span class="hljs-number">600</span>, <span class="hljs-number">400</span>)<br>widget.setWindowTitle(<span class="hljs-string">&quot;PyQt5 测试窗体&quot;</span>)<br><br>elt = QLineEdit(widget)<br>elt.setPlaceholderText(<span class="hljs-string">&#x27;请输入账号&#x27;</span>)<br><br>widget.show()<br>app.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
+<h4 id="窗口">窗口</h4>
+<ul>
+<li><p><strong>设置窗口大小</strong>：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">widget.resize(w, h) <span class="hljs-comment"># 将窗口设置为宽为 w，高为 h</span><br></code></pre></td></tr></table></figure></p></li>
+<li><p><strong>设置窗口位置：</strong></p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">widget.move(x, y) <span class="hljs-comment"># 设置窗口界面初始化后所在坐标</span><br></code></pre></td></tr></table></figure></p></li>
+</ul>
+<h4 id="布局">布局</h4>
+<h5 id="qboxlayout"><code>QBoxLayout</code></h5>
+<h6 id="垂直布局-qvboxlayout">垂直布局 <code>QVBoxLayout</code></h6>
 
                 
               </div>
@@ -436,7 +398,7 @@ Servlet 的资源路径</li>
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
   
 
@@ -451,7 +413,9 @@ Servlet 的资源路径</li>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Servlet/">#Servlet</a>
+        <a href="/tags/Qt/">#Qt</a>
+      
+        <a href="/tags/GUI/">#GUI</a>
       
     </div>
   
@@ -463,8 +427,8 @@ Servlet 的资源路径</li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Servlet 学习笔记</div>
-      <div>http://example.com/2023/10/03/Servlet 学习笔记/</div>
+      <div>PyQt 学习笔记</div>
+      <div>http://example.com/2023/10/09/PyQt 学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -476,7 +440,7 @@ Servlet 的资源路径</li>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月3日</div>
+          <div>2023年10月9日</div>
         </div>
       
       

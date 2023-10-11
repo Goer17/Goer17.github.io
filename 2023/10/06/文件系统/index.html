@@ -16,30 +16,26 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Servlet 简介 Servlet 是 Java EE（Java Platform, Enterprise Edition）中的一种 Java 程序组件，用于处理 Web 应用程序中的 HTTP 请求和响应。Servlet 通常运行在 Web 服务器或 Servlet 容器中，并提供了一种有效的方式来创建动态的 Web 内容。   Servlets were Java’s answer to C">
+    <meta name="description" content="文件系统 文件系统（File system）是操作系统的一层，它将磁盘（或其他块设备）的块接口（Block interface）转换为文件、目录等。 文件系统的主要功能：  磁盘管理（Disk management） 将磁盘块集成文件。 命名（Naming） 接口通过名字访问文件而不是磁盘块。 保护（Protection） 保护文件数据安全。 可靠性&#x2F;耐用性（Reliability&#x2F;Durabil">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Servlet 学习笔记">
-<meta property="og:url" content="http://example.com/2023/10/03/Servlet%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="文件系统">
+<meta property="og:url" content="http://example.com/2023/10/06/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="Servlet 简介 Servlet 是 Java EE（Java Platform, Enterprise Edition）中的一种 Java 程序组件，用于处理 Web 应用程序中的 HTTP 请求和响应。Servlet 通常运行在 Web 服务器或 Servlet 容器中，并提供了一种有效的方式来创建动态的 Web 内容。   Servlets were Java’s answer to C">
+<meta property="og:description" content="文件系统 文件系统（File system）是操作系统的一层，它将磁盘（或其他块设备）的块接口（Block interface）转换为文件、目录等。 文件系统的主要功能：  磁盘管理（Disk management） 将磁盘块集成文件。 命名（Naming） 接口通过名字访问文件而不是磁盘块。 保护（Protection） 保护文件数据安全。 可靠性&#x2F;耐用性（Reliability&#x2F;Durabil">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055254.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055757.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-070211.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-060132.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-065137.png">
-<meta property="article:published_time" content="2023-10-03T05:46:39.000Z">
-<meta property="article:modified_time" content="2023-10-05T10:21:49.753Z">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-06-091258.png">
+<meta property="article:published_time" content="2023-10-06T09:06:04.000Z">
+<meta property="article:modified_time" content="2023-10-06T09:33:11.761Z">
 <meta property="article:author" content="Captain_Lee">
-<meta property="article:tag" content="Servlet">
+<meta property="article:tag" content="文件系统">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055254.png">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-06-091258.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Servlet 学习笔记 - Yuanyang-Lee&#39;s Blog</title>
+  <title>文件系统 - Yuanyang-Lee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Servlet 学习笔记</span>
+            <span id="subtitle">文件系统</span>
           
         </div>
 
@@ -243,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-03 13:46" pubdate>
-          2023年10月3日 下午
+        <time datetime="2023-10-06 17:06" pubdate>
+          2023年10月6日 下午
         </time>
       </span>
     
@@ -255,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k 字
+          202 字
         
       </span>
     
@@ -266,7 +262,7 @@
         
         
         
-          33 分钟
+          2 分钟
         
       </span>
     
@@ -304,120 +300,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Servlet 学习笔记</h1>
+            <h1 style="display: none">文件系统</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="servlet-简介">Servlet 简介</h4>
-<p>Servlet 是 Java EE（Java Platform, Enterprise Edition）中的一种 Java
-程序组件，用于处理 Web 应用程序中的 HTTP 请求和响应。Servlet 通常运行在
-Web 服务器或 Servlet 容器中，并提供了一种有效的方式来创建动态的 Web
-内容。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055254.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p class="note note-info">
-Servlets were Java’s answer to CGI (Common Gateway Interface), and
-<strong>programs that run on web server acting as middle layer between
-HTTP request and databases or other applications.</strong>
-</p>
-<h5 id="mvc-模型">MVC 模型</h5>
-<p>MVC（Model-View-Controller）是一种软件架构模式，用于组织和分离应用程序的不同组成部分，以提高应用程序的可维护性、可扩展性和可重用性。MVC模型将应用程序分为三个主要组件，每个组件都有不同的责任。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-055757.png" srcset="/img/loading.gif" lazyload alt="MVC Model" style="zoom:50%;" /></p>
-<p class="note note-info">
-Java classes/beans —— The business logic (Model)<br> JSP —— The
-presentation logic (View)<br> Servlet —— Handling the HTTP protocol and
-coordination (Controller)
-</p>
-<ol type="1">
-<li><strong>模型（Model）</strong>：
+                <h4 id="文件系统">文件系统</h4>
+<p><strong>文件系统（File
+system）</strong>是操作系统的一层，它将磁盘（或其他块设备）的<strong>块接口（Block
+interface）</strong>转换为文件、目录等。</p>
+<p>文件系统的主要功能：</p>
 <ul>
-<li>模型代表应用程序的数据和业务逻辑。</li>
-<li>模型负责处理数据的获取、存储、验证和操作，以确保数据的完整性和一致性。</li>
-<li>模型通常不直接与用户界面交互，而是通过控制器来处理数据的请求和响应。</li>
-</ul></li>
-<li><strong>视图（View）</strong>：
-<ul>
-<li>视图负责呈现数据给用户，并负责用户界面的显示。</li>
-<li>视图通常不包含应用程序的业务逻辑，它只负责显示数据和接收用户输入。</li>
-<li>视图可以是图形用户界面（GUI）、Web
-页面、命令行界面或其他任何用户界面形式。</li>
-</ul></li>
-<li><strong>控制器（Controller）</strong>：
-<ul>
-<li>控制器充当模型和视图之间的中介，它接收来自用户界面的用户输入。</li>
-<li>控制器负责解释用户输入，并相应地调用模型的方法来执行业务逻辑。</li>
-<li>控制器还可以更新视图以反映模型的状态变化。</li>
-</ul></li>
-</ol>
-<h5 id="servlet-优点">Servlet 优点</h5>
-<ul>
-<li><p>高效性（Efficient，lower overhead）</p>
-<p>Servlet 在 JVM
-上运行，<strong>每一个请求都使用线程而不是开启一个新的进程</strong>。</p></li>
-<li><p>便利（Convenient）</p>
-<p>提供解析和解码 HTML 表单的基础设施。</p></li>
-<li><p>功能强大（Powerful）</p>
-<ul>
-<li><strong>可以直接和 Web Server 连接</strong>；</li>
-<li><strong>多个 Servlet 可以共享数据库链接</strong>。</li>
-</ul></li>
-<li><p>跨平台（Portable）</p>
-<ul>
-<li>使用 Java 编写，可移植性强。</li>
-</ul></li>
+<li><p><strong>磁盘管理（Disk management）</strong></p>
+<p>将磁盘块集成文件。</p></li>
+<li><p><strong>命名（Naming）</strong></p>
+<p>接口通过名字访问文件而不是磁盘块。</p></li>
+<li><p><strong>保护（Protection）</strong></p>
+<p>保护文件数据安全。</p></li>
+<li><p><strong>可靠性/耐用性（Reliability/Durability）</strong></p>
+<p>保证文件的持久性。</p></li>
 </ul>
-<h5 id="tomcat">Tomcat</h5>
-<p>Apache Tomcat（通常称为Tomcat）是一个开源的 Servlet
-容器，用于实现和管理 Java Servlet 和 JSP。它是 Apache
-软件基金会的一个项目，作为一个轻量级的 Web 服务器，被广泛用于运行 Java
-Web 应用程序。</p>
-<p>目录结构：</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-070211.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<h4 id="servlet-生命周期">Servlet 生命周期</h4>
-<p>Servlet 生命周期可被定义为从创建直到毁灭的整个过程。以下是 Servlet
-遵循的过程：</p>
-<ul>
-<li><p>Servlet 初始化后调用 <code>init()</code> 方法。</p>
-<blockquote>
-<p>注：<code>init()</code>
-方法不等同于构造方法，构造方法只会创建一个对象，只有调用完
-<code>init()</code> 方法后对象才是一个合格的 Servlet。</p>
-</blockquote></li>
-<li><p>Servlet 调用 <code>service()</code>
-方法来处理客户端的请求。</p></li>
-<li><p>Servlet 销毁前调用 <code>destroy()</code> 方法。</p></li>
-</ul>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-060132.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-03-065137.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
-<h4 id="第一个-servlet-实例">第一个 Servlet 实例</h4>
-<p>通过 IDEA 构建一个 Jakarta EE 项目，创建一个简单的 Servlet 实例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.Servlet_demo;<br><br><span class="hljs-meta">@WebServlet(name = &quot;helloServlet&quot;, value = &quot;/hello-servlet&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    <span class="hljs-keyword">private</span> String message;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span> &#123;<br>        message = <span class="hljs-string">&quot;Hello World!&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">service</span><span class="hljs-params">(ServletRequest req, ServletResponse res)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br>        <span class="hljs-built_in">super</span>.service(req, res);<br>        System.out.println(<span class="hljs-string">&quot;Hello World!&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        response.setContentType(<span class="hljs-string">&quot;text/html&quot;</span>);<br><br>        <span class="hljs-comment">// Hello</span><br>        <span class="hljs-type">PrintWriter</span> <span class="hljs-variable">out</span> <span class="hljs-operator">=</span> response.getWriter();<br>        out.println(<span class="hljs-string">&quot;&lt;html&gt;&lt;body&gt;&quot;</span>);<br>        out.println(<span class="hljs-string">&quot;&lt;h1&gt;&quot;</span> + message + <span class="hljs-string">&quot;&lt;/h1&gt;&quot;</span>);<br>        out.println(<span class="hljs-string">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">destroy</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Servlet is destroyed&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>配置 <code>web.xml</code> 文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;https://jakarta.ee/xml/ns/jakartaee&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;5.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>com.example.Servlet_demo.HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<blockquote>
-<p>Servlet 中的部署描述符（Deployment Descriptor，DD）是一个 XML
-文件，通常命名为 <code>web.xml</code>，用于配置和管理 Web 应用程序中的
-Servlet 组件。Deployment Descriptor 提供了一种在 Servlet 容器中配置
-Servlet 和其他 Web 应用程序组件的方式，这样 Web
-服务器可以正确地加载和运行这些组件。</p>
-</blockquote>
-<p><code>index.jsp</code> 文件：</p>
-<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span> %&gt;<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>    &lt;title&gt;JSP - Hello World&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&lt;h1&gt;&lt;%= <span class="hljs-string">&quot;Hello World!&quot;</span> %&gt;<br>&lt;/h1&gt;<br>&lt;br/&gt;<br>&lt;a href=<span class="hljs-string">&quot;hello-servlet&quot;</span>&gt;Hello Servlet&lt;/a&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
-<p>在生成的 HTML 网页中点击超链接 "Hello Servlet" ，即调用
-<code>HelloServlet</code> 的 <code>doGet()</code> 方法，在页面打印
-"Hello World!"，同时每次刷新页面都会调用 <code>service()</code>
-方法，在控制台窗口打印 "Hello World!"。</p>
-<p>执行原理：</p>
-<ol type="1">
-<li>当服务器接收到客户浏览器的请求后，会解析请求 URL 路径，获取访问的
-Servlet 的资源路径</li>
-<li>查找 <code>web.xml</code> 文件，查找是否存在
-<code>&lt;url-pattern&gt;</code> 标签体内容</li>
-<li>如果有，则在找到对应的 <code>&lt;servlet-class&gt;</code>
-全类名</li>
-<li>Tomcat 会将类的字节码文件加载进内存，并且创建其对象</li>
-<li>调用对应方法</li>
-</ol>
+<h5 id="文件">文件</h5>
 
                 
               </div>
@@ -436,7 +339,7 @@ Servlet 的资源路径</li>
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="category-chain-item">操作系统</a>
   
   
 
@@ -451,7 +354,7 @@ Servlet 的资源路径</li>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Servlet/">#Servlet</a>
+        <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">#文件系统</a>
       
     </div>
   
@@ -463,8 +366,8 @@ Servlet 的资源路径</li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Servlet 学习笔记</div>
-      <div>http://example.com/2023/10/03/Servlet 学习笔记/</div>
+      <div>文件系统</div>
+      <div>http://example.com/2023/10/06/文件系统/</div>
     </div>
     <div class="license-meta">
       
@@ -476,7 +379,7 @@ Servlet 的资源路径</li>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月3日</div>
+          <div>2023年10月6日</div>
         </div>
       
       
@@ -509,6 +412,23 @@ Servlet 的资源路径</li>
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/04/mysql-connector%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="mysql-connector 学习笔记">
+                        <span class="hidden-mobile">mysql-connector 学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
