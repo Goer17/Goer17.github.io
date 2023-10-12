@@ -16,16 +16,16 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="文件系统 文件系统（File system）是操作系统的一层，它将磁盘（或其他块设备）的块接口（Block interface）转换为文件、目录等。 文件系统的主要功能：  磁盘管理（Disk management） 将磁盘块集成文件。 命名（Naming） 接口通过名字访问文件而不是磁盘块。 保护（Protection） 保护文件数据安全。 可靠性&#x2F;耐用性（Reliability&#x2F;Durabil">
+    <meta name="description" content="文件系统介绍 文件系统（File system）是操作系统的一层，它将磁盘（或其他块设备）的块接口（Block interface）转换为文件、目录等。 文件系统的主要功能：  磁盘管理（Disk management） 将磁盘块集成文件。 命名（Naming） 接口通过名字访问文件而不是磁盘块。 保护（Protection） 保护文件数据安全。 可靠性&#x2F;耐用性（Reliability&#x2F;Durab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文件系统">
 <meta property="og:url" content="http://example.com/2023/10/06/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="文件系统 文件系统（File system）是操作系统的一层，它将磁盘（或其他块设备）的块接口（Block interface）转换为文件、目录等。 文件系统的主要功能：  磁盘管理（Disk management） 将磁盘块集成文件。 命名（Naming） 接口通过名字访问文件而不是磁盘块。 保护（Protection） 保护文件数据安全。 可靠性&#x2F;耐用性（Reliability&#x2F;Durabil">
+<meta property="og:description" content="文件系统介绍 文件系统（File system）是操作系统的一层，它将磁盘（或其他块设备）的块接口（Block interface）转换为文件、目录等。 文件系统的主要功能：  磁盘管理（Disk management） 将磁盘块集成文件。 命名（Naming） 接口通过名字访问文件而不是磁盘块。 保护（Protection） 保护文件数据安全。 可靠性&#x2F;耐用性（Reliability&#x2F;Durab">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-06-091258.png">
 <meta property="article:published_time" content="2023-10-06T09:06:04.000Z">
-<meta property="article:modified_time" content="2023-10-06T09:33:11.761Z">
+<meta property="article:modified_time" content="2023-10-12T10:25:43.796Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="文件系统">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          202 字
+          4.3k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          2 分钟
+          37 分钟
         
       </span>
     
@@ -305,7 +305,7 @@
             
               <div class="markdown-body">
                 
-                <h4 id="文件系统">文件系统</h4>
+                <h4 id="文件系统介绍">文件系统介绍</h4>
 <p><strong>文件系统（File
 system）</strong>是操作系统的一层，它将磁盘（或其他块设备）的<strong>块接口（Block
 interface）</strong>转换为文件、目录等。</p>
@@ -321,6 +321,194 @@ interface）</strong>转换为文件、目录等。</p>
 <p>保证文件的持久性。</p></li>
 </ul>
 <h5 id="文件">文件</h5>
+<p><strong>文件是一种对计算机上非易失性（non-volatile）存储的抽象。</strong></p>
+<p>其包括了：</p>
+<ul>
+<li><p><strong>数据（Data）</strong>：</p>
+<p>在硬件上存储的数据块。</p></li>
+<li><p><strong>元数据（Metadata）</strong></p>
+<ul>
+<li><p><strong>用户（Owner）</strong></p></li>
+<li><p><strong>大小（Size）</strong></p></li>
+<li><p>最近开启时间（Last opened）</p></li>
+<li><p>最后一次修改时间（Last modified）</p></li>
+<li><p><strong>权限（Access rights）</strong></p>
+<p>在 Unix / Linux 操作系统中，一般用 9 个 bit
+来描述文件的权限，分别表示所属用户、群组用户和外部用户对该文件是否有读（Read）、写（Write）和执行（Execute）的权限。</p></li>
+<li><p>...</p></li>
+</ul>
+<blockquote>
+<p>在 Unix / Linux 操作系统中，我们可以使用 <code>ls</code>
+指令输出文件详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls -l demo.txt<br></code></pre></td></tr></table></figure>
+<p>终端输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">-rw-r--r--@ 1 username  staff  0 10 12 16:38 demo.txt<br></code></pre></td></tr></table></figure>
+<ol type="1">
+<li><code>-rw-r--r--</code> ：</li>
+</ol>
+<p>这部分显示了文件的权限模式。在这个权限模式中，有10个字符，它们按顺序表示了文件的不同权限。这个权限模式可以分为三部分：</p>
+<ul>
+<li>第一位是文件的类型， <code>-</code> 表示 <code>demo.txt</code>
+是一个普通文件。</li>
+<li>接下来的 3
+位（<code>rw-</code>）表示文件的所有者（<code>username</code>）具有读（r）和写（w）的权限，但没有执行（x）权限。</li>
+<li>再接下来的3位（<code>r--</code>）表示文件的组（<code>staff</code>）具有只读（r）的权限，但没有写入（w）或执行（x）的权限。</li>
+<li>最后的3位（<code>r--</code>）表示其他用户也具有只读（r）的权限，但没有写入（w）或执行（x）的权限。</li>
+</ul>
+<p>可以使用 <code>chmod</code> 指令对文件权限进行修改：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-101251.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<ol start="2" type="1">
+<li><p><code>1</code> ：这个数字表示文件的硬链接数。在这个示例中，文件
+<code>demo.txt</code>
+有一个硬链接。硬链接是指多个文件名指向相同的文件数据块。每个文件都有一个硬链接计数，当这个计数变为零时，文件数据才会被删除。</p></li>
+<li><p><code>username</code>
+：文件<strong>所有者（Owner）</strong>的用户名。</p></li>
+<li><p><code>staff</code> ：文件所属组（Group）名。</p></li>
+<li><p><code>0</code>
+：这是文件的大小，以字节为单位。在这个示例中，文件大小为0字节，表示这是一个空文件。</p></li>
+<li><p><code>10 12 16:38</code>
+：这是文件的最后修改时间。具体来说，这个文件的最后时间是在 10 月 12 日的
+16:38。</p></li>
+</ol>
+</blockquote></li>
+<li><p><strong>文件的需求</strong></p>
+<ul>
+<li>可变的大小（<strong>Variable size</strong>）</li>
+<li>可实现多个并发用户和进程，同时能有保护作用（<strong>Multiple
+concurrent users / peocesses</strong> but with
+<strong>protection</strong>）</li>
+<li>高效的查找技术（<strong>Being able to find files</strong>）</li>
+<li>管理空闲磁盘块（<strong>Manage free disk blocks</strong>）</li>
+</ul></li>
+</ul>
+<h5 id="文件系统的组成部分">文件系统的组成部分</h5>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-085412.png" srcset="/img/loading.gif" lazyload alt="Components of a File System" style="zoom:67%;" /></p>
+<ul>
+<li><p><strong>目录结构（Directory Structure）</strong></p>
+<p>目录结构是文件系统中用于组织和管理文件和目录的方式。通常，它采用树状结构（Hierarchy
+tree-like
+structure），类似于文件夹（目录）和文件的层次结构。根目录位于顶层，包含子目录和文件，这些子目录又可以包含更多的子目录和文件，以此类推。每个目录都可以包含文件和其他目录。</p>
+<p>Unix / Linux 操作系统使用的目录结构是一个树状结构，根目录通常表示为
+<code>/</code>，然后有多个子目录和文件，如
+<code>/home</code>、<code>/usr</code> 等等。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-090133.png" srcset="/img/loading.gif" lazyload alt="Files in the Linux root directory" style="zoom:67%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-091248.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p><strong>文件索引结构（File Index Structure）</strong></p>
+<p>文件索引结构是文件系统用于管理文件和文件属性的内部数据结构。它包含有关文件的元数据信息，例如文件名、大小、创建日期、修改日期、权限和链接数等。文件索引结构的设计取决于文件系统的类型。</p>
+<p>例如，在 Unix / Linux 中，常见的文件系统如 Ext4
+使用了<strong>索引节点（Inode）</strong>结构来存储文件的元数据。每个文件和目录都有一个唯一的索引节点号，而这个索引节点包含了关于文件的所有信息。这使得操作系统能够有效地查找和管理文件。</p>
+<p>我们可以给 <code>ls</code> 指令加上 <code>-i</code> 参数来显示文件的
+inode 属性：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-090915.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-092100.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p><strong>数据块（Data Block）</strong></p>
+<p>数据块是文件系统用来存储文件内容的基本单位。当文件太大以至于无法一次存储在内存中时，文件会被划分为多个数据块，每个数据块包含文件的一部分内容。这些数据块通常由文件系统管理，而文件索引结构中的信息将告诉操作系统如何组合这些数据块以获取完整的文件内容。</p>
+<p>在大多数文件系统中，数据块通常是一个连续的、固定大小的块，例如 4KB 或
+8KB。文件系统会维护一个映射，将文件的逻辑块地址映射到物理磁盘上的数据块。</p></li>
+</ul>
+<h4 id="文件的启动与关闭">文件的启动与关闭</h4>
+<h5 id="打开文件表">打开文件表</h5>
+<p><strong>操作系统需要在内存维护所有开启文件的信息</strong>。</p>
+<p><strong>打开文件表（Open file
+table）</strong>是操作系统内部用于跟踪已打开文件的数据结构，它包含了文件的元数据和状态信息，允许操作系统和进程有效地管理对文件的访问。每个正在运行的进程都有其自己的打开文件表，用于跟踪该进程所打开的文件。</p>
+<ul>
+<li><p><strong>系统范围的打开文件表（System-wide open file
+table）</strong></p>
+<p>系统范围的打开文件表是操作系统维护的一个数据结构，用于跟踪在整个系统范围内打开的文件。<strong>它存储了有关每个系统中已打开文件的信息（Information
+for every currently open file in the
+system）</strong>，<strong>例如存储在 inode
+属性中的信息（文件名、大小、所属用户等）</strong>。</p>
+<p>系统范围的打开文件表<strong>允许不同的进程共享文件的访问信息</strong>。当多个进程打开同一个文件时，它们可以共享相同的系统范围的打开文件表条目，这意味着它们可以看到对该文件的更改。这有助于提高操作系统的效率，因为不需要为每个打开的文件创建独立的系统资源，只需在系统范围的打开文件表中引用相同的信息即可。</p></li>
+<li><p><strong>进程内的打开文件表（Per-process open fild
+table）</strong></p>
+<p>每个进程都有自己的进程内打开文件表，用于跟踪该进程打开的文件。每个进程内的打开文件表包含了一个<strong>指向系统打开文件表的指针（A
+pointer to the system open file table）</strong>
+和其他信息如文件描述符、文件状态标志、当前文件偏移量等。</p>
+<p>进程内的打开文件表使每个进程能够独立地管理其打开的文件，包括读取、写入和定位文件指针等操作。这确保了不同进程之间的文件访问彼此隔离，一个进程的文件操作不会影响其他进程。</p></li>
+</ul>
+<h5 id="open-和-close"><code>open()</code> 和 <code>close()</code></h5>
+<p>在 Linux 内核中，<code>open()</code> 和 <code>close()</code>
+是两个重要的系统调用函数，用于打开和关闭文件。这些函数在文件操作中起着关键作用，允许进程与文件进行交互。</p>
+<p>一下展示两个系统调用在 C 语言中的接口：</p>
+<ul>
+<li><p><strong><code>open()</code> 函数</strong>：</p>
+<p><code>open()</code> 函数用于打开文件，并返回一个称为文件描述符（File
+Descriptor）的整数值，该文件描述符在后续的文件操作中用于唯一标识打开的文件。函数原型如下：</p>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">open</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* pathname, <span class="hljs-type">int</span> flags, <span class="hljs-type">mode_t</span> mode)</span>;<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><code>pathname</code>：是要打开的文件的路径或文件名。</li>
+<li><code>flags</code>：是一组标志，用于指定文件的打开方式，如只读、只写、追加等。常见的标志包括<code>O_RDONLY</code>（只读）、<code>O_WRONLY</code>（只写）、<code>O_RDWR</code>（读写）、<code>O_APPEND</code>（追加写入）、<code>O_CREAT</code>（如果文件不存在则创建）、<code>O_TRUNC</code>（截断文件）等。</li>
+<li><code>mode</code>：是文件权限的设置，通常与 <code>O_CREAT</code>
+标志一起使用，用于新创建的文件。（如果文件已存在则不需要传递该参数）</li>
+</ul>
+<p><code>open()</code>
+函数返回一个非负整数文件描述符，如果打开文件失败，则返回
+-1。文件描述符在进程的打开文件表中唯一标识已打开的文件，可以用于后续的读取、写入和关闭操作。</p></li>
+<li><p><strong><code>close()</code> 函数</strong>：</p>
+<p><code>close()</code> 函数用于关闭先前通过 <code>open()</code>
+函数打开的文件，释放与文件描述符相关的资源。函数原型如下：</p>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">close</span><span class="hljs-params">(<span class="hljs-type">int</span> fd)</span>;<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><code>fd</code>：是要关闭的文件描述符。</li>
+</ul>
+<p><code>close()</code>
+函数会关闭指定的文件描述符，使该文件描述符不再可用，同时释放与该文件描述符相关的资源，如文件表项和文件描述符表中的条目。关闭文件是一项重要的操作，它有助于避免资源泄漏和确保文件在不再需要时不会继续占用系统资源。</p></li>
+</ul>
+<p><strong>当我们打开一个文件</strong>：</p>
+<ol type="1">
+<li>先进行 <code>open()</code> 系统调用，<strong>从磁盘中读取目标文件的
+inode 信息，并存储在系统范围的打开文件表内。</strong></li>
+<li><strong>当前进程内的打开文件表新增一个指向系统范围内打开文件表的索引（或指针）</strong>，并通过
+<code>open()</code> 函数返回给程序（在 Unix / Linux 中称为 File
+descriptor，在 Windows 中称为 File handle）。</li>
+</ol>
+<p><strong>当我们关闭一个文件</strong>：</p>
+<ol type="1">
+<li>释放<strong>进程表项（Per-process table entry）</strong>。</li>
+<li>当前存储在此文件的<strong>内存缓存（Memory
+cache</strong>）中的任何数据都将在必要时写入磁盘。</li>
+</ol>
+<h4 id="文件的共享">文件的共享</h4>
+<p><strong>一个文件可以被多个用户 /
+进程访问</strong>，如果同一时间多个用户或进程以只读方式打开文件，那该过程可以正常执行，但如果多个用户或进程同时读写就可能引发冲突。</p>
+<p>因此 OS 中引入了<strong>锁（Lock）</strong>：</p>
+<p>文件锁技术是一种用于控制对文件的并发访问的机制。它允许多个进程或线程协调共享对文件的访问，以防止竞争条件和数据损坏。文件锁通常用于多进程或多线程环境中，其中多个实体需要访问相同的文件。</p>
+<p>有两种主要类型的文件锁：共享锁（Shared Lock）和独占锁（Exclusive
+Lock）。这些锁可以在文件上的不同部分或整个文件上设置。</p>
+<ol type="1">
+<li><strong>共享锁（Shared Lock）</strong>：
+<ul>
+<li>多个进程可以同时持有共享锁。</li>
+<li>共享锁允许多个进程同时读取文件，但阻止其他进程获得独占锁。</li>
+<li>共享锁通常用于并发读取操作，以防止竞争条件。</li>
+</ul></li>
+<li><strong>独占锁（Exclusive Lock）</strong>：
+<ul>
+<li>仅一个进程可以持有独占锁。</li>
+<li>独占锁阻止其他进程获得任何类型的锁，共享锁和独占锁都被阻止。</li>
+<li>独占锁通常用于写入和修改文件的操作，以确保数据的一致性。</li>
+</ul></li>
+</ol>
+<blockquote>
+<p>例如，用户 A
+在读取文件时每个进程都持有共享锁，其他进程无法对文件内容进行修改，只能以只读方式打开文件。</p>
+</blockquote>
+<h4 id="文件的索引">文件的索引</h4>
+<h5 id="unixlinux-inode">Unix/Linux Inode</h5>
+<p>在 Unix 和 Linux
+文件系统中，"inode"（索引节点）是一个关键的<strong>数据结构</strong>，用于管理和存储文件的元数据信息。<strong>每个文件和目录都有一个唯一的
+inode</strong>，用于跟踪文件的属性、权限、所在位置等等，我们可以认为一个文件的
+inode 主要维护了以下两类信息：</p>
+<ul>
+<li><strong>元数据（Metadata）</strong></li>
+<li><strong>数据块地址（Which disk blocks belong to which
+file）</strong></li>
+</ul>
+<p>我们可以使用 <code>stat</code> 指令查看文件包括 inode
+在内的各种详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">stat filename<br></code></pre></td></tr></table></figure>
+<p><strong>示例</strong>：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-102335.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
 
                 
               </div>
