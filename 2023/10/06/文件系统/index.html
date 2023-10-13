@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-06-091258.png">
 <meta property="article:published_time" content="2023-10-06T09:06:04.000Z">
-<meta property="article:modified_time" content="2023-10-12T10:25:43.796Z">
+<meta property="article:modified_time" content="2023-10-13T09:40:41.009Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="文件系统">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k 字
+          4.6k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          37 分钟
+          39 分钟
         
       </span>
     
@@ -419,7 +419,7 @@ for every currently open file in the
 system）</strong>，<strong>例如存储在 inode
 属性中的信息（文件名、大小、所属用户等）</strong>。</p>
 <p>系统范围的打开文件表<strong>允许不同的进程共享文件的访问信息</strong>。当多个进程打开同一个文件时，它们可以共享相同的系统范围的打开文件表条目，这意味着它们可以看到对该文件的更改。这有助于提高操作系统的效率，因为不需要为每个打开的文件创建独立的系统资源，只需在系统范围的打开文件表中引用相同的信息即可。</p></li>
-<li><p><strong>进程内的打开文件表（Per-process open fild
+<li><p><strong>进程内的打开文件表（Per-process open file
 table）</strong></p>
 <p>每个进程都有自己的进程内打开文件表，用于跟踪该进程打开的文件。每个进程内的打开文件表包含了一个<strong>指向系统打开文件表的指针（A
 pointer to the system open file table）</strong>
@@ -493,7 +493,7 @@ Lock）。这些锁可以在文件上的不同部分或整个文件上设置。<
 <p>例如，用户 A
 在读取文件时每个进程都持有共享锁，其他进程无法对文件内容进行修改，只能以只读方式打开文件。</p>
 </blockquote>
-<h4 id="文件的索引">文件的索引</h4>
+<h4 id="文件索引与文件信息">文件索引与文件信息</h4>
 <h5 id="unixlinux-inode">Unix/Linux Inode</h5>
 <p>在 Unix 和 Linux
 文件系统中，"inode"（索引节点）是一个关键的<strong>数据结构</strong>，用于管理和存储文件的元数据信息。<strong>每个文件和目录都有一个唯一的
@@ -504,11 +504,33 @@ inode 主要维护了以下两类信息：</p>
 <li><strong>数据块地址（Which disk blocks belong to which
 file）</strong></li>
 </ul>
+<blockquote>
+<p>元数据在上文中已经介绍，包括文件的一些基本信息，数据块地址则是文件实际内容的存储地址。</p>
+</blockquote>
 <p>我们可以使用 <code>stat</code> 指令查看文件包括 inode
 在内的各种详细信息：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">stat filename<br></code></pre></td></tr></table></figure>
 <p><strong>示例</strong>：</p>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-12-102335.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><strong>Inode 存储在什么地方？</strong></p>
+<p>在早期的 UNIX 系统中，它们被存储在磁盘。</p>
+<ul>
+<li>Inode
+不在数据块附近存储。要读一个小文件，先查找索引节点，再查找回数据。（<strong>Poor
+performance</strong>）</li>
+<li>如果外部磁盘损坏，意味着文件系统会丢失。（<strong>Poor
+reliability</strong>）</li>
+</ul>
+<p>在后来的系统中，<strong>索引节点分布在磁盘块组中，更接近数据块本身</strong>。</p>
+<h5 id="unix-目录">Unix 目录</h5>
+<p><strong>目录（Directory）</strong>是一种特殊的文件，其包含：</p>
+<ul>
+<li><strong>文件名列表（A list of filenames）</strong></li>
+<li><strong>指向 Inode 的指针（Pointers to inodes）</strong></li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-13-093456.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p><a target="_blank" rel="noopener" href="https://grymoire.com/Unix/Inodes.html">有关 Inode
+更详细的介绍</a></p>
 
                 
               </div>
