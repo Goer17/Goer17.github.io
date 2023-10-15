@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-21-174656.png">
 <meta property="article:published_time" content="2023-09-21T10:02:30.000Z">
-<meta property="article:modified_time" content="2023-10-11T16:53:21.945Z">
+<meta property="article:modified_time" content="2023-10-15T16:42:43.437Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          6k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          31 分钟
+          51 分钟
         
       </span>
     
@@ -687,6 +687,48 @@
 </tr>
 </tbody>
 </table>
+<h5 id="more-命令"><code>more</code> 命令</h5>
+<p><code>more</code> 是一个用于在 Linux Shell
+中分页显示文本文件内容的命令行工具，它允许用户逐页查看文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">more [参数] 文件名<br></code></pre></td></tr></table></figure>
+<p><strong>使用方法</strong>：</p>
+<ul>
+<li>按空格键：向下滚动一页。</li>
+<li>按 Enter 键：向下滚动一行。</li>
+<li>按 <code>q</code> 键：退出 <code>more</code>，返回到 Shell
+提示符。</li>
+<li>按 <code>/</code> 键：进行文本搜索，然后输入要搜索的文本并按 Enter
+键。</li>
+<li>按 <code>n</code> 键：查找下一个匹配的搜索结果。</li>
+<li>按 <code>p</code> 键：查找上一个匹配的搜索结果。</li>
+</ul>
+<p><strong>参数</strong>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-d</code></td>
+<td>显示文件名和当前行号</td>
+</tr>
+<tr class="even">
+<td><code>-c</code></td>
+<td>清屏后显示内容</td>
+</tr>
+<tr class="odd">
+<td><code>-f</code></td>
+<td>忽略控制字符</td>
+</tr>
+<tr class="even">
+<td><code>-s</code></td>
+<td>合并多个空行为一个空行</td>
+</tr>
+</tbody>
+</table>
 <h5 id="echo-命令"><code>echo</code> 命令</h5>
 <p><code>echo</code>
 在英文中译为回声，用于在终端输出字符串或提取后的变量值。</p>
@@ -995,26 +1037,38 @@ print out the line" 的缩写，是一个强大的文本搜索工具。</p>
 <td>显示系统所有进程</td>
 </tr>
 <tr class="even">
+<td><code>-f</code></td>
+<td>显示详细的进程信息</td>
+</tr>
+<tr class="odd">
+<td><code>-l</code></td>
+<td>以长格式显示进程信息</td>
+</tr>
+<tr class="even">
 <td><code>aux</code></td>
 <td>也是显示系统所有进程，但输出格式更加详细</td>
 </tr>
 <tr class="odd">
 <td><code>-u</code></td>
-<td>显示某个用户的进程</td>
+<td>显示与指定用户标识符（UID）相关的进程</td>
 </tr>
 <tr class="even">
+<td><code>-d</code></td>
+<td>显示指定用户正在运行的进程</td>
+</tr>
+<tr class="odd">
 <td><code>-p</code></td>
 <td>显示特定 PID 的进程</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>-o</code></td>
 <td>自定义输出进程格式</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>-t</code></td>
 <td>显示在特定终端运行的进程</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>-H</code></td>
 <td>显示进程的层次结构，包括父进程和子进程</td>
 </tr>
@@ -1027,6 +1081,105 @@ print out the line" 的缩写，是一个强大的文本搜索工具。</p>
 <li><p>显示 PID 为 100 的进程信息：</p>
 <p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ps -p 100<br></code></pre></td></tr></table></figure></p></li>
 </ol>
+<h5 id="pstree-命令"><code>pstree</code> 命令</h5>
+<p><code>pstree</code>
+命令是一个用于显示进程树的实用程序。它以一种层次结构的方式展示正在运行的进程，显示进程之间的父子关系。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pstree [参数]<br></code></pre></td></tr></table></figure>
+<p><strong>常用参数</strong>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-u</code></td>
+<td>显示与指定用户标识符（UID）相关的进程</td>
+</tr>
+<tr class="even">
+<td><code>-p</code></td>
+<td>显示特定 PID 的进程</td>
+</tr>
+<tr class="odd">
+<td><code>-h</code></td>
+<td>以水平格式显示进程树</td>
+</tr>
+</tbody>
+</table>
+<h5 id="kill-命令和-pkill-命令"><code>kill</code> 命令和
+<code>pkill</code> 命令</h5>
+<p><code>kill</code> 命令用于向单个进程发送一个信号，以请求其终止。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">kill [参数] PID<br></code></pre></td></tr></table></figure>
+<p><code>pkill</code>
+命令用于根据进程名或其他进程属性来终止进程。它可以一次终止多个匹配的进程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pkill [参数] 进程名称<br></code></pre></td></tr></table></figure>
+<p><strong>参数</strong>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-l</code></td>
+<td>显示所有可用的信号列表</td>
+</tr>
+<tr class="even">
+<td><code>-s</code></td>
+<td>指定要发送的信号，默认为 <code>SIGTERM</code></td>
+</tr>
+<tr class="odd">
+<td><code>-u</code></td>
+<td>指定要终止的进程的有效用户标识符（EUID）</td>
+</tr>
+<tr class="even">
+<td><code>-t</code></td>
+<td>指定终止与特定终端相关的进程</td>
+</tr>
+</tbody>
+</table>
+<h5 id="top-命令"><code>top</code> 命令</h5>
+<p><code>top</code>
+是一个非常常用的命令行工具，用于实时监视和显示正在运行的进程的系统性能信息。它在类
+Unix 系统（如Linux、MacOS）上非常有用，可以让用户实时查看 CPU
+使用率、内存利用率、进程列表和其他系统性能指标。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">top<br></code></pre></td></tr></table></figure>
+<p><strong>操作</strong>：</p>
+<ul>
+<li>使用键盘上的箭头键可以在进程列表中滚动。</li>
+<li>按下 <code>q</code> 键可退出 <code>top</code>。</li>
+<li>按下 <code>k</code> 键可终止选定的进程。</li>
+<li>按下 <code>F</code> 键可调整排序顺序或显示的字段。</li>
+<li>按下 <code>h</code> 键可查看帮助和快捷键列表。</li>
+</ul>
+<p>一般情况下，<code>top</code> 显示的信息包括：</p>
+<ul>
+<li><strong>进程ID（PID）</strong>：每个进程的唯一标识符。</li>
+<li><strong>用户（USER）</strong>：运行该进程的用户。</li>
+<li><strong>调度优先级（PR）</strong>：表示进程的调度优先级（Priority）。</li>
+<li><strong>Niceness（NI）</strong>：表示进程的 Niceness 值。</li>
+<li><strong>虚拟内存使用量（VIRT）</strong>：<code>VIRT</code>
+表示进程的虚拟内存（Virtual Memory）使用量</li>
+<li><strong>物理占用内存（RES）</strong>：<code>RES</code>
+表示进程的实际物理内存占用（Resident Set
+Size），也就是实际分配给进程并存储在物理内存中的内存量。</li>
+<li><strong>共享内存大小（SHR）</strong>：<code>SHR</code>
+表示进程共享的内存大小（Shared
+Memory），也就是多个进程之间共享的内存量。这包括进程使用的共享库和共享的内存段。</li>
+<li><strong>状态（S）</strong>：进程的状态（如运行、休眠、停止等）。</li>
+<li><strong>CPU% （CPU%）</strong>：进程占用的CPU百分比。</li>
+<li><strong>内存% （MEM%）</strong>：进程占用的内存百分比。</li>
+<li><strong>累计时间（TIME+）</strong>：<code>TIME+</code>
+列表示自进程启动以来的累积 CPU
+时间。这个值以小时、分钟和秒的格式表示，显示了进程占用 CPU
+的时间量。</li>
+<li><strong>命令 （COMMAND）</strong>：启动进程的命令行。</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-15-162253.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
 <h5 id="uname-命令"><code>uname</code> 命令</h5>
 <p><code>uname</code> 命令来自英文中的 "Unix
 name"，用于查看系统主机名、内核及硬件架构等信息。</p>
@@ -1078,6 +1231,94 @@ name"，用于查看系统主机名、内核及硬件架构等信息。</p>
 </tr>
 </tbody>
 </table>
+<h4 id="磁盘管理">磁盘管理</h4>
+<h5 id="df-命令"><code>df</code> 命令</h5>
+<p><code>df</code> 命令是 "Report file system disk space usage"
+的缩写，用于显示磁盘空间的使用情况。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">df [参数] 磁盘分区<br></code></pre></td></tr></table></figure>
+<p><strong>常用参数</strong>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-a</code></td>
+<td>显示所有文件系统</td>
+</tr>
+<tr class="even">
+<td><code>-h</code></td>
+<td>以更易读的方式显示</td>
+</tr>
+<tr class="odd">
+<td><code>-H</code></td>
+<td>以 1 KB = 1000 Byte 为换算单位</td>
+</tr>
+<tr class="even">
+<td><code>-i</code></td>
+<td>显示索引字节信息</td>
+</tr>
+<tr class="odd">
+<td><code>-k</code></td>
+<td>设置显示时块的大小</td>
+</tr>
+<tr class="even">
+<td><code>-l</code></td>
+<td>只显示本地文件系统</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例</strong>：</p>
+<ol type="1">
+<li><p>以容量单位显示系统全部磁盘的使用量情况：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">df -h<br></code></pre></td></tr></table></figure></p></li>
+<li><p>指定具体分区：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">df -h /boot<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<h4 id="管道表达式">管道表达式</h4>
+<p>在 Linux Shell
+中，管道表达式是一种非常有用的工具，它允许将一个命令的输出直接传递给另一个命令的输入，以便进行数据处理和流水线操作。管道操作符是
+<code>|</code>。</p>
+<ol type="1">
+<li><p>基本语法： 管道操作符 <code>|</code>
+用于连接两个或多个命令。它的一般语法如下：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">comma<span class="hljs-symbol">nd1</span> | comma<span class="hljs-symbol">nd2</span> | comma<span class="hljs-symbol">nd3</span><br></code></pre></td></tr></table></figure>
+<p>这将使 <code>command1</code> 的输出成为 <code>command2</code>
+的输入，而 <code>command2</code> 的输出成为 <code>command3</code>
+的输入，依此类推。</p></li>
+<li><p>用途： 管道表达式在 Shell 中广泛用于以下情况：</p>
+<ul>
+<li>数据筛选：通过将数据传递给 <code>grep</code>、<code>awk</code> 或
+<code>sed</code> 等工具，可以筛选、搜索和处理文本数据。</li>
+<li>数据排序：使用 <code>sort</code> 命令对数据进行排序。</li>
+<li>数据计算：使用工具如 <code>awk</code> 和 <code>bc</code>
+进行数学计算。</li>
+<li>数据统计：使用 <code>wc</code> 命令进行行、单词和字符的统计。</li>
+<li>数据转换：将数据从一种格式转换为另一种格式，例如将文本数据转换为 CSV
+格式。</li>
+</ul></li>
+<li><p>示例： 以下是一些使用管道表达式的示例：</p>
+<ul>
+<li><p>使用 <code>ls</code> 列出当前目录的文件，然后使用
+<code>grep</code> 过滤文件名中包含 "txt" 的文件名：
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls | grep &quot;txt&quot;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>统计一个文件中的行数、单词数和字符数： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat myfile.txt | wc<br></code></pre></td></tr></table></figure></p></li>
+<li><p>从一个文本文件中读取数据，然后使用 <code>awk</code>
+对数据进行处理： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat data.txt | awk &#x27;&#123;print $2, $1&#125;&#x27; | sort<br></code></pre></td></tr></table></figure></p></li>
+<li><p>使用管道连接多个命令以完成一系列复杂的任务。</p></li>
+</ul></li>
+<li><p>错误处理： 管道中的每个命令都运行在自己的子 Shell
+中，因此如果其中一个命令失败，管道可能会终止。您可以使用
+<code>set -o pipefail</code> 来使管道在任何命令失败时终止整个管道。</p>
+<p>例如： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">set -o pipefail<br>command1 | command2 | command3<br></code></pre></td></tr></table></figure></p>
+<p>这将确保如果 <code>command1</code>、<code>command2</code> 或
+<code>command3</code> 中的任何一个失败，整个管道将失败。</p></li>
+</ol>
+<p>管道表达式是 Linux Shell
+中非常强大和有用的功能，它允许将多个命令组合在一起，以便以更有效的方式处理和操作数据。</p>
 
                 
               </div>
