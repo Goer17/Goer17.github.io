@@ -1,0 +1,968 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="I&#x2F;O I&#x2F;O 是计算机科学中的一个常见缩写，它代表了输入&#x2F;输出（Input&#x2F;Output）的意思。在计算机系统中，I&#x2F;O 涉及到计算机与外部设备之间的数据传输。输入通常是指从外部设备（如键盘、鼠标、磁盘驱动器、网络等）传输数据到计算机系统，而输出是指从计算机系统传输数据到外部设备。 I&#x2F;O 是操作系统中非常复杂的一个话题，因为其牵涉到相当多部分。 计算机系统中不同操作的延迟或响应时间的估计数字：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I&#x2F;O 与磁盘">
+<meta property="og:url" content="http://example.com/2023/10/15/IO%20%E4%B8%8E%E7%A3%81%E7%9B%98/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="I&#x2F;O I&#x2F;O 是计算机科学中的一个常见缩写，它代表了输入&#x2F;输出（Input&#x2F;Output）的意思。在计算机系统中，I&#x2F;O 涉及到计算机与外部设备之间的数据传输。输入通常是指从外部设备（如键盘、鼠标、磁盘驱动器、网络等）传输数据到计算机系统，而输出是指从计算机系统传输数据到外部设备。 I&#x2F;O 是操作系统中非常复杂的一个话题，因为其牵涉到相当多部分。 计算机系统中不同操作的延迟或响应时间的估计数字：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-052334.png">
+<meta property="article:published_time" content="2023-10-15T15:43:38.000Z">
+<meta property="article:modified_time" content="2023-10-22T09:04:06.144Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="I&#x2F;O">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-052334.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>I/O 与磁盘 - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">I/O 与磁盘</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-15 23:43" pubdate>
+          2023年10月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">I/O 与磁盘</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="io">I/O</h3>
+<p>I/O
+是计算机科学中的一个常见缩写，它代表了输入/输出（Input/Output）的意思。在计算机系统中，I/O
+涉及到<strong>计算机与外部设备之间的数据传输</strong>。输入通常是指从外部设备（如键盘、鼠标、磁盘驱动器、网络等）传输数据到计算机系统，而输出是指从计算机系统传输数据到外部设备。</p>
+<p>I/O 是操作系统中非常复杂的一个话题，因为其牵涉到相当多部分。</p>
+<p>计算机系统中不同操作的延迟或响应时间的估计数字：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-040804.png" srcset="/img/loading.gif" lazyload alt="Latency numbers for the 2020s" style="zoom:50%;" /></p>
+<p class="note note-info">
+<ol type="1">
+<li>内存访问延迟：
+访问计算机内存通常是非常快的操作，延迟通常在纳秒级别（几十纳秒或更短）。这意味着从内存读取或写入数据的速度非常快。
+<br></li>
+<li>磁盘 I/O 延迟：
+与内存相比，访问磁盘通常更慢。典型的磁盘读取操作可能需要几毫秒（毫秒）的时间，具体取决于磁盘驱动器的类型和性能。
+<br></li>
+<li>网络通信延迟：
+网络通信延迟取决于网络延迟和带宽，通常在几毫秒到数十毫秒之间。这包括发送数据到远程服务器和接收响应的时间。</li>
+</ol>
+</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-040906.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-041248.png" srcset="/img/loading.gif" lazyload alt="常见 I/O 设备传输效率" style="zoom:67%;" /></p>
+<h4 id="计算机存储结构">计算机存储结构</h4>
+<p>下图展示了典型现代计算机系统的数据存储结构以及 I/O
+在该结构中的位置：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-044032.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<ol type="1">
+<li><p><strong>寄存器（Registers）</strong>是计算机系统中<strong>最快速、最小</strong>的存储设备之一，用于存储和处理数据。它们通常位于中央处理单元（CPU）内部，并用于执行计算和控制指令。由于其极高的速度，寄存器在执行计算和控制任务时起到关键作用，而且在
+CPU 设计和程序优化中具有重要意义。</p></li>
+<li><p><strong>高速缓存（Cache）</strong>是计算机系统中用于提高数据访问速度和性能的关键组件。它是一种快速存储器，用于存储最常用的数据，以减少对较慢存储器（如主内存或硬盘驱动器）的访问次数。</p>
+<blockquote>
+<p>计算机系统通常采用多层内存层次结构，其中包括高速缓存、主内存和较慢的外部存储器（如硬盘驱动器）。高速缓存位于主内存和中央处理单元（CPU）之间，具有不同级别，如一级缓存（L1）、二级缓存（L2）、三级缓存（L3）等。</p>
+</blockquote></li>
+<li><p><strong>动态随机访问存储器（Dynamic Random-Access
+Memory，DRAM）</strong>的缩写，它是计算机系统中广泛使用的主要内存类型之一。DRAM
+是一种易失性存储器，用于存储计算机程序和数据，但它<strong>需要不断刷新以保持数据的完整性</strong>。与
+CPU 缓存不同，DRAM 的容量通常较大，但速度较慢。</p></li>
+<li><p><strong>次级存储（Secondary
+storage）</strong>是计算机系统中的一种主要存储层级，用于长期数据存储和备份。与主内存（RAM）不同，它通常是非易失性的，意味着数据在断电后仍然保持完好。次级存储包括各种设备和媒体，例如硬盘驱动器（HDD）、固态硬盘（SSD）、光盘（如
+CD 和 DVD）、磁带、USB
+闪存驱动器、网络附加存储（NAS）以及云存储服务等。</p>
+<ul>
+<li><p><strong>硬盘驱动器（Hard Disk
+Drive，HDD）</strong>是一种常见的计算机数据存储设备，用于长期数据存储和检索。HDD
+使用旋转的磁性盘片和机械臂来读写数据。</p>
+<blockquote>
+<p>HDD
+内部包含一个或多个盘片（通常是金属或玻璃制成），盘片上分成了一系列磁性轨道和扇区。数据以磁性方式存储在这些表面上。机械臂负责将读/写头移动到正确的磁道上来读取或写入数据。磁头将数据编码为磁性位，然后根据需要将其读取或写入。</p>
+</blockquote></li>
+<li><p><strong>固态硬盘（Solid-State
+Drive，SSD）</strong>是一种用于数据存储的非机械式存储设备。SSD
+是一种高性能、可靠、耐用且节能的数据存储解决方案，它已经取代了许多传统的
+HDD，并成为现代计算机和移动设备的标配之一。</p></li>
+</ul></li>
+<li><p><strong>I/O 控制器（I/O
+Controller）</strong>，是计算机系统中的硬件组件，用于管理和协调输入和输出设备的数据传输和通信。I/O
+控制器起到桥梁的作用，协调主处理器（CPU）与外部设备之间的数据交换。不同类型的
+I/O
+控制器针对不同类型的设备，如存储设备、网络设备和外围设备等，都具有特定的功能和特点。</p></li>
+</ol>
+<h4 id="io-传输">I/O 传输</h4>
+<h6 id="io-bus">I/O bus</h6>
+<p>I/O 总线（I/O
+Bus）是计算机体系结构中的一个关键组成部分，用于传输数据和控制信息，以连接计算机主板上的主处理器（CPU）和内存与外部设备之间。I/O总线是计算机系统内部的物理或电子通道，它允许不同类型的输入/输出设备与计算机进行通信，包括硬盘驱动器、键盘、鼠标、显示器、打印机、USB
+设备和网络适配器等。</p>
+<p>总得来说，我们可以认为 I/O 总线由两部分组成：</p>
+<ul>
+<li>一组连接设备用于数据传输的线（Wires）</li>
+<li>数据传输操作的协议（Protocols）</li>
+</ul>
+<p>不同类型的计算机和体系结构可能使用不同的 I/O 总线标准，如
+PCI（Peripheral Component Interconnect）、PCI Express、USB、SATA
+等。这些标准规定了总线的电气和物理规格，以确保设备的互操作性。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-051758.png" srcset="/img/loading.gif" lazyload alt="PCI 架构" style="zoom:67%;" /></p>
+<h4 id="操作系统与-io-的交互">操作系统与 I/O 的交互</h4>
+<p>操作系统和 I/O
+设备之间的交互通常需要使用<strong>寄存器</strong>来管理和监控 I/O
+操作的进展和状态。这些寄存器通常是硬件设备上的寄存器，用于记录设备的状态和控制信息。</p>
+<ol type="1">
+<li><p><strong>状态寄存器（Status Register）</strong>：</p>
+<p>状态寄存器通常包含设备的当前状态信息，如设备是否忙碌、是否就绪、是否有错误等。操作系统可以定期轮询这个寄存器来检查设备状态，以决定是否可以执行
+I/O 操作。</p>
+<p>典型的状态位包括忙碌位（Busy）、错误位（Error）、就绪位（Ready）等。</p></li>
+<li><p><strong>数据寄存器（Data Register）</strong>：</p>
+<p>数据寄存器用于实际的数据传输，包括从 CPU
+发送数据到设备或从设备接收数据到
+CPU。操作系统通过读取或写入数据寄存器来传递数据。我们可以认为数据寄存器充当了<strong>数据传输的临时存储区域</strong>，允许数据在不同硬件模块之间进行有效的交换。</p></li>
+<li><p><strong>命令寄存器（Command Register）</strong>：</p>
+<p>命令寄存器包含了<strong>控制 I/O
+设备的命令码</strong>。这些命令码告诉设备要执行的操作，例如读取、写入、打开、关闭、复位等。通过命令寄存器，操作系统可以向设备发送启动或停止命令，以开始或终止
+I/O 操作。</p></li>
+</ol>
+<blockquote>
+<p>一个典型的操作系统与 I/O 交互的执行过程：</p>
+<ol type="1">
+<li>操作系统根据<strong>状态寄存器</strong>判断什么时候某个设备处于就绪状态（Ready）；</li>
+<li>若启动
+I/O，则操作系统会向<strong>数据寄存器</strong>写入数据，并且设置<strong>命令寄存器</strong>的数据为我们需要的
+I/O 操作的操作码（此时，<strong>I/O
+控制器</strong>会设置该设备的状态寄存器为 Busy）；</li>
+<li><strong>I/O
+控制器</strong>接下来读取<strong>命令寄存器</strong>和<strong>数据寄存器</strong>的内容，并开始执行命令；</li>
+<li>操作系统根据执行结果对<strong>状态寄存器</strong>进行修改：</li>
+</ol>
+<ul>
+<li>若正常执行结束，即所有指令都执行完成，控制器将清除该命令，并将其
+Busy 状态复位</li>
+<li>若出现异常状态，则在必要情况下将状态寄存器设置为 Error</li>
+</ul>
+</blockquote>
+<h5 id="中断-轮询">中断 &amp; 轮询</h5>
+<p>在执行 I/O 操作时，操作系统需要知道：</p>
+<ul>
+<li>某个设备是否<strong>完成了 I/O 操作</strong></li>
+<li>某个设备的特定 I/O 操作是否<strong>遇到了异常</strong></li>
+</ul>
+<p>这意味着 I/O 设备必须与 OS 实现有效通信。</p>
+<ul>
+<li><p><strong>I/O 中断（I/O Interrupt）</strong></p>
+<p><strong>当设备需要 CPU 的处理时，I/O
+设备会生成一个中断信号</strong>，CPU
+在接收到中断信号后立即暂停正在执行的任务，保存当前状态（通常通过将寄存器内容保存到堆栈），并跳转到中断处理程序。中断处理程序负责执行与中断相关的任务，然后返回到先前中断之前的任务。</p>
+<p><strong>中断是异步的，它们随时可能发生，而不需要 CPU
+连续地检查设备状态。</strong></p>
+<ul>
+<li><p>优点：能较好地<strong>处理不可预判的异常（Great
+robustness）</strong></p></li>
+<li><p>缺点：<strong>开销大（High overhead）</strong></p>
+<blockquote>
+<p>这里的开销主要来自于 I/O 中断造成的上下文切换（Context switch）</p>
+</blockquote></li>
+</ul></li>
+<li><p><strong>轮询（Polling）</strong></p>
+<p>在轮询中，<strong>操作系统或应用程序周期性检查设备的状态寄存器</strong>，以查看是否需要处理。如果发现有事件发生，系统会采取相应的措施。</p>
+<ul>
+<li><strong>优点：开销小（Low overhead）</strong></li>
+<li>缺点：如果 I/O 操作不频繁或不可预测，则会在轮询上花费过多时间</li>
+</ul></li>
+</ul>
+<h5 id="编程-io-dma">编程 I/O &amp; DMA</h5>
+<p>在解决状态访问的问题后我们还需要实现数据传输，常见的两种方法是编程
+I/O 和直接内存访问。</p>
+<ul>
+<li><p><strong>编程 I/O（Programmed I/O）</strong></p>
+<p>编程 I/O（Programmed I/O）是计算机系统中的一种基本 I/O
+操作方法，它<strong>通过 CPU
+执行的程序来控制数据的传输和通信</strong>。在Programmed I/O中，CPU
+负责直接处理 I/O
+操作，包括从外部设备读取数据或将数据写入外部设备。<strong>即编程 I/O
+所有数据的传输都依托于处理器的指令</strong>。</p>
+<ul>
+<li>优点：因为是从编程角度出发的，因此易于实现，对硬件需求低</li>
+<li>缺点：会消耗与数据大小成比例的处理器周期</li>
+</ul></li>
+<li><p><strong>直接内存访问（Directly Memory Access，DMA）</strong></p>
+<p>直接内存访问（Direct Memory
+Access，DMA），是一种计算机系统中用于提高数据传输性能的技术。DMA
+<strong>允许外部设备</strong>（如硬盘驱动器、网络适配器、图形卡等）<strong>直接访问主内存</strong>，而<strong>无需
+CPU 的直接干预</strong>，从而<strong>减少 CPU
+的负</strong>担，提高数据传输效率。</p></li>
+</ul>
+<h4 id="内存映射-io">内存映射 I/O</h4>
+<p><strong>内存映射 I/O（Memory-mapped
+I/O）</strong>是一种在计算机系统中用于管理 I/O
+设备的通用方法，它允许操作系统和应用程序<strong>将 I/O
+设备视为内存地址范围的一部分</strong>，使其可以直接读取和写入设备数据，就像操作内存一样。</p>
+<p>在内存映射 I/O 中，每个 I/O
+设备都被分配一个在物理内存地址空间中的范围。这个地址范围通常称为设备寄存器的地址空间，其中包含了与设备通信的特定<strong>寄存器</strong>（状态寄存器、数据寄存器、命令寄存器等等）和<strong>数据缓冲（Buffer）</strong>。</p>
+<p>注：该内存分配区域<strong>一般只用于 I/O
+通信而不会进行其他操作</strong>。</p>
+<h5 id="一个-io-请求的生命周期">一个 I/O 请求的生命周期</h5>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-22-081225.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h3 id="磁盘">磁盘</h3>
+<p>磁盘（Disk）是计算机系统中用于存储数据的主要外部设备之一。磁盘是一种非易失性存储媒体，意味着数据会在断电或重启后仍然保留。</p>
+<h4 id="hhd">HHD</h4>
+<p>硬盘驱动器（Hard Disk
+Drive，HDD）是一种用于存储数据的计算机存储设备。HDD
+是一种机械式存储设备，其工作原理是使用旋转的磁性盘片和移动的读写磁头来读取和写入数据。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-22-082028.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ol type="1">
+<li><strong>磁道（Track）</strong>：
+<ul>
+<li>磁道是硬盘驱动器上的一个圆形轨迹或路径，位于硬盘盘片的表面上；</li>
+<li>硬盘的每个盘片通常包含多个同心圆磁道，这些磁道从盘片的中心开始，向外扩展；</li>
+<li>每个磁道上的数据通常具有相似的物理位置，因此可以更快地被访问。</li>
+</ul></li>
+<li><strong>柱面（Cylinder）</strong>：
+<ul>
+<li>柱面是多个硬盘盘片上相同位置的磁道的集合；</li>
+<li>每个盘片上具有相同半径位置的磁道被组合成一个柱面；</li>
+<li>从柱面的角度来看，这些磁道在不同盘片之间对齐，因此它们可以一起被读取或写入，从而提高数据的传输速度。</li>
+</ul></li>
+<li><strong>扇区（Sector）</strong>：
+<ul>
+<li>扇区是磁道上的最小存储单位，通常包含 512 字节或更多数据；</li>
+<li>每个磁道被划分成多个扇区，以便更有效地存储和检索数据；</li>
+<li>操作系统和硬件通过扇区来访问硬盘上的数据。数据的读取和写入是以扇区为单位进行的。</li>
+</ul></li>
+</ol>
+<h5 id="时延分析">时延分析</h5>
+<p>HHD 技术寻址并传输数据的时间开销我们可以认为由以下 3 部分组成：</p>
+<ol type="1">
+<li><strong>寻道时间（Seek
+time）</strong>：即移动磁头到目标所在柱面和磁道所花费的时间。寻道时间受到磁头移动的距离和速度的影响。较短的寻道时间表示硬盘可以更快地访问数据，因此是一个性能指标。</li>
+<li><strong>旋转延迟（Rotational
+delay）</strong>：找到目标位置后需要旋转磁盘使得磁头落在目标扇区，这由磁盘盘片的旋转速度相关（单位：RPM，每分钟旋转次数）。</li>
+<li><strong>传输延迟（Transfer
+delay）</strong>：使用读写头来传输数据。实际的数据传输时间取决于硬盘的数据传输速度。这通常以每秒字节（Bps）或兆字节每秒（MBps）来表示。</li>
+</ol>
+<blockquote>
+<p>我们假设某个 HHD 设备的平均寻道时间是 5ms，盘片旋转速度为 7200
+RPM，传输速率为 50 MB/s，一个数据块的大小为 4KB，则有：</p>
+<ul>
+<li><p>平均旋转延迟 = 盘片旋转一圈的时间 / 2 = 8ms / 2 = 4ms</p></li>
+<li><p>一个数据块的平均传输时间 = 4 KB / 50 MB/s = 0.08ms</p></li>
+</ul>
+<p>进一步，我们可以得到：</p>
+<ul>
+<li><strong>随机读取一个数据块</strong>的时间开销 = 平均寻道时间 +
+平均旋转延迟 + 数据块传输延迟 = 9.08ms</li>
+<li><strong>随机读取同一个柱面的某个数据块</strong>的时间开销 =
+平均旋转延迟 + 数据块传输延迟 = 4.08ms</li>
+<li><strong>读取同一个柱面同一个磁道的下一个数据块</strong>的时间开销 =
+数据传输延迟 = 0.08ms</li>
+</ul>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="category-chain-item">操作系统</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/I-O/">#I/O</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>I/O 与磁盘</div>
+      <div>http://example.com/2023/10/15/IO 与磁盘/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/17/RSA%20%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" title="RSA 加密算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">RSA 加密算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/06/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="文件系统">
+                        <span class="hidden-mobile">文件系统</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
