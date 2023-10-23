@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-052334.png">
 <meta property="article:published_time" content="2023-10-15T15:43:38.000Z">
-<meta property="article:modified_time" content="2023-10-22T09:10:49.435Z">
+<meta property="article:modified_time" content="2023-10-23T02:22:17.338Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="I&#x2F;O">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          6.2k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          40 分钟
+          53 分钟
         
       </span>
     
@@ -475,6 +475,7 @@ I/O）</strong>是一种在计算机系统中用于管理 I/O
 <h3 id="磁盘">磁盘</h3>
 <p>磁盘（Disk）是计算机系统中用于存储数据的主要外部设备之一。磁盘是一种非易失性存储媒体，意味着数据会在断电或重启后仍然保留。</p>
 <h4 id="hhd">HHD</h4>
+<h5 id="基本结构">基本结构</h5>
 <p>硬盘驱动器（Hard Disk
 Drive，HDD）是一种用于存储数据的计算机存储设备。HDD
 是一种机械式存储设备，其工作原理是使用旋转的磁性盘片和移动的读写磁头来读取和写入数据。</p>
@@ -526,6 +527,111 @@ RPM，传输速率为 50 MB/s，一个数据块的大小为 4KB，则有：</p>
 数据传输延迟 = 0.08ms</li>
 </ul>
 </blockquote>
+<h5 id="磁盘调度">磁盘调度</h5>
+<p>由于 HHD
+获取盘片速度较慢，所以我们当我们的任务队列中有多个任务时需要合适的调度策略来处理任务。</p>
+<p>假设我们的任务队列当前有 6
+个任务，每个任务所在磁道与盘片圆心的距离分别为
+99，10，50，150，11，30。则这些任务在不同调度策略下的磁头移动方式如下：</p>
+<h6 id="fifo">FIFO</h6>
+<p><strong>先来先服务（First In First
+Out，FIFO）</strong>，即严格按照队列结构实行先进先出。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-23-011258.png" srcset="/img/loading.gif" lazyload alt="FIFO" style="zoom:50%;" /></p>
+<p>优点：最公平。</p>
+<p>缺点：由于任务位置可能是随机的，可能会花费很多寻道时间。</p>
+<h6 id="sstf">SSTF</h6>
+<p><strong>最短寻道时间优先（Shortest Seek Time
+First，SSTF）</strong>，即磁头每次都向最近的任务移动。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-23-011839.png" srcset="/img/loading.gif" lazyload alt="SSTF，假设磁头从 99 处开始" style="zoom:50%;" /></p>
+<p>优点：利于减少寻道时间。</p>
+<p>缺点：可能在调度出现某个任务长期未得到响应而造成饥饿。</p>
+<h6 id="scan">Scan</h6>
+<p><strong>Scan</strong> 调度，也叫电梯算法（Elevator
+algorithm），相比于 SSTF，Scan
+策略每次只选择当前运动方向最近的请求。当完成磁道半径最大的请求后就会逆转当前方向。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-23-012421.png" srcset="/img/loading.gif" lazyload alt="Scan，假设磁头初始在 99 的位置，初始方向是由低磁道到高磁道" style="zoom:50%;" /></p>
+<p>优点：避免了请求饥饿。</p>
+<p>缺点：某些情况可能不够公平。（比如上图在磁道 10 处的请求）</p>
+<h6 id="c-scan">C-Scan</h6>
+<p><strong>C-Scan</strong> 调度，就是在 <strong>Scan</strong>
+调度的基础上，不处理逆转方向过程中遇到的任何请求，这可以使得
+<strong>C-Scan</strong> 调度相比于 <strong>Scan</strong>
+调度而言更加公平。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-23-013332.png" srcset="/img/loading.gif" lazyload alt="C-Scan，假设磁头初始在 99 的位置，初始方向是由低磁道到高磁道" style="zoom:50%;" /></p>
+<h4 id="ssd">SSD</h4>
+<p>即固态硬盘（Solid State
+Drive，SSD），是一种用于数据存储的存储设备，它使用集成电路（Integrated
+circuits）来存储数据，而不像传统硬盘驱动器（HDD）那样使用旋转磁盘和机械臂来读写数据，SSD
+中没有任何异动的机械器件。</p>
+<figure>
+<img
+src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-23-013838.png" srcset="/img/loading.gif" lazyload
+alt="SSD" />
+<figcaption aria-hidden="true">SSD</figcaption>
+</figure>
+<p>由于不依赖机械臂读写数据，所以 SSD 读写数据就不再受到像 HHD
+中的寻道时间和旋转延迟的限制。</p>
+<h5 id="nand-闪存">NAND 闪存</h5>
+<p>在 SSD 中广泛使用 NAND 闪存（NAND cell flash
+memory）技术，其通过<strong>晶体管（Transistor）</strong>存储一个或多个
+bit，通过此可以划分为两种类型：</p>
+<ul>
+<li>SLC（Single Level Cell）：每个存储单元只存储一个 bit。
+<ul>
+<li>特点：快速、高耐用性（Endurance）、成本高</li>
+</ul></li>
+<li>MLC（Multiple Level Cell）：每个存储单元可以存储多个 bit，一般是 2 ~
+3。
+<ul>
+<li>特点：相对较慢、低耐用性、成本低</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>有关耐用性：</p>
+<p>SSD
+中存储单元的擦除/写入次数是受到限制的，每次执行擦除和写入操作时，存储单元中的浮动栅承受一定的电荷和电压压力。随着时间的推移，这些操作会导致存储单元中的浮动栅逐渐受损，降低了其可靠性和性能。</p>
+<p>MLC 闪存相对 SLC
+而言更容易受到擦除/写入次数限制，因为它每个存储单元的擦除/写入次数较少。这意味着
+MLC 闪存的寿命可能会较短，尤其在高度写入密集的应用中。</p>
+</blockquote>
+<h5 id="flash-芯片结构">Flash 芯片结构</h5>
+<p>SSD 采用 Flash 芯片结构（Flash Chip
+Structure），其结构可以划分如下：</p>
+<ul>
+<li>一个芯片可以划分为多个<strong>块组（Banks）</strong>
+<ul>
+<li>一个块组可以划分为多个<strong>块（Blocks）</strong>（e.g. 256KB）
+<ul>
+<li>一个块可以划分为多个<strong>页（Pages）</strong>（e.g. 4KB）</li>
+</ul></li>
+</ul></li>
+</ul>
+<h5 id="ssd-中的读与写">SSD 中的读与写</h5>
+<ul>
+<li><strong>读取（Reading）</strong>
+<ul>
+<li>操作单位：页（Page)</li>
+<li>运行时间大约 10ms，远快于 HHD</li>
+</ul></li>
+<li><strong>写（Writing）</strong>
+<ul>
+<li>每次在执行写操作前要先<strong>擦除数据（Erasing a
+block）</strong>，具体操作如下：
+<ol type="1">
+<li>将目标数据块的所有 bit 置为 1（1 ～ 2ms）</li>
+<li>对相应的页执行写操作，将一些 bit 设置为 0（200ms 左右）</li>
+</ol></li>
+</ul></li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-23-021020.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p><strong>HHD vs SSD</strong></p>
+<ul>
+<li>对于<strong>随机访问 I/O（Random-access I/O）</strong>，SSD
+具有更大的优势，因为其没有机械部件带来的时间开销。</li>
+<li>对于<strong>顺序访问 I/O（Sequential-access
+I/O）</strong>，二者差距较小。</li>
+<li>相比于 HHD，SSD 质量更轻、功耗更少、运行噪声也更小。</li>
+</ul>
 
                 
               </div>
