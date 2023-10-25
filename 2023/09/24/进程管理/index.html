@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-24-055541.png">
 <meta property="article:published_time" content="2023-09-24T05:13:21.000Z">
-<meta property="article:modified_time" content="2023-10-14T09:13:24.732Z">
+<meta property="article:modified_time" content="2023-10-25T03:31:36.351Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="进程管理">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.8k 字
+          8.9k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          74 分钟
+          75 分钟
         
       </span>
     
@@ -444,7 +444,6 @@ information）</strong></p>
 <li><p><strong>I/O 状态信息（I/O status information）</strong></p>
 <p>这类信息包括分配给进程的 I/O 设备列表、打开文件列表等等。</p></li>
 </ul>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-24-065526.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <blockquote>
 <p>Linux 操作系统的进程控制块采用 C 语言结构体 <code>task_struct</code>
 来表示，它位于内核源码目录内的头文件 <code>&lt;linux/sched.h&gt;</code>
@@ -502,6 +501,15 @@ User</strong></p>
 <p>例如为每个进程维护一个记账文件。</p></li>
 </ol>
 <h5 id="进程切换">进程切换</h5>
+<p>基于此，我们可以得到进程切换的一般过程：</p>
+<ol type="1">
+<li>存储当前进程的 PC、SP 指针与寄存器等（统称 Context）</li>
+<li>更新当前进程的 PCB</li>
+<li>将当前进程移动到等待队列（具体状态视情况而定）</li>
+<li>从进程队列中选取一个新的进程来执行，从其 PCB 中读取信息</li>
+</ol>
+<p>...</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-24-065526.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>何时切换进程？进程切换可能在<strong>操作系统从当前正在运行进程中获得控制权的任何时刻</strong>发生。</p>
 <p class="note note-info">
 由于进程切换需要内核模式的权限，所以进程切换的过程中一般都会发生执行模式的改变。
@@ -715,9 +723,9 @@ MacOS，本身就可以完成以下实验。</p>
 </blockquote>
 <h5 id="使用-python-的-os-模块实现部分-system-call">使用 Python 的
 <code>os</code> 模块实现部分 System call</h5>
-<p>Python 的 <code>os</code> 模块提供了标准 UNIX 库接口，<code>os</code>
-模块提供了不少 POSIX 系统调用，如 <code>fork()</code>
-，<code>exec()</code> 系列函数等等。</p>
+<p>Python 的 <code>os</code> 模块提供了标准 UNIX 库接口与不少 POSIX
+系统调用，如 <code>fork()</code> ，<code>exec()</code>
+系列函数等等。</p>
 <h6 id="fork"><code>fork()</code></h6>
 <p><code>fork()</code> 函数用于创建一个新进程。<code>fork()</code>
 函数不接收任何参数，当 <code>fork()</code>

@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-21-174656.png">
 <meta property="article:published_time" content="2023-09-21T10:02:30.000Z">
-<meta property="article:modified_time" content="2023-10-21T14:50:19.250Z">
+<meta property="article:modified_time" content="2023-10-24T11:45:49.291Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.9k 字
+          7.3k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          58 分钟
+          61 分钟
         
       </span>
     
@@ -654,6 +654,49 @@
 <p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar -xvf demo.tar<br></code></pre></td></tr></table></figure></p></li>
 <li><p>查看压缩包 <code>demo.tar</code> 内到文件信息：</p>
 <p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar -tvf demo.tar<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<h5 id="chmod-命令"><code>chmod</code> 命令</h5>
+<p><code>chmod</code> ，来自英文缩写 "change
+mode"，用于更改文件权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod [参数] 权限 文件名<br></code></pre></td></tr></table></figure>
+<p><strong>常用参数</strong>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-c</code></td>
+<td>改变文件权限成功后再输出成功信息</td>
+</tr>
+<tr class="even">
+<td><code>-f</code></td>
+<td>改变文件权限失败后不显示错误信息</td>
+</tr>
+<tr class="odd">
+<td><code>-R</code></td>
+<td>递归处理所有子文件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>权限</strong>：</p>
+<p>权限可以用数字表示，例如 755，表示 <code>rwxr-xr-x</code>
+权限，也可以使用 <code>+</code> 和 <code>-</code> 进行权限追加。</p>
+<p>文件所属者、群组用户和外部用户分别用 <code>u</code> 、<code>g</code>
+、<code>o</code> 表示；</p>
+<p>读、写、执行的权限分别用 <code>r</code> 、<code>w</code>
+、<code>x</code> 表示。</p>
+<p><strong>示例</strong>：</p>
+<ol type="1">
+<li><p>将 <code>demo.txt</code> 的权限设置为 755：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod 755 demo.txt<br></code></pre></td></tr></table></figure></p></li>
+<li><p>给所有用户增加读 <code>demo.txt</code> 的权限：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod +r demo.txt <br></code></pre></td></tr></table></figure></p></li>
+<li><p>剥夺外部用户写 <code>demo.txt</code> 的权限：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod o-w demo.txt<br></code></pre></td></tr></table></figure></p></li>
 </ol>
 <h4 id="文档编辑">文档编辑</h4>
 <h5 id="cat-命令"><code>cat</code> 命令</h5>
@@ -1426,7 +1469,7 @@ name"，用于查看系统主机名、内核及硬件架构等信息。</p>
 <ol type="1">
 <li><p>基本语法： 管道操作符 <code>|</code>
 用于连接两个或多个命令。它的一般语法如下：</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">comma<span class="hljs-symbol">nd1</span> | comma<span class="hljs-symbol">nd2</span> | comma<span class="hljs-symbol">nd3</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">command1 | command2 | command3<br></code></pre></td></tr></table></figure>
 <p>这将使 <code>command1</code> 的输出成为 <code>command2</code>
 的输入，而 <code>command2</code> 的输出成为 <code>command3</code>
 的输入，依此类推。</p></li>
