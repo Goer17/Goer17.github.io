@@ -16,27 +16,24 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="为什么需要流量控制 ？ 流量控制（Flow control）是链路层中主要功能之一，使用流量控制的主要原因是防止拥塞，如果发送方过快地向链路发送数据，而接收方无法跟上处理速度，数据包可能会在链路上堆积，导致拥塞。通过控制发送速度，可以减少这种情况的发生，保持网络的稳定性。除此之外，流量控制还可以防止数据的丢失。 流量控制协议 乌托邦协议 乌托邦协议（Utopian simplex protocol">
+    <meta name="description" content="word2vec 原论文：Efficient Estimation of Word Representations in Vector Space  词向量与词嵌入 词向量（Word vector）是用于表示词意义的向量。它的目的是将每个词表示为连续的数值空间中的点，从而使语义上相似的词在这个空间中靠近彼此。这种表示方法允许计算机更好地处理和理解文本信息。  例如： Apple \(\to\ [1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据链路层的流量控制">
-<meta property="og:url" content="http://example.com/2023/10/29/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:title" content="词向量与 word2vec">
+<meta property="og:url" content="http://example.com/2023/10/30/%E8%AF%8D%E5%90%91%E9%87%8F%E4%B8%8E%20word2vec/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="为什么需要流量控制 ？ 流量控制（Flow control）是链路层中主要功能之一，使用流量控制的主要原因是防止拥塞，如果发送方过快地向链路发送数据，而接收方无法跟上处理速度，数据包可能会在链路上堆积，导致拥塞。通过控制发送速度，可以减少这种情况的发生，保持网络的稳定性。除此之外，流量控制还可以防止数据的丢失。 流量控制协议 乌托邦协议 乌托邦协议（Utopian simplex protocol">
+<meta property="og:description" content="word2vec 原论文：Efficient Estimation of Word Representations in Vector Space  词向量与词嵌入 词向量（Word vector）是用于表示词意义的向量。它的目的是将每个词表示为连续的数值空间中的点，从而使语义上相似的词在这个空间中靠近彼此。这种表示方法允许计算机更好地处理和理解文本信息。  例如： Apple \(\to\ [1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-073334.png">
-<meta property="article:published_time" content="2023-10-29T06:50:53.000Z">
-<meta property="article:modified_time" content="2023-10-30T03:29:53.015Z">
+<meta property="article:published_time" content="2023-10-30T03:58:02.000Z">
+<meta property="article:modified_time" content="2023-11-01T04:43:59.696Z">
 <meta property="article:author" content="Captain_Lee">
-<meta property="article:tag" content="流量控制">
-<meta property="article:tag" content="数据链路层">
+<meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-073334.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>数据链路层的流量控制 - Yuanyang-Lee&#39;s Blog</title>
+  <title>词向量与 word2vec - Yuanyang-Lee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">数据链路层的流量控制</span>
+            <span id="subtitle">词向量与 word2vec</span>
           
         </div>
 
@@ -240,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-29 14:50" pubdate>
-          2023年10月29日 下午
+        <time datetime="2023-10-30 11:58" pubdate>
+          2023年10月30日 中午
         </time>
       </span>
     
@@ -252,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          816 字
         
       </span>
     
@@ -263,7 +260,7 @@
         
         
         
-          26 分钟
+          7 分钟
         
       </span>
     
@@ -301,170 +298,53 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">数据链路层的流量控制</h1>
+            <h1 style="display: none">词向量与 word2vec</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="为什么需要流量控制">为什么需要流量控制 ？</h4>
-<p><strong>流量控制（Flow
-control）</strong>是链路层中主要功能之一，使用流量控制的主要原因是<strong>防止拥塞</strong>，如果发送方过快地向链路发送数据，而接收方无法跟上处理速度，数据包可能会在链路上堆积，导致拥塞。通过控制发送速度，可以减少这种情况的发生，保持网络的稳定性。除此之外，流量控制还可以防止数据的丢失。</p>
-<h3 id="流量控制协议">流量控制协议</h3>
-<h4 id="乌托邦协议">乌托邦协议</h4>
-<p><strong>乌托邦协议（Utopian simplex
-protocol）</strong>是最理想状态下的传输协议，此协议有以下假设：</p>
-<ul>
-<li>单工信道（Simplex channel）</li>
-<li>信道无错（Error-free），即不会发生帧错误</li>
-<li>接收方有不受限制的缓存（Unlimitied buffers）</li>
-</ul>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-083125.png" srcset="/img/loading.gif" lazyload alt="Utopian simplex protocol" style="zoom:50%;" /></p>
-<p>乌托邦协议是非常理想的协议，正如其名字一样，实际的链路层通信是完全不一样的，由于接收方缓存有限，且信道的差错无可避免，我们需要考虑<strong>流量控制</strong>和<strong>差错控制</strong>。</p>
-<p><strong>ARQ</strong></p>
-<p>自动重传请求（Automatic Repeat reQuest，简称
-ARQ）是一种用于数据通信中的错误控制方法。当传输的数据帧在接收端被检测到有错误时，ARQ
-协议会要求发送端重新发送该帧。这种机制确保了数据的完整性和正确性。ARQ
-通常与前向纠错编码（FEC）相结合，后者允许在不重新发送数据的情况下纠正错误。</p>
-<p>接下来要介绍的停等协议和滑动窗口协议，都属于 ARQ。</p>
-<h4 id="停等协议">停等协议</h4>
-<p><strong>停等协议（Stop-and-Wait
-protocol）</strong>引入了<strong>应答（ACK）</strong>的概念，每次发送方发出一个数据帧后，接收方接受数据帧，如果接受成功就会发送一个应答（ACK），只有发送方接收到
-ACK 后才会发送下一个数据帧。如果发送方长时间没有收到
-ACK，则其会认为接收方没有收到目标数据帧，就会重新发送该数据帧。</p>
+                <p>word2vec 原论文：<a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/1301.3781.pdf">Efficient Estimation of Word
+Representations in Vector Space</a></p>
+<hr />
+<h4 id="词向量与词嵌入">词向量与词嵌入</h4>
+<p><strong>词向量（Word
+vector）</strong>是用于表示词意义的向量。它的目的是将每个词表示为连续的数值空间中的点，从而使语义上相似的词在这个空间中靠近彼此。这种表示方法允许计算机更好地处理和理解文本信息。</p>
 <blockquote>
-<p>有些协议中可能会有<strong>否定应答（NAK）</strong>，即接收方收到数据，通过纠错码（如
-CRC）判断数据出错后会向发送方发送 NAK，发送方收到 NAK
-后则会重新发送数据帧。</p>
+<p>例如：</p>
+<p>Apple <span class="math inline">\(\to\ [1, 2, 0]\)</span></p>
+<p>Banana <span class="math inline">\(\to\ [1, 3, 1]\)</span></p>
 </blockquote>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-173121.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
-<p>以上展示了停等协议的四种主要情况，在情况（d）中，发送方没有成功接收到接收方的
-ACK，其认定数据帧传输失败，于是重新传输数据帧，造成了<strong>数据冗余（Duplication）</strong>。</p>
-<p>为了解决 ACK Lost 的问题，我们引入了 SN（Sequence number）编号。</p>
-<p>在停等协议中，帧和 ACK 的 SN 编号只需要 1 个 bit
-即可，具体操作如下：</p>
-<p><strong>发送方按照奇偶次序依次发送 SN 编号为 0 和 1
-的帧，接收方则在收到发送方的信号后返回对应的 ACK</strong>。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-174053.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p>使用 SN 编号的停等协议就可以解决之前提到的全部问题了。</p>
-<ul>
-<li><p><strong>数据帧丢失（Frame gets lost）</strong></p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-174847.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
-<li><p><strong>ACK 丢失（ACK Lost）</strong></p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-174823.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p></li>
-<li><p><strong>ACK 延迟（ACK Delayed）</strong></p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-175118.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>词向量通常是多维的，其维度范围从几十到几千，这取决于训练数据的大小和所使用的模型。在这个多维空间中，每一维都捕获了词的某些语义或句法特性。</p>
+<p>同时，在词向量中我们会定义两个向量的距离（如余弦相似度）来表示两个词的语意相似度。</p>
 <blockquote>
-<p>注：<strong>ACK 也必须要有 SN
-编号</strong>，如果只对数据帧编号，则上图的接收方在收到 Frame 0
-的重传递后会发送一个一样的 ACK，若发送方发送了 Frame 1
-且接收方没有收到，则发送会误判接收方成功收到了 Frame 0 和 Frame
-1，实际上接收方只收到了 Frame 0。</p>
-</blockquote></li>
-</ul>
-<p><strong>计时器（Timer）</strong>：</p>
-<p>一般而言，发送方会设置一个固定的 Timeout interval，一旦在发送目标帧 i
-后如果没有在规定的时间内收到 ACK（i），则会重新发送数据帧
-i，这个时间段不宜过短，如果太短，可能导致发送方发送过多不必要的数据帧；也不宜过长，不然会导致数据接收的响应慢。</p>
-<p><strong>停等协议的优缺点</strong></p>
-<p><strong>优点：</strong></p>
-<ol type="1">
-<li><strong>简单性（Easy to
-implement）</strong>：停等协议的结构简单，容易实现。对于需要简单可靠数据传输的应用，该协议可能是合适的。</li>
-<li><strong>完整性（Integrity）</strong>：由于每次只发送一个数据帧并等待确认，所以在低误差率的通信环境中，可以确保数据的完整性。</li>
-</ol>
-<p><strong>缺点：</strong></p>
-<ol type="1">
-<li><strong>低效率（Low
-efficiency）</strong>：在高带宽或大延迟的通信环境中，停等协议的效率可能会很低。因为大部分时间可能都花在了等待确认上，而不是数据传输。</li>
-<li><strong>延迟（Dalay）</strong>：每次发送一个数据帧后都要等待确认，这增加了传输的总延迟。</li>
-<li><strong>资源利用不足（Insufficient utilization of
-resources）</strong>：在有大量可用带宽的情况下，停等协议可能无法充分利用所有的带宽，导致带宽浪费。</li>
-</ol>
-<h4 id="滑动窗口协议">滑动窗口协议</h4>
-<h5 id="捎带应答">捎带应答</h5>
-<p><strong>捎带应答（Piggybacking）</strong>指的是在<strong>全双工（Full-duplex）</strong>信道传输中，接收方在收到数据帧后先将
-ACK
-暂存起来，然后将其捎带在数据帧处发送出去，这样能一定程度上节约信道的使用。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-181756.png" srcset="/img/loading.gif" lazyload alt="Piggybacking" style="zoom:80%;" /></p>
-<p><strong>什么是滑动窗口协议 ？</strong></p>
-<p>更确切来说，这里提到的<strong>滑动窗口（Sliding
-window）</strong>，主要由两部分组成：</p>
-<ul>
-<li><p><strong>发送窗口（Sending window）</strong></p>
-<p>发送方维护一个窗口，只有处于该窗口的数据帧可以被发送。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-013204.png" srcset="/img/loading.gif" lazyload alt="Sending window, size = 5" style="zoom:40%;" /></p></li>
-<li><p><strong>接收窗口（Receiving window）</strong></p>
-<p>接收方维护一个窗口，只能处于该窗口的数据帧可以被接收。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-013248.png" srcset="/img/loading.gif" lazyload alt="Receiving window, size = 1" style="zoom:40%;" /></p></li>
-</ul>
-<p><strong>滑动窗口协议允许发送方在收到 ACK
-之前发送多个数据帧</strong>。</p>
-<p>在滑动窗口协议中，若发送窗口大小为 <span
-class="math inline">\(W_T\)</span> ，接收窗口大小为 <span
-class="math inline">\(W_R\)</span> ，SN 模数为 <span
-class="math inline">\(m\)</span>（通常 <span class="math inline">\(m = 2
-^ n\)</span>），则必须满足 <span class="math inline">\(W_T + W_R \leq
-m\)</span></p>
-<p>，至于原因，我们会在下文中介绍。</p>
-<h5 id="累积-ack">累积 ACK</h5>
-<p><strong>累计 ACK（Cumulative ACK）</strong>，即一种记录累积效果的
-ACK，若发送方收到 ACK（i），则说明 Frame（0 ~ i）都被成功接收。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-014102.png" srcset="/img/loading.gif" lazyload alt="左图：常规 ACK；右图：累积 ACK" style="zoom:67%;" /></p>
-<h5 id="go-back-n">Go-Back-N</h5>
-<p>在 Go-Back-N
-协议中，<strong>如果某个帧接收失败，则接收方会拒绝所有在此之后发送过来的数据帧直到错误帧被成功接收</strong>。因此若发送方发送的数据帧未被成功接收，则其必须回退重发该帧。</p>
-<p>一般而言，GBN 协议中接收窗口的尺寸为
-1，因此某一时刻只能接收特定帧。</p>
-<ul>
-<li><p>数据帧损坏：</p>
-<ol type="1">
-<li>接收方检测到 Frame（i）出错</li>
-<li>接收方丢弃 Frame（i）与所有后续帧</li>
-<li>超时之后，发送方重发 Frame（i）与后续帧</li>
-</ol>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-020443.png" srcset="/img/loading.gif" lazyload alt="GBN，Lost Frame" style="zoom:67%;" /></p></li>
-<li><p>ACK 丢失：</p>
-<ol type="1">
-<li>接收方成功收到 Frame（i）并发送了 ACK（i），但是发送方没有成功收到
-ACK</li>
-<li>但由于这里的 ACK 记录累积效果，所以如果在 Frame（i）重传之前收到了
-ACK（i + n），那么 Frame（i）就不需要再重传</li>
-<li>如果超时，重传 Frame（i）与后续帧</li>
-</ol>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-021524.png" srcset="/img/loading.gif" lazyload alt="GBN，ACK Lost" style="zoom:67%;" /></p></li>
-</ul>
-<p>根据上文提及的 <span class="math inline">\(W_T + W_R \leq
-m\)</span>，我们不难得出在 GBN 协议中有 <span class="math inline">\(W_T
-+ 1 \leq m\)</span> ，即 <span class="math inline">\(W_T &lt; m\)</span>
-，如果 <span class="math inline">\(W_T \geq m\)</span>
-会发生什么事情呢？</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-025407.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
-<p>如上图所示，接收窗口的大小等于 SN 模数（4），若前 4 帧的 ACK
-均未被成功接收，则发送方会因为超时重新发送
-Frame（0），<strong>此刻接收方的接收窗口恰好与发送窗口有重叠部分</strong>
-0，此时接收方会错误地接收冗余的 Frame（0）并认为这是新的一帧。</p>
-<p>因此 <span class="math inline">\(W_T + W_R \leq m\)</span>
-其实就是为了保证：</p>
-<p>当发送方发送完发送窗口内所有帧，在未收到 ACK
-之前，<strong>接收方正确接收到所有发送来的帧，接收窗口向前推移</strong>，此时，必须保证发送窗口与接收窗口在序号上不能重叠。</p>
-<h5 id="选择重传协议">选择重传协议</h5>
-<p>选择重传协议（Selective Repeat ARQ），与 GBN
-协议相比，选择重传协议更加高效，其减少了重传的次数，同时也更加复杂。</p>
-<p>与 GBN
-协议不同的是，选择重传协议的接收窗口尺寸通常更大，这意味着<strong>接收方可以接受失序的帧</strong>。<strong>当接收到失序的帧时，它不会丢弃这些帧，而是将它们缓存起来，并为每个正确接收的帧发送确认</strong>。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-031657.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
-<p>上图中接收方在收到 Frame（4）和 Frame（5）后依然发送
-ACK（1）是因为目前连续接收成功的帧只有 0 ~ 1，在收到
-Frame（2）后才会发送 ACK（5）。</p>
-<p>假设 SN 模数为 <span class="math inline">\(2 ^ n\)</span>
-，则在选择重传协议中发送窗口和接收窗口尺寸的选择有以下要求：</p>
-<ul>
-<li><span class="math inline">\(W_T + W_R \leq 2 ^ n\)</span></li>
-<li><span class="math inline">\(W_T \geq W_R\)</span></li>
-</ul>
-<p>一般而言，我们会选择 <span class="math inline">\(W_T = W_R = 2 ^ {n -
-1}\)</span></p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-30-032213.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>余弦相似度（Cosine
+Similarity）是在多维空间中测量两个向量之间相似性的一种方法。它是通过计算两个向量之间的夹角的余弦值来得到的。</p>
+<p>计算方法：若单词 A 和单词 B 对应的词向量分别为 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> ，则有： <span class="math display">\[
+\text{similarily}(A, B) = \frac{u ^ T v}{||u||\ ||v||} \in [-1, 1]
+\]</span></p>
+</blockquote>
+<p>而将单词映射到词向量的技术就称为<strong>词嵌入（Word
+embedding）</strong>。</p>
+<h4 id="独热向量">独热向量</h4>
+<p>独热向量（One-hot
+Vector）是一种编码方法，独热编码的基本思想是使用一个向量来表示单个类别，其中该类别对应的元素设为1，而其他所有元素设为
+0。</p>
+<p>例如，现在需要编码的单词一共有 3
+个：apple、banana、coffee，则独热编码如下：</p>
+<p>Apple <span class="math inline">\(\to\ [1, 0, 0]\)</span></p>
+<p>Banana <span class="math inline">\(\to\ [0, 1, 0]\)</span></p>
+<p>Coffee <span class="math inline">\(\to\ [0, 0, 1]\)</span></p>
+<p>独热编码通常是一个很糟糕的选择，不难发现，如果我们使用余弦相似度来计算不同向量的距离，永远只会得到
+0，因为所有的词编码都是两两正交的。</p>
+<h4 id="自监督-word2vec">自监督 word2vec</h4>
+<h5 id="跳元模型">跳元模型</h5>
+<h5 id="连续词袋模型">连续词袋模型</h5>
+<h5 id="近似训练">近似训练</h5>
+<h6 id="负采样">负采样</h6>
+<h6 id="层序-softmax">层序 Softmax</h6>
 
                 
               </div>
@@ -483,7 +363,7 @@ Frame（2）后才会发送 ACK（5）。</p>
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
   
   
 
@@ -498,9 +378,7 @@ Frame（2）后才会发送 ACK（5）。</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6/">#流量控制</a>
-      
-        <a href="/tags/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">#数据链路层</a>
+        <a href="/tags/NLP/">#NLP</a>
       
     </div>
   
@@ -512,8 +390,8 @@ Frame（2）后才会发送 ACK（5）。</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>数据链路层的流量控制</div>
-      <div>http://example.com/2023/10/29/数据链路层的流量控制/</div>
+      <div>词向量与 word2vec</div>
+      <div>http://example.com/2023/10/30/词向量与 word2vec/</div>
     </div>
     <div class="license-meta">
       
@@ -525,7 +403,7 @@ Frame（2）后才会发送 ACK（5）。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月29日</div>
+          <div>2023年10月30日</div>
         </div>
       
       
@@ -558,29 +436,6 @@ Frame（2）后才会发送 ACK（5）。</p>
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2023/11/01/Transfomer/" title="Transfomer">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Transfomer</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/10/17/RSA%20%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" title="RSA 加密算法">
-                        <span class="hidden-mobile">RSA 加密算法</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 
