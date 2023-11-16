@@ -16,16 +16,21 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="核心思想 贝叶斯分类器是一种基于贝叶斯定理的统计分类方法。在给定数据的情况下，它使用概率模型来预测数据点的类别。贝叶斯分类器的核心思想是，对于给定的样本，我们可以计算它属于每个类别的概率，并将样本分配给概率最大的类别。 贝叶斯公式： \[ P(A | B) &#x3D; \frac{P(B | A) P(A)}{P(B)} \]  先验概率（Prior Probability）：指在没有额外信息的情况下，一">
+<meta property="og:type" content="article">
 <meta property="og:title" content="贝叶斯分类器">
-<meta property="og:url" content="http://example.com/2023/11/14/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/index.html">
+<meta property="og:url" content="http://example.com/2023/10/14/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="核心思想 贝叶斯分类器是一种基于贝叶斯定理的统计分类方法。在给定数据的情况下，它使用概率模型来预测数据点的类别。贝叶斯分类器的核心思想是，对于给定的样本，我们可以计算它属于每个类别的概率，并将样本分配给概率最大的类别。 贝叶斯公式： \[ P(A | B) &#x3D; \frac{P(B | A) P(A)}{P(B)} \]  先验概率（Prior Probability）：指在没有额外信息的情况下，一">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-14T11:42:20.000Z">
-<meta property="article:modified_time" content="2023-11-16T01:51:50.466Z">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-16-063645.png">
+<meta property="article:published_time" content="2023-10-14T11:42:20.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:37:09.226Z">
 <meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="概率论">
 <meta property="article:tag" content="贝叶斯公式">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-16-063645.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -235,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-14 19:42" pubdate>
-          2023年11月14日 晚上
+        <time datetime="2023-10-14 19:42" pubdate>
+          2023年10月14日 晚上
         </time>
       </span>
     
@@ -247,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          3.5k 字
         
       </span>
     
@@ -258,7 +263,7 @@
         
         
         
-          1 分钟
+          30 分钟
         
       </span>
     
@@ -301,7 +306,165 @@
             
               <div class="markdown-body">
                 
-                
+                <h4 id="核心思想">核心思想</h4>
+<p>贝叶斯分类器是一种基于贝叶斯定理的统计分类方法。在给定数据的情况下，它使用概率模型来预测数据点的类别。贝叶斯分类器的核心思想是，<strong>对于给定的样本，我们可以计算它属于每个类别的概率，并将样本分配给概率最大的类别</strong>。</p>
+<p>贝叶斯公式： <span class="math display">\[
+P(A | B) = \frac{P(B | A) P(A)}{P(B)}
+\]</span></p>
+<ul>
+<li><strong>先验概率（Prior
+Probability）</strong>：指在没有额外信息的情况下，一个事件发生的概率。</li>
+<li><strong>后验概率（Posterior
+Probability）</strong>：给定某些证据后，时间发生的概率。</li>
+<li><strong>似然性（Likelihood）</strong>：给定假设为真时观察到证据的概率。</li>
+</ul>
+<p><strong>使用后验概率来进行分类的分类器称之为贝叶斯分类器（Bayes
+Classifier）</strong>。</p>
+<h4 id="数学表示">数学表示</h4>
+<p>我们以二分类问题为例，假设在数据集 <span
+class="math inline">\(S\)</span> 中的数据有两个类 <span
+class="math inline">\(A\)</span> 和 <span
+class="math inline">\(B\)</span>
+，则贝叶斯分类器一般用<strong>优势比（Odds
+Ratio）</strong>来描述某个数据点的所属类别： <span
+class="math display">\[
+\frac{P(y = A|x)}{P(y = B|x)}
+\]</span>
+<img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-16-033413.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>若上式子大于 1，即 <span class="math inline">\(P(y = A | x) &gt; P(y
+= B | x)\)</span>，则认为数据点的特征向量为 <span
+class="math inline">\(x\)</span> 的情况下，其属于 <span
+class="math inline">\(A\)</span> 类的概率更大，反之则认为其属于 <span
+class="math inline">\(B\)</span> 类的概率更大。</p>
+<p>根据贝叶斯公式，上式可以表示为： <span class="math display">\[
+\frac{P(x | y = A) P(y = A)}{P(x | y = B) P(y = B)}
+\]</span> 其中 <span class="math inline">\(P(y = A)\)</span> 和 <span
+class="math inline">\(P(y = B)\)</span>
+由两个类别在数据集中的占比决定，而 <span class="math inline">\(P(x | y =
+A)\)</span> 和 <span class="math inline">\(P(x | y = B)\)</span>
+则由两个类别中数据的分布相关。</p>
+<h5 id="判别分析">判别分析</h5>
+<p><strong>判别分析（Discriminant
+Analysis）</strong>是机器学习和统计学中的一种技术，用于将一组观测值分类到预定义的类别中。该方法假设不同的类别通过不同的<strong>高斯分布（Guassian
+Distribution）</strong>生成数据。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-16-032722.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" />
+<span class="math display">\[
+p(x | y = A) = \frac{1}{(2 \pi) ^ {\frac{d}{2}} {|\Sigma_A|} ^
+\frac{1}{2}} exp(-\frac{1}{2}(x - \mu_A) ^ T \Sigma_A (x - \mu_A))
+\]</span></p>
+<p><span class="math display">\[
+p(x | y = B) = \frac{1}{(2 \pi) ^ {\frac{d}{2}} {|\Sigma_B|} ^
+\frac{1}{2}} exp(-\frac{1}{2}(x - \mu_B) ^ T \Sigma_B (x - \mu_B))
+\]</span></p>
+<p>主要类型的判别分析包括：</p>
+<ol type="1">
+<li><p><strong>线性判别分析（Linear Discrinant
+Analysis，LDA）</strong>：这种方法假设不同类别具有相同的协方差矩阵。它找到一个特征的线性组合，这个组合能够表征或者区分两个或多个类别。目的是在类别之间找到一个<strong>线性边界</strong>。</p></li>
+<li><p><strong>二次判别分析（Quadratic Discrinant
+Analysis，QDA）</strong>：与 LDA 不同，QDA
+假设每个类别都有自己的协方差矩阵。它在分类上更加灵活，因为它可以创建<strong>二次边界</strong>，因此得名。</p></li>
+</ol>
+<blockquote>
+<p>通常而言，两个类别的协方差矩阵相等或者十分接近，例如其差值的矩阵二范数
+<span class="math inline">\(||\Sigma_A - \Sigma_B || ^ 2\)</span>
+是一个很小的值，我们就可以认为数据集的判别分析类型为 LDA。</p>
+</blockquote>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-16-034510.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h5 id="考虑错误分类成本">考虑错误分类成本</h5>
+<p>在机器学习和统计分类问题中，<strong>错误分类成本（Misclassification
+Costs）</strong>指的是将一个实例错误分类为另一个类别时所产生的代价或损失。在某些情况下，不同类型的错误可能会导致不同程度的负面影响。例如，在医疗诊断中，将患有疾病的病人错误地判定为健康（漏诊）通常比将健康的病人错误判定为患病（误诊）带来更严重的后果。</p>
+<p>错误分类成本可以是不对称的，意味着对于不同的错误分类，成本可以不一样。在设计分类器时，我们通常希望最小化总体的错误分类成本，而不仅仅是错误分类的数量。</p>
+<p>考虑错误分类成本的贝叶斯分类器（也称为成本敏感的贝叶斯分类器）是一种在决策过程中考虑到不同类型错误分类所带来成本的分类器。这种分类器不仅仅追求最大化整体的准确率，而是尝试最小化总的期望分类成本。</p>
+<p>以上文提及的二分类为例，我们定义<strong>成本矩阵（Costs
+Matrix）</strong>： <span class="math display">\[
+C = \begin{bmatrix}
+C(A | A) &amp; C(A | B) \\
+C(B | A) &amp; C(B | B)
+\end{bmatrix}
+\]</span> 在成本矩阵中 <span class="math inline">\(C(I | J)\)</span>
+表示将标签为 <span class="math inline">\(J\)</span> 类的数据识别为 <span
+class="math inline">\(I\)</span> 类需要付出的成本。</p>
+<p>对于一个新的实例 <span class="math inline">\(x\)</span>
+，我们可以计算出其属于每个类别的期望成本： <span class="math display">\[
+EC(y = A | x) = P(y = A | x)C(A | A) + P(y = B | x) C(A | B)
+\]</span></p>
+<p><span class="math display">\[
+EC(y = B | x) = P(y = B | x)C(B | B) + P(y = A | x)C(B | A)
+\]</span></p>
+<p>最后我们只需要选择期望成本最小的类别即可，我们一般认为 <span
+class="math inline">\(C(A | A) = C(B | B) =
+0\)</span>，因为通常情况下正确识别不需要花费额外的成本。</p>
+<p>因此考虑错误分类成本的优势比可以表示如下： <span
+class="math display">\[
+\frac{P(y = A | x)C(B | A)}{P(y = B | x)C(A | B)}
+\]</span> 即如果满足 <span class="math inline">\(\frac{P(y = A | x)}{P(y
+= B |x)} &gt; T\ (T = \frac{C(A | B)}{C(B | A)})\)</span> ，则考虑将样本
+<span class="math inline">\(x\)</span> 划分为 A 类更合适。<span
+class="math inline">\(T\)</span> 在这里就是分类器的阈值，不同的 <span
+class="math inline">\(T\)</span> 会有不同的分类边界。</p>
+<h4 id="分类器的评估">分类器的评估</h4>
+<h5 id="混淆矩阵">混淆矩阵</h5>
+<p><strong>混淆矩阵（Confusion
+Matrix）</strong>是一种特定的表格用于可视化算法性能，尤其是在监督学习中对分类问题的性能评估。它展示了实际类别与模型预测类别之间的关系，以此来揭示模型在各个类别上的错误类型。</p>
+<p>对于一个二分类问题，混淆矩阵包含四个部分：</p>
+<ol type="1">
+<li><strong>真正例（True Positives,
+TP）</strong>：模型正确预测为正类的数量。</li>
+<li><strong>假正例（False Positives,
+FP）</strong>：模型错误预测为正类的数量。</li>
+<li><strong>真负例（True Negatives,
+TN）</strong>：模型正确预测为负类的数量。</li>
+<li><strong>假负例（False Negatives,
+FN）</strong>：模型错误预测为负类的数量。</li>
+</ol>
+<p>混淆矩阵通常如下所示：</p>
+<p><span class="math display">\[
+\begin{array}{cc}
+&amp; \text{预测正类} &amp; \text{预测负类} \\
+\text{实际正类} &amp; TP &amp; FN \\
+\text{实际负类} &amp; FP &amp; TN \\
+\end{array}
+\]</span> 这个矩阵使我们能够快速计算出几个重要的性能指标，如：</p>
+<ul>
+<li><strong>准确率（Accuracy）</strong>：所有正确分类的观测值占总观测值的比例，计算公式为
+<span class="math inline">\((TP + TN) / (TP + TN + FP +
+FN)\)</span>。</li>
+<li><strong>精确率（Precision）</strong>：正确预测为正类的观测值占预测为正类的比例，计算公式为
+<span class="math inline">\(TP / (TP + FP)\)</span>。</li>
+<li><strong>召回率（Recall）或灵敏度（Sensitivity）</strong>：正确预测为正类的观测值占实际正类的比例，计算公式为
+<span class="math inline">\(TP / (TP + FN)\)</span>。</li>
+<li><strong>特异性（Specificity）</strong>：正确预测为负类的观测值占实际负类的比例，计算公式为
+<span class="math inline">\(TN / (TN + FP)\)</span>。</li>
+</ul>
+<p>解决一个分类问题，实际上即使要找到一个分类边界，可以最大化<strong>敏感度</strong>和<strong>特异性</strong>。</p>
+<h5 id="roc-平面与-auc-指标">ROC 平面与 AUC 指标</h5>
+<p>ROC（接收者操作特征）平面是用来评估二分类系统性能的图形化工具。它通过绘制真正例率（True
+Positive Rate, TPR）对假正例率（False Positive Rate,
+FPR）来展示分类器的性能。</p>
+<p>在 ROC 平面中：</p>
+<ul>
+<li><strong>真正例率（TPR）</strong>，也就是召回率（Recall）或灵敏度（Sensitivity），是指正确识别为正例的样本占所有实际正例的比例。计算公式为：<span
+class="math inline">\(\text{TPR} = \frac{TP}{TP + FN}\)</span>。</li>
+<li><strong>假正例率（FPR）</strong>，是指错误识别为正例的样本占所有实际负例的比例。计算公式为：<span
+class="math inline">\(\text{FPR} = \frac{FP}{TN + FN}\)</span> ，即
+<span class="math inline">\(1 - \text{specificity}\)</span>。</li>
+</ul>
+<p>在 ROC
+曲线上，每个点代表对应于某个决策阈值的（FPR，TPR）对。<strong>曲线下面积（Area
+Under the Curve，AUC）</strong>用来量化分类器的总体性能：<strong>AUC值为
+1 表示完美分类器，AUC 值为 0.5
+表示无效分类器，即其性能不如随机猜测</strong>。</p>
+<p>ROC平面上的主要特点包括：</p>
+<ol type="1">
+<li><strong>ROC
+曲线越靠近左上角，分类器的性能越好</strong>：这意味着高的真正例率和低的假正例率。</li>
+<li><strong>ROC
+曲线下的面积（AUC）越大，分类器的整体性能越好</strong>：它为我们提供了一个分类器性能的单一度量，可以用来比较不同的分类器。</li>
+<li><strong>ROC
+曲线提供了一个无需担心类别分布或者决策阈值选择的性能度量</strong>：这使得它在评估不平衡数据集的分类器时特别有用。</li>
+</ol>
+<p>因此，ROC平面和AUC指标是评估和比较分类模型性能的强有力工具。它们允许我们在不同的阈值设置下考虑分类器的性能，为选择最佳模型提供了依据。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-16-061436.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
 
                 
               </div>
@@ -335,6 +498,8 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/">#概率论</a>
+      
         <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%85%AC%E5%BC%8F/">#贝叶斯公式</a>
       
     </div>
@@ -348,7 +513,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>贝叶斯分类器</div>
-      <div>http://example.com/2023/11/14/贝叶斯分类器/</div>
+      <div>http://example.com/2023/10/14/贝叶斯分类器/</div>
     </div>
     <div class="license-meta">
       
@@ -360,7 +525,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月14日</div>
+          <div>2023年10月14日</div>
         </div>
       
       
@@ -393,6 +558,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/15/IO%20%E4%B8%8E%E7%A3%81%E7%9B%98/" title="I/O 与磁盘">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">I/O 与磁盘</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/06/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="文件系统">
+                        <span class="hidden-mobile">文件系统</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
