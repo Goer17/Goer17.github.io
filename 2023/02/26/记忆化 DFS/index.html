@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-082655.png">
 <meta property="article:published_time" content="2023-02-26T15:47:02.000Z">
-<meta property="article:modified_time" content="2023-07-10T08:27:12.697Z">
+<meta property="article:modified_time" content="2023-11-15T18:23:34.073Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="记忆化搜索">
 <meta property="article:tag" content="DFS">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          5k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          39 分钟
+          42 分钟
         
       </span>
     
@@ -407,6 +407,23 @@ alt="img" />
 即可，这里不再赘述。</p>
 <p><strong>代码</strong>：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">int</span> T; <span class="hljs-comment">// 数据组数</span><br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_LENG 105</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_NUM 10000</span><br><br><span class="hljs-type">int</span> energy[MAX_LENG][MAX_LENG]; <span class="hljs-comment">// 记录每个格点点能量</span><br><span class="hljs-type">int</span> ans[MAX_LENG][MAX_LENG]; <span class="hljs-comment">// 记录答案，初始化为 -1</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> </span>&#123;<br>    <span class="hljs-comment">// 表示从 (x, y) 出发到终点又多少种走法</span><br>    <span class="hljs-keyword">if</span> (ans[x][y] &gt;= <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> ans[x][y];<br>    &#125;<br>    <span class="hljs-keyword">if</span> (x == n - <span class="hljs-number">1</span> &amp;&amp; y == m - <span class="hljs-number">1</span>) &#123;<br>        ans[x][y] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> ans[x][y];<br>    &#125;<br>    <span class="hljs-type">int</span> power = energy[x][y]; <span class="hljs-comment">// 能量</span><br>    ans[x][y] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= power; i++) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= power - i; j++) &#123;<br>            <span class="hljs-comment">// 遍历所有可能位置</span><br>            <span class="hljs-type">int</span> nx = x + i, ny = y + j;<br>            <span class="hljs-keyword">if</span> (nx != x || ny != y) &#123;<br>                <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx &lt; n &amp;&amp; ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny &lt; m) &#123;<br>                    ans[x][y] = (ans[x][y] + <span class="hljs-built_in">dfs</span>(nx, ny)) % MAX_NUM;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> ans[x][y];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>);<br>    cin &gt;&gt; T;<br>    <span class="hljs-keyword">while</span> (T--) &#123;<br>        cin &gt;&gt; n &gt;&gt; m;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++) &#123;<br>                cin &gt;&gt; energy[i][j];<br>            &#125;<br>        &#125;<br>        <span class="hljs-built_in">memset</span>(ans, <span class="hljs-number">0xff</span>, <span class="hljs-built_in">sizeof</span>(ans));<br>        cout &lt;&lt; <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) &lt;&lt; endl;<br>    &#125;<br><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="在-python-中的简单实现">在 Python 中的简单实现</h4>
+<p>在 Python 中，实现记忆化搜索的一个简单方式是使用
+<code>functools</code> 模块中的 <code>lru_cache</code>
+装饰器。这个装饰器可以告诉 Python
+缓存函数的输出值，以便相同的输入参数在后续调用中不需要重新计算。</p>
+<p>基本的函数声明如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> lru_cache<br><br><span class="hljs-meta">@lru_cache(<span class="hljs-params">maxsize=<span class="hljs-literal">None</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-comment"># 函数体</span><br></code></pre></td></tr></table></figure>
+<p>在这个例子中，<code>@lru_cache(maxsize=None)</code>
+是一个装饰器，它应用于函数 <code>f</code>。这个装饰器会缓存
+<code>f</code> 的调用结果，以便相同的输入 <code>x</code>
+在将来的调用中可以直接从缓存中获取结果，而不需要重新计算。</p>
+<ul>
+<li><code>maxsize</code> 参数用于指定缓存的大小。如果设置为
+<code>None</code>，缓存的大小是无限的，这意味着除非显式清除，否则所有的调用都会被缓存。</li>
+<li>如果你想限制缓存的大小，可以设置 <code>maxsize</code>
+为一个正整数，这将限制缓存的大小，当达到最大值时，最旧的结果将被移除。</li>
+</ul>
 
                 
               </div>
