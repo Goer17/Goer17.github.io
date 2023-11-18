@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-081608.png">
 <meta property="article:published_time" content="2023-06-28T03:55:33.000Z">
-<meta property="article:modified_time" content="2023-07-10T08:16:24.756Z">
+<meta property="article:modified_time" content="2023-11-18T05:02:43.698Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="位运算">
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.9k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          13 分钟
+          16 分钟
         
       </span>
     
@@ -389,9 +389,30 @@ class="math inline">\(B\)</span> ，它们的二进制表示分别为 <code>a</c
 <p>状态压缩 DP
 是一种在动态规划算法中使用的优化技巧。它主要应用于具有指数级别状态数的问题，通过将状态用一个整数表示，从而减少内存空间的使用和提高计算效率。这里所说的用一个整数表示状态，也就是上文提到的二进制集合。</p>
 <p><strong>示例</strong></p>
-<p><a
-target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-cost-to-connect-two-groups-of-points/">连通两组点的最小成本</a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">connectTwoGroups</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; cost)</span> </span>&#123;<br>        <span class="hljs-type">const</span> <span class="hljs-type">int</span> inf = <span class="hljs-number">0x3f3f3f3f</span>;<br>        <span class="hljs-type">int</span> size_1 = cost.<span class="hljs-built_in">size</span>(), size_2 = cost[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> stateNumber = <span class="hljs-number">1</span> &lt;&lt; size_2;<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(size_1 + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(stateNumber, inf));<br>        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= size_1; i++) &#123;<br>            <span class="hljs-comment">// 前 i 个点</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">1</span>; s &lt; stateNumber; s++) &#123;<br>                <span class="hljs-comment">// s 表示状态</span><br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; size_2; k++) &#123;<br>                    <span class="hljs-keyword">if</span> ((s &amp; (<span class="hljs-number">1</span> &lt;&lt; k)) == <span class="hljs-number">0</span>) &#123;<br>                        <span class="hljs-comment">// k 不属于 s</span><br>                        <span class="hljs-keyword">continue</span>;<br>                    &#125;<br>                    dp[i][s] = <span class="hljs-built_in">min</span>(dp[i][s], dp[i][s ^ (<span class="hljs-number">1</span> &lt;&lt; k)] + cost[i - <span class="hljs-number">1</span>][k]);<br>                    dp[i][s] = <span class="hljs-built_in">min</span>(dp[i][s], dp[i - <span class="hljs-number">1</span>][s] + cost[i - <span class="hljs-number">1</span>][k]);<br>                    dp[i][s] = <span class="hljs-built_in">min</span>(dp[i][s], dp[i - <span class="hljs-number">1</span>][s ^ (<span class="hljs-number">1</span> &lt;&lt; k)] + cost[i - <span class="hljs-number">1</span>][k]);<br>                &#125;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> dp[size_1][stateNumber - <span class="hljs-number">1</span>];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><p><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-path-visiting-all-nodes/">Shortest
+Path Visiting All Nodes</a></p>
+<p>我们设 <span class="math inline">\(dp[i][S]\)</span> 表示从顶点 <span
+class="math inline">\(i\)</span> 出发，需要走完集合 <span
+class="math inline">\(S\)</span>
+包含的所有点的最小步数，不难得到状态转移方程： <span
+class="math display">\[
+  dp[i][S] = \underset{&lt;i, j&gt; \in G(V, E)}{\text{min}}\ dp[j][S -
+i] + 1
+  \]</span>
+基于此，我们可以用记忆化搜索来解决问题。但由于这里面是可以走回路的，则可能出现无限递归的情况，为了解决这个问题，我们可以在递归函数中对状态
+<span class="math inline">\((i, S)\)</span> 进行标记（代码中是将 <span
+class="math inline">\(dp[i][S]\)</span>
+设置为一个特殊的值），保证每个状态只经过一次，这个做法显然是合理的，因为如果从顶点
+<span class="math inline">\(i\)</span> 出发，走了若干步回到顶点 <span
+class="math inline">\(i\)</span> 后，需要走完的点的集合还是 <span
+class="math inline">\(S\)</span>，则说明这若干步都没有意义，顾可以舍去。</p>
+<p>递归出口： <span class="math display">\[
+  dp[i][S] = 0\ \ \text{if}\ S = \{i\}
+  \]</span> 代码如下：</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> dp[<span class="hljs-number">12</span>][<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">12</span>]; <span class="hljs-comment">// dp[i][s], 起点为 i, 需要走完集合 s 所有点的最短路径</span><br>    <span class="hljs-type">const</span> <span class="hljs-type">int</span> inf = <span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Solution</span>() &#123;<br>        <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">0xff</span>, <span class="hljs-built_in">sizeof</span>(dp));<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">shortestPathLength</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; graph)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n = graph.<span class="hljs-built_in">size</span>();<br>        function&lt;<span class="hljs-type">int</span>(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)&gt; dfs = [&amp;](<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> s) -&gt; <span class="hljs-type">int</span> &#123;<br>            <span class="hljs-type">int</span>&amp; res = dp[i][s];<br>            <span class="hljs-keyword">if</span> (res &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;<br>            res = <span class="hljs-number">-2</span>; <span class="hljs-comment">// 后续不再处理 dfs(i, s), 避免无限递归</span><br>            s &amp;= ~(<span class="hljs-number">1</span> &lt;&lt; i);<br>            <span class="hljs-keyword">if</span> (s == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res = <span class="hljs-number">0</span>;<br>            <span class="hljs-type">int</span> ans = inf;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j : graph[i]) &#123;<br>                <span class="hljs-keyword">if</span> (dp[j][s] != <span class="hljs-number">-2</span>) ans = <span class="hljs-built_in">min</span>(ans, <span class="hljs-built_in">dfs</span>(j, s) + <span class="hljs-number">1</span>);<br>            &#125;<br><br>            <span class="hljs-keyword">return</span> res = ans;<br>        &#125;;<br><br>        <span class="hljs-type">int</span> res = inf;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) res = <span class="hljs-built_in">min</span>(res, <span class="hljs-built_in">dfs</span>(i, (<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>));<br><br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure></p></li>
+</ul>
 
                 
               </div>
