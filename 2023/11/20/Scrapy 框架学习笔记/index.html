@@ -1,0 +1,980 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Scrapy 是一个基于 Python 的快速的、高级别的 web 爬虫和 web 抓取框架，旨在用于抓取 web 站点并从页面中提取结构化的数据。Scrapy 可以应用于一系列的网路数据抓取任务，从信息提取、数据挖掘到监控和自动化测试。 以下是笔者根据官方文档和 B 站上的教程写的一份学习笔记。   Scrapy 核心组件  爬虫（Spiders）：这些是遍历网络收集数据的网络爬虫。它们向网站发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy 框架学习笔记">
+<meta property="og:url" content="http://example.com/2023/11/20/Scrapy%20%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="Scrapy 是一个基于 Python 的快速的、高级别的 web 爬虫和 web 抓取框架，旨在用于抓取 web 站点并从页面中提取结构化的数据。Scrapy 可以应用于一系列的网路数据抓取任务，从信息提取、数据挖掘到监控和自动化测试。 以下是笔者根据官方文档和 B 站上的教程写的一份学习笔记。   Scrapy 核心组件  爬虫（Spiders）：这些是遍历网络收集数据的网络爬虫。它们向网站发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-20-115138.png">
+<meta property="article:published_time" content="2023-11-20T05:03:24.000Z">
+<meta property="article:modified_time" content="2023-11-21T07:02:44.187Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="Scrapy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-20-115138.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Scrapy 框架学习笔记 - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Scrapy 框架学习笔记</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-20 13:03" pubdate>
+          2023年11月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Scrapy 框架学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Scrapy 是一个基于 Python 的快速的、高级别的 web 爬虫和 web
+抓取框架，旨在用于抓取 web 站点并从页面中提取结构化的数据。Scrapy
+可以应用于一系列的网路数据抓取任务，从信息提取、数据挖掘到监控和自动化测试。</p>
+<p>以下是笔者根据<a
+target="_blank" rel="noopener" href="https://docs.scrapy.org/en/latest/">官方文档</a>和 B
+站上的教程写的一份学习笔记。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-20-075343.png" srcset="/img/loading.gif" lazyload  style="zoom:40%;" /></p>
+<hr />
+<h4 id="scrapy-核心组件">Scrapy 核心组件</h4>
+<ul>
+<li><strong>爬虫（Spiders）</strong>：这些是遍历网络收集数据的网络爬虫。它们向网站发送请求并解析响应。</li>
+<li><strong>调度器（Scheduler）</strong>：此组件管理爬虫爬行网页的顺序。它安排爬虫发出的请求，通常使用算法来优先决定访问哪些页面。</li>
+<li><strong>下载器（Downloader）</strong>：请求被调度后，发送给下载器，下载器从互联网上获取网页。下载器处理对网服务器的实际
+HTTP 请求。</li>
+<li><strong>引擎（Engine）</strong>：引擎是系统的核心部分，协调整个过程。它控制系统组件之间的数据流动，并触发事件。</li>
+<li><strong>中间件（Middleware）</strong>：中间件组件用于处理系统中传递的请求和响应。它们可以修改、丢弃或丰富请求和响应。例如，它们可以处理用户代理轮换、代理管理或内容转换等事宜。</li>
+<li><strong>项目管道（Item
+Pipelines）</strong>：数据被爬取后，需要进行处理、清洗和存储。项目管道负责在爬虫提取数据后处理数据项。</li>
+</ul>
+<p>Scrapy 框架工作流：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-20-075950.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<ol type="1">
+<li><p>爬虫向引擎发送请求（1）。</p></li>
+<li><p>引擎将请求发送给调度器（2）。</p></li>
+<li><p>调度器将请求排队，然后发送回引擎（3）。</p></li>
+<li><p>引擎再将请求发送至下载器（4）。</p></li>
+<li><p>下载器从互联网获取数据，并将响应发送回引擎（5）。</p></li>
+<li><p>引擎将响应发送给爬虫（6）。</p></li>
+<li><p>爬虫处理响应并提取项目，这些项目被发送到项目管道（7）。</p></li>
+<li><p>处理过的项目然后从项目管道发送到引擎（8），可能用于进一步处理或存储。</p></li>
+</ol>
+<h4 id="安装库并新建一个-scrapy-项目">安装库并新建一个 Scrapy 项目</h4>
+<p><strong>安装 <code>scrapy</code> 库</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install scrapy<br></code></pre></td></tr></table></figure>
+<p><strong>新建 Scrapy 项目</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy startproject project_name<br></code></pre></td></tr></table></figure>
+<p>使用 <code>scrapy startproject</code> 后就会在当前工作目录下新建一个
+Scrapy 项目，项目目录结构如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">project_name/<br>├── scrapy.cfg<br>└── project_name<br>    ├── __init__.py<br>    ├── items.py<br>    ├── middlewares.py<br>    ├── pipelines.py<br>    ├── settings.py<br>    └── spiders<br>        ├── __init__.py<br>        ├── spider1.py<br>        └── spider2.py<br></code></pre></td></tr></table></figure>
+<p>这个结构图展示了一个典型的Scrapy项目的文件和目录层次，其中：</p>
+<ul>
+<li><code>scrapy.cfg</code> 是项目的部署配置文件。</li>
+<li><code>myproject</code>
+文件夹是项目的Python模块，您的代码会在这里编写和组织。</li>
+<li><code>items.py</code> 中定义了项目中的数据结构。</li>
+<li><code>middlewares.py</code> 中定义了项目的中间件。</li>
+<li><code>pipelines.py</code>
+中定义了项目的管道，用于处理抓取的数据。</li>
+<li><code>settings.py</code> 包含了项目的设置。</li>
+<li><code>spiders</code> 目录包含了所有爬虫相关的代码。</li>
+</ul>
+<p>在<code>spiders</code>目录下，每个文件代表了一个爬虫。您可以根据需要添加更多的爬虫文件。每个爬虫文件定义了一个<code>Spider</code>类，用于指定如何抓取网页和解析页面内容以提取数据。</p>
+<h4 id="scrapy-命令行工具"><code>scrapy</code> 命令行工具</h4>
+<p>除了上文提到的创建项目指令，Scrapy 还提供了一系列其他命令：</p>
+<ul>
+<li><p>在当前项目下创建一个新的 <code>Spider</code> ：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy genspider spider_name &#x27;example.com&#x27;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>运行当前项目下的某个 <code>Spider</code> ：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy crawl spider_name<br></code></pre></td></tr></table></figure></p></li>
+<li><p>列出当前所有的 <code>Spider</code> ：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy list<br></code></pre></td></tr></table></figure></p></li>
+<li><p>启动一个交互式的 Scrapy Shell，可以在这里尝试抓取数据</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy shell &#x27;http://example.com&#x27;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>下载一个网页并且显示在控制台上：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy fetch &#x27;http://example.com&#x27;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>在浏览器中打开一个网页，方便进行可视化调试</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy view &#x27;http://example.com&#x27;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>使用 <code>Spider</code>
+解析一个网页，这对于测试和调试爬虫非常有用</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy parse &#x27;http://example.com/page&#x27; --callback parse_item<br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这将使用 <code>parse_item</code> 方法来解析指定的 URL</p>
+</blockquote></li>
+</ul>
+<h4 id="spider-类"><code>Spider</code> 类</h4>
+<p>在 Scrapy 框架中，<code>Spider</code>
+类是定义如何抓取某个或某些网站的关键组成部分。这包括抓取的动作，例如：访问网站的哪些页面，如何进行跟进链接，以及如何从页面内容中提取结构化数据（即抓取什么数据）。每个
+<code>Spider</code> 都能处理一个或多个特定的网站或页面。</p>
+<h5 id="基本属性">基本属性</h5>
+<ul>
+<li><code>name</code> ：识别 <code>Spider</code>
+的唯一名称。<strong>这个名称在项目中必须是唯一的</strong>，即不能为不同的
+<code>Spider</code> 设置相同的名字。</li>
+<li><code>start_url</code> ：包含一个或多个 URL
+的列表，<code>Spider</code> 将从这些 URL 开始抓取数据。当没有指定特定的
+URL 时，<code>Spider</code> 将默认从这个列表中的 URL 开始进行抓取。</li>
+<li><code>allowed_domains</code>
+：可选属性，包含一个域名的列表，用于指定 <code>Spider</code>
+可以抓取的域名。如果设置了这个属性，Spider
+将不会抓取这个列表以外的域名下的页面。</li>
+</ul>
+<h5 id="基本方法">基本方法</h5>
+<ul>
+<li><code>start_requests()</code>
+：此方法用于生成初始的请求。您可以重写这个方法来实现自定义的请求初始化。默认情况下，它生成
+<code>start_urls</code> 中定义的 URL 的请求。</li>
+<li><code>parse()</code> ：<strong>当响应返回时，Scrapy
+下载器将响应作为参数传递给此方法</strong>。这是处理响应并提取数据的主要方法，或者进一步生成要跟踪的
+URL 的请求。</li>
+</ul>
+<h5 id="工作方式">工作方式</h5>
+<ol type="1">
+<li><code>Spider</code> 在 <code>start_urls</code> 中指定的 URL
+开始抓取。</li>
+<li>对每个起始 URL，Scrapy 生成 <code>Request</code> 对象，并将
+<code>parse</code> 方法作为回调函数指定。</li>
+<li>当页面被下载后，Scrapy 引擎调用 <code>parse</code>
+方法处理响应。</li>
+<li>在 <code>parse</code>
+方法内部，您可以使用响应对象来提取信息，或者查找新的 URL
+来创建新的请求（Scrapy 会处理这些请求，调用相应的回调）。</li>
+<li>通常情况下，<code>parse</code> 方法将解析响应数据，提取信息并用
+<code>yield</code> 语句生成 <code>Item</code> 对象，或者生成新的
+<code>Request</code> 对象。</li>
+</ol>
+<h5 id="基本示例">基本示例</h5>
+<p>爬取豆瓣电影排名前 250 的电影的名字和评分：</p>
+<ol type="1">
+<li><p>创建项目：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy startproject Douban &amp;&amp; cd Douban<br></code></pre></td></tr></table></figure></p></li>
+<li><p>编写 <code>item.py</code></p>
+<p>爬虫获取到的数据需要组装成 <code>Item</code>
+对象，所以我们需要预先定义封装数据的 <code>Item</code> 对象：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MovieItem</span>(scrapy.Item):<br>    title = scrapy.Field()<br>    rating = scrapy.Field()<br></code></pre></td></tr></table></figure></p></li>
+<li><p>创建并编写一个 <code>Spider</code> 来爬取电影：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy genspider Movie &#x27;Movie.douban.com&#x27;<br></code></pre></td></tr></table></figure></p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> Selector, Request<br><span class="hljs-keyword">from</span> Douban.items <span class="hljs-keyword">import</span> MovieItem<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MovieSpider</span>(scrapy.Spider):<br>    name = <span class="hljs-string">&quot;Movie&quot;</span><br>    allowed_domains = [<span class="hljs-string">&quot;movie.douban.com&quot;</span>]<br>    start_urls = [<span class="hljs-string">&quot;https://movie.douban.com/top250&quot;</span>]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">parse</span>(<span class="hljs-params">self, response</span>):<br>        sel = Selector(response)<br>        list_items = sel.css(<span class="hljs-string">&#x27;#content &gt; div &gt; div.article &gt; ol &gt; li&#x27;</span>) <span class="hljs-comment"># 根据 Selector 进行捕获</span><br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> list_items:<br>            movieItem = MovieItem()<br>            movieItem[<span class="hljs-string">&#x27;title&#x27;</span>] = item.css(<span class="hljs-string">&#x27;span.title::text&#x27;</span>).extract_first()<br>            movieItem[<span class="hljs-string">&#x27;rating&#x27;</span>] = item.css(<span class="hljs-string">&#x27;span.rating_num::text&#x27;</span>).extract_first()<br>            <br>            <span class="hljs-keyword">yield</span> movieItem<br>        <br>        hrefs_list = sel.css(<span class="hljs-string">&#x27;#content &gt; div &gt; div.article &gt; div.paginator &gt; a::attr(href)&#x27;</span>).extract() <span class="hljs-comment"># 获取底部其他页的链接</span><br>        next_pages = [response.urljoin(href) <span class="hljs-keyword">for</span> href <span class="hljs-keyword">in</span> hrefs_list <span class="hljs-keyword">if</span> href != <span class="hljs-string">&#x27;?start=0&amp;filter=&#x27;</span>]<br>        <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> next_pages:<br>            <span class="hljs-keyword">yield</span> Request(url=url)<br></code></pre></td></tr></table></figure></p>
+<p>这里 <code>Selector</code>
+是一个非常重要的组件，我们传递响应作为参数可以初始化一个
+<code>Selector</code> 对象，其可以使用 XPath 或 CSS 表达式来选择 HTML 或
+XML 中的特定部分。</p></li>
+<li><p>将抓取的数据保存：</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy crawl Movie -o top250_movie.csv # 保存为 csv 格式<br>scrapy crawl Movie -o top250_movie.json # 保存为 json 格式<br>scrapy crawl Movie -o top250_movie.xml # 保存为 xml 格式<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<blockquote>
+<p>另外一种 <code>Spider</code> 的定义方式，通过定义
+<code>start_requests()</code> 函数来获取到更多页面：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> Selector, Request<br><span class="hljs-keyword">from</span> Douban.items <span class="hljs-keyword">import</span> MovieItem<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MovieSpider</span>(scrapy.Spider):<br>    name = <span class="hljs-string">&quot;Movie&quot;</span><br>    allowed_domains = [<span class="hljs-string">&quot;movie.douban.com&quot;</span>]<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start_requests</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">for</span> page <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>            <span class="hljs-keyword">yield</span> Request(url=<span class="hljs-string">f&#x27;https://movie.douban.com/top250?start=<span class="hljs-subst">&#123;<span class="hljs-number">25</span> * page&#125;</span>&amp;filter=&#x27;</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">parse</span>(<span class="hljs-params">self, response</span>):<br>        sel = Selector(response)<br>        list_items = sel.css(<span class="hljs-string">&#x27;#content &gt; div &gt; div.article &gt; ol &gt; li&#x27;</span>) <span class="hljs-comment"># 根据 Selector 进行捕获</span><br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> list_items:<br>            movieItem = MovieItem()<br>            movieItem[<span class="hljs-string">&#x27;title&#x27;</span>] = item.css(<span class="hljs-string">&#x27;span.title::text&#x27;</span>).extract_first()<br>            movieItem[<span class="hljs-string">&#x27;rating&#x27;</span>] = item.css(<span class="hljs-string">&#x27;span.rating_num::text&#x27;</span>).extract_first()<br>            <br>            <span class="hljs-keyword">yield</span> movieItem<br></code></pre></td></tr></table></figure>
+<p>这样定义可以避免同一个网页 URL
+相同而导致重复请求的情况，而且保证了请求的次序不被打乱。</p>
+</blockquote>
+<h5 id="定义多个回调函数">定义多个回调函数</h5>
+<p>假设我们现在要请求 HTML
+网页列表的子链接的内容，并对子链接的网页进行爬取，那我们就需要定义多个回调函数。</p>
+<p><strong>示例</strong>：</p>
+<ol type="1">
+<li><p>分析chinaz.com网站行业网站页面结构（链接：https://top.chinaz.com/hangye/）</p></li>
+<li><p>爬取每个行业分类下面的网站信息，包括网站标题、网站关键词、网站描述信息。</p></li>
+<li><p>将爬取结果存取成 csv
+格式，每行的数据格式为：网站域名，网站行业分类、网站标题、网站关键词、网站描述信息</p></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Item 对象定义</span><br><br><span class="hljs-keyword">import</span> scrapy<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">HangyeItem</span>(scrapy.Item):<br>    domain = scrapy.Field()<br>    web_class = scrapy.Field()<br>    title = scrapy.Field()<br>    key_words = scrapy.Field()<br>    description = scrapy.Field()<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Spider 定义</span><br><br><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> Request, Selector<br><span class="hljs-keyword">from</span> ChinaZ.items <span class="hljs-keyword">import</span> HangyeItem<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">HangyeSpider</span>(scrapy.Spider):<br>    name = <span class="hljs-string">&quot;Hangye&quot;</span><br>    allowed_domains = [<span class="hljs-string">&quot;top.chinaz.com&quot;</span>]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start_requests</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">yield</span> Request(url=<span class="hljs-string">&#x27;https://top.chinaz.com/hangye/index.html&#x27;</span>)<br>        <span class="hljs-keyword">for</span> page <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-number">1873</span>):<br>            <span class="hljs-keyword">yield</span> Request(url=<span class="hljs-string">f&#x27;https://top.chinaz.com/hangye/index_<span class="hljs-subst">&#123;page&#125;</span>.html&#x27;</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">parse</span>(<span class="hljs-params">self, response</span>):<br>        sel = Selector(response)<br>        items_list = sel.css(<span class="hljs-string">&#x27;#content &gt; div.Wrapper.TopIndexCentWrap.pt10 &gt; div.TopListCent &gt; div.TopListCent-listWrap &gt; ul &gt; li.clearfix &gt; div.CentTxt&#x27;</span>)<br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> items_list:<br>            title = item.css(<span class="hljs-string">&#x27;h3 &gt; a::text&#x27;</span>).extract_first()<br>            domain = item.css(<span class="hljs-string">&#x27;h3 &gt; span::text&#x27;</span>).extract_first()<br>            href = item.css(<span class="hljs-string">&#x27;h3 &gt; a::attr(href)&#x27;</span>).extract_first()<br><br>            <span class="hljs-keyword">yield</span> Request(url=response.urljoin(href), callback=self.parse_sublink, meta=&#123;<br>                <span class="hljs-string">&#x27;title&#x27;</span>: title,<br>                <span class="hljs-string">&#x27;domain&#x27;</span>: domain<br>            &#125;)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">parse_sublink</span>(<span class="hljs-params">self, response</span>):<br>        hangyeItem = HangyeItem()<br>        hangyeItem[<span class="hljs-string">&#x27;title&#x27;</span>] = response.meta[<span class="hljs-string">&#x27;title&#x27;</span>]<br>        hangyeItem[<span class="hljs-string">&#x27;domain&#x27;</span>] = response.meta[<span class="hljs-string">&#x27;domain&#x27;</span>]<br>        sel = Selector(response)<br>        hangyeItem[<span class="hljs-string">&#x27;web_class&#x27;</span>] = <span class="hljs-string">&#x27;, &#x27;</span>.join(sel.css(<span class="hljs-string">&#x27;#content &gt; div.Wrapper.TopIndexCentWrap.pt10 &gt; div &gt; div.TopPageCent.clearfix &gt; div.TPageCent-TopMain.mt10.clearfix &gt; div &gt; div &gt; p:nth-child(1) &gt; a::text&#x27;</span>).getall())<br>        hangyeItem[<span class="hljs-string">&#x27;description&#x27;</span>] = sel.css(<span class="hljs-string">&#x27;#content &gt; div.Wrapper.TopIndexCentWrap.pt10 &gt; div &gt; div.TopPageCent.clearfix &gt; div.TPageCent-TMain01.mb40 &gt; div:nth-child(2) &gt; div.Centright.fr.SimSun &gt; p::text&#x27;</span>).extract_first()<br>        hangyeItem[<span class="hljs-string">&#x27;key_words&#x27;</span>] = <span class="hljs-string">&#x27;, &#x27;</span>.join(sel.css(<span class="hljs-string">&#x27;#content &gt; div.Wrapper.TopIndexCentWrap.pt10 &gt; div &gt; div.TopPageCent.clearfix &gt; div.clearfix.mb40 &gt; div.TPageCent-TMainmob.fl &gt; ul &gt; li:not(.ListHead) &gt; span.Lnone::text&#x27;</span>).getall())<br><br>        <span class="hljs-keyword">yield</span> hangyeItem<br></code></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy crawl Hangye -o cn_web_info.csv<br></code></pre></td></tr></table></figure>
+<h4 id="数据管道">数据管道</h4>
+<p>Scrapy 中的数据管道（Data
+Pipeline）是用于处理从网页中提取出的数据的组件。它们提供了一个清晰的方式来处理、过滤和存储爬虫抓取的数据。</p>
+<p>要在 Scrapy 项目中使用数据管道，你需要在 <code>settings.py</code>
+文件中启用并配置它：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<br>   <span class="hljs-string">&quot;MyProject.pipelines.MyProjectPipeline&quot;</span>: <span class="hljs-number">300</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>每个数据管道都是一个 Python 类，定义在 <code>pipelines.py</code>
+中，它实现了一个或多个方法，这个方法会被 Scrapy
+自动调用来处理每一个提取的项（Item）。</p>
+<p>例如，将爬取到的数据保存到数据库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># setting.py</span><br><span class="hljs-comment"># ...</span><br><br>ITEM_PIPELINES = &#123;<br>   <span class="hljs-string">&quot;Douban.pipelines.DoubanPipeline&quot;</span>: <span class="hljs-number">300</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># piplines.py</span><br><br><span class="hljs-keyword">from</span> itemadapter <span class="hljs-keyword">import</span> ItemAdapter<br><span class="hljs-keyword">import</span> mysql.connector<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DoubanPipeline</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            self.my_db = mysql.connector.connect(<br>                host=<span class="hljs-string">&#x27;localhost&#x27;</span>,<br>                user=<span class="hljs-string">&#x27;root&#x27;</span>,<br>                passwd=<span class="hljs-string">&#x27;&#x27;</span>,<br>                database=<span class="hljs-string">&#x27;movie&#x27;</span><br>            )<br>            self.cs = self.my_db.cursor()<br>            self.cs.execute(<span class="hljs-string">&#x27;truncate table top250_mv&#x27;</span>)<br>        <span class="hljs-keyword">except</span> mysql.connector.Error <span class="hljs-keyword">as</span> err:<br>            <span class="hljs-built_in">print</span>(err)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">process_item</span>(<span class="hljs-params">self, item, spider</span>):<br>        mv_name, rating = item[<span class="hljs-string">&#x27;title&#x27;</span>], item[<span class="hljs-string">&#x27;rating&#x27;</span>]<br>        <span class="hljs-keyword">try</span>:<br>            self.cs.execute(<span class="hljs-string">&#x27;insert into top250_mv(name, rating) values(%s, %s)&#x27;</span>, (mv_name, rating))<br>            self.my_db.commit()<br>            <span class="hljs-keyword">return</span> item<br>        <span class="hljs-keyword">except</span> mysql.connector.Error <span class="hljs-keyword">as</span> err:<br>            <span class="hljs-built_in">print</span>(err)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">close_spider</span>(<span class="hljs-params">self, spider</span>):<br>        <span class="hljs-keyword">try</span>:<br>            self.cs.close()<br>            self.my_db.close()<br>        <span class="hljs-keyword">except</span> mysql.connector.Error <span class="hljs-keyword">as</span> err:<br>            <span class="hljs-built_in">print</span>(err)<br></code></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-20-124824.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p><strong>设置多个管道</strong></p>
+<p>在 Scrapy 的 <code>ITEM_PIPELINES</code> 设置中，数字（如上文例子中的
+<code>300</code>）表示该管道的优先级。Scrapy
+支持同时定义多个管道，并且通过这个优先级数字来决定各个管道的执行顺序。优先级的范围是从
+0 到 1000。</p>
+<ul>
+<li><p><strong>低数字表示高优先级</strong>：数字越小，管道的优先级越高。这意味着优先级数字较低的管道会先于优先级数字较高的管道处理
+Item。</p></li>
+<li><p><strong>执行顺序</strong>：当一个 Item 被爬虫抓取并传递给 Item
+Pipeline 时，它会按照由低到高的优先级顺序经过每个激活的管道。</p></li>
+</ul>
+<p>例如，假设你有以下的设置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<br>    <span class="hljs-string">&#x27;MyProject.pipelines.MyFirstPipeline&#x27;</span>: <span class="hljs-number">300</span>,<br>    <span class="hljs-string">&#x27;MyProject.pipelines.MySecondPipeline&#x27;</span>: <span class="hljs-number">400</span>,<br>    <span class="hljs-string">&#x27;MyProject.pipelines.MyThirdPipeline&#x27;</span>: <span class="hljs-number">100</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，<code>MyThirdPipeline</code>（优先级为 100）将首先处理
+Item，其次是 <code>MyFirstPipeline</code>（优先级为 300），最后是
+<code>MySecondPipeline</code>（优先级为 400）。</p>
+<p>这种机制允许开发者灵活地控制不同管道处理 Item
+的顺序，这在进行复杂的数据处理时非常有用，例如，一个管道可能负责清洗数据，另一个管道可能负责将数据存储到数据库中。通过调整它们的优先级，可以确保数据在存储之前被正确地清洗。</p>
+<h4 id="中间件的使用">中间件的使用</h4>
+<p>Scrapy
+中的中间件是一种可插拔的组件，用于在请求和响应的处理过程中执行自定义的操作。在
+Scrapy 中有两种主要类型的中间件：<strong>下载器中间件（Downloader
+Middleware</strong>）和<strong>蜘蛛中间件（Spider
+Middleware）</strong>。</p>
+<ul>
+<li><p><strong>下载中间件</strong>：</p>
+<p>下载器中间件用于处理 Scrapy 发出的 HTTP 请求和收到的 HTTP
+响应。它在请求从蜘蛛发送到服务器和响应从服务器返回到蜘蛛的过程中起作用。下载器中间件的常见用途包括：</p>
+<ul>
+<li>修改发出的请求：比如设置代理、添加或修改请求头、重定向请求等。</li>
+<li>处理返回的响应：比如处理重定向或错误的响应、修改响应内容等。</li>
+<li>处理请求异常：比如在连接错误或超时时重试请求。</li>
+</ul>
+<p><strong>主要方法</strong>：</p>
+<ul>
+<li><code>process_request(request, spider)</code>
+：在请求被发送到下载器之前调用。</li>
+<li><code>process_response(request, response, spider)</code>
+：在下载器完成 HTTP 请求，返回响应之后调用。</li>
+<li><code>process_exception(request, exception, spider)</code>
+：当下载处理过程中出现异常时调用。</li>
+</ul>
+<p>例如，写一个中间件修改所有的请求头：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDownloaderMiddleware</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">process_request</span>(<span class="hljs-params">self, request, spider</span>):<br>        request.headers[<span class="hljs-string">&#x27;User-Agent&#x27;</span>] = <span class="hljs-string">&#x27;My Custom User Agent&#x27;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>  <span class="hljs-comment"># 返回 None 继续正常处理</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">process_response</span>(<span class="hljs-params">self, request, response, spider</span>):<br>        <span class="hljs-comment"># 可以在这里处理响应，例如检查状态码</span><br>        <span class="hljs-keyword">return</span> response  <span class="hljs-comment"># 必须返回 Response 对象</span><br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p>通常，我们可以在请求中间件内给请求加上 Cookie，从而获得某些权限。</p>
+</blockquote></li>
+<li><p><strong>蜘蛛中间件</strong>：</p>
+<p>蜘蛛中间件用于处理蜘蛛的输入（响应）和输出（提取的项目和新的请求）。它主要在解析响应和生成提取项或进一步请求的过程中起作用。蜘蛛中间件的常见用途包括：</p>
+<ul>
+<li>修改或丢弃蜘蛛接收到的响应。</li>
+<li>修改蜘蛛产生的提取项。</li>
+<li>修改或丢弃蜘蛛产生的新的请求。</li>
+</ul>
+<p><strong>主要方法</strong>：</p>
+<ul>
+<li><code>process_spider_input(response, spider)</code>
+：在蜘蛛解析响应之前调用。</li>
+<li><code>process_spider_output(response, result, spider)</code>
+：在蜘蛛解析响应并返回结果之后调用。</li>
+<li><code>process_spider_exception(response, exception, spider)</code>
+：当解析过程中出现异常时调用。</li>
+<li><code>process_start_requests(start_requests, spider)</code>
+：在蜘蛛开始发出初始请求时调用。</li>
+</ul>
+<p>例如，写一个中间件过滤掉某些响应：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MySpiderMiddleware</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">process_spider_input</span>(<span class="hljs-params">self, response, spider</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;不需要处理的条件&#x27;</span> <span class="hljs-keyword">in</span> response.text:<br>            <span class="hljs-keyword">raise</span> IgnoreRequest()<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">process_spider_output</span>(<span class="hljs-params">self, response, result, spider</span>):<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> result:<br>            <span class="hljs-keyword">yield</span> i<br></code></pre></td></tr></table></figure></p></li>
+</ul>
+<p>要启用中间，需要在 <code>settings.py</code> 中进行配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">DOWNLOADER_MIDDLEWARES = &#123;<br>    <span class="hljs-string">&#x27;MyProject.middlewares.MyCustomDownloaderMiddleware&#x27;</span>: <span class="hljs-number">543</span>,<br>&#125;<br><br>SPIDER_MIDDLEWARES = &#123;<br>    <span class="hljs-string">&#x27;MyProject.middlewares.MyCustomSpiderMiddleware&#x27;</span>: <span class="hljs-number">543</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里的数字表示中间件的优先级，数字越小优先级越高。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+      
+        <a href="/tags/Scrapy/">#Scrapy</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Scrapy 框架学习笔记</div>
+      <div>http://example.com/2023/11/20/Scrapy 框架学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/05/%E7%BB%99%E4%BD%A0%E7%9A%84%20Python%20%E5%BE%AA%E7%8E%AF%E5%8A%A0%E4%B8%8A%E8%BF%9B%E5%BA%A6%E6%9D%A1/" title="给你的 Python 循环加上进度条">
+                        <span class="hidden-mobile">给你的 Python 循环加上进度条</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
