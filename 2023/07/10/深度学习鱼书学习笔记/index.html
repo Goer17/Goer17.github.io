@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-125638.png">
 <meta property="article:published_time" content="2023-07-10T12:55:04.000Z">
-<meta property="article:modified_time" content="2023-10-15T03:41:47.719Z">
+<meta property="article:modified_time" content="2023-11-27T10:02:41.203Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="NumPy">
 <meta property="article:tag" content="深度学习">
@@ -511,7 +511,7 @@ y)
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Sigmoid</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.out = <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        out = sigmoid(x)<br>        self.out = out<br>        <span class="hljs-keyword">return</span> out<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, dout</span>):<br>        dx = dout * (<span class="hljs-number">1.0</span> - self.out) * self.out<br><br>        <span class="hljs-keyword">return</span> dx<br></code></pre></td></tr></table></figure>
 <h5 id="affine-层">Affine 层</h5>
 <p><span class="math display">\[
-y = XW + b
+Y = XW + b
 \]</span></p>
 <p>这里涉及到矩阵求导，采用分子布局，若已知 <span
 class="math inline">\(\frac{\partial L}{\partial

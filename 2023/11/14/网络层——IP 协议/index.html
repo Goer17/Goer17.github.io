@@ -1,0 +1,1082 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="IP（Internet Protocol）是一种用于在网络上发送和接收数据的协议。它是互联网的基础协议之一，定义了数据在网络中如何路由和传输。IP协议主要用于在源主机和目标主机之间建立连接，并确保数据包能够正确地从发送方传送到接收方。  IP 地址 IP 地址（Internet Protocol Address）是用于标识网络上设备的数字标签。每个使用互联网的设备都需要一个 IP 地址以便与其他设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络层——IP 协议">
+<meta property="og:url" content="http://example.com/2023/11/14/%E7%BD%91%E7%BB%9C%E5%B1%82%E2%80%94%E2%80%94IP%20%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="IP（Internet Protocol）是一种用于在网络上发送和接收数据的协议。它是互联网的基础协议之一，定义了数据在网络中如何路由和传输。IP协议主要用于在源主机和目标主机之间建立连接，并确保数据包能够正确地从发送方传送到接收方。  IP 地址 IP 地址（Internet Protocol Address）是用于标识网络上设备的数字标签。每个使用互联网的设备都需要一个 IP 地址以便与其他设">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-114031.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-124437.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-123313.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-130049.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-130658.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-133601.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-135407.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-135959.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-23-034416.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-23-070823.png">
+<meta property="article:published_time" content="2023-11-14T11:31:54.000Z">
+<meta property="article:modified_time" content="2023-11-23T09:56:28.556Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="IP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-114031.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>网络层——IP 协议 - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">网络层——IP 协议</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-14 19:31" pubdate>
+          2023年11月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">网络层——IP 协议</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>IP（Internet
+Protocol）是一种用于在网络上发送和接收数据的协议。它是互联网的基础协议之一，定义了数据在网络中如何路由和传输。IP协议主要用于在源主机和目标主机之间建立连接，并确保数据包能够正确地从发送方传送到接收方。</p>
+<hr />
+<h4 id="ip-地址">IP 地址</h4>
+<p><strong>IP 地址（Internet Protocol
+Address）</strong>是用于标识网络上设备的数字标签。每个使用互联网的设备都需要一个
+IP 地址以便与其他设备通信。IP
+地址在网络中的作用类似于邮寄地址在现实世界中的作用。</p>
+<h5 id="ip-地址版本">IP 地址版本</h5>
+<ol type="1">
+<li><strong>IPv4</strong>：
+<ul>
+<li><strong>格式</strong>：IPv4 地址由 32
+位二进制数字组成，通常表示为四个十进制数，每个数由点分隔，例如
+<code>192.168.1.1</code>。</li>
+<li><strong>地址空间</strong>：IPv4 提供大约 43
+亿个唯一地址，但由于互联网的迅速增长，这些地址已经变得非常紧张。</li>
+<li><strong>子网划分（Subnetting）</strong>：IPv4
+地址可以被划分为不同的子网，以便更有效地管理和分配 IP 地址资源。</li>
+</ul></li>
+<li><strong>IPv6</strong>：
+<ul>
+<li><strong>格式</strong>：IPv6 地址由 128
+位二进制数字组成，表示为八组四个十六进制数，每组之间用冒号分隔，例如
+<code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>。</li>
+<li><strong>地址空间</strong>：由于采用了 128 位地址长度，IPv6
+拥有几乎无限的地址空间，能够解决 IPv4 地址耗尽的问题。</li>
+<li><strong>特性</strong>：IPv6
+包括内置的安全性和更好的路由和网络自动配置能力。</li>
+</ul></li>
+</ol>
+<h5 id="ip-地址分类">IP 地址分类</h5>
+<p>这里我们重点说说 IPv4，如下图，展示了五类经典 IPv4 地址的类型：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-114031.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>对于一个 IP 地址而言，其由两个部分组成：</p>
+<ul>
+<li><strong>网络标识符（Network identifier）</strong></li>
+<li><strong>主机标识符（Host identifier）</strong></li>
+</ul>
+<p>类别（假设起始数字为 <span class="math inline">\(\text
+x\)</span>）：</p>
+<ul>
+<li><strong>类别 A（Class A）</strong>：（<span
+class="math inline">\(\text x &lt; 128\)</span>）以 0
+开头。网络标识符占据了第一个字节，剩下的三个字节用于主机标识符。这允许大约
+1.26 亿个网络，每个网络可以有大约 1600 万个主机。</li>
+<li><strong>类别 B（Class B）</strong>：（<span
+class="math inline">\(129 \leq \text x &lt; 192\)</span>）以 10
+开头。网络标识符占据了前两个字节，主机标识符占据了后两个字节。这允许大约
+6.4 万个网络，每个网络可以有大约 6.5 万个主机。</li>
+<li><strong>类别 C（Class C）</strong>：（<span
+class="math inline">\(192 \leq \text x &lt; 224\)</span>）以 110
+开头。网络标识符占据了前三个字节，主机标识符占据了最后一个字节。这允许大约
+210 万个网络，每个网络可以有 256 个主机。</li>
+<li><strong>类别 D（Class D）</strong>：（<span
+class="math inline">\(224 \leq \text x &lt; 240\)</span>）以 1110
+开头，用于多播（multicast）。在多播中，数据被同时发送到属于多播组的多个目的地。</li>
+<li><strong>类别 E（Class E）</strong>：（<span
+class="math inline">\(240 \leq \text x \leq 255\)</span>）以 1111
+开头，保留用于实验和未来的使用，不分配给公共网络。</li>
+</ul>
+<p>特别强调：</p>
+<ul>
+<li><p>在 IPv4 地址中，<strong>主机标识符（Host ID）为 0
+通常表示整个网络本身，而不是特定的设备</strong>。每个 IPv4
+网络都有一个基址，其主机部分全为
+0，这个地址用来标识网络，而不是网络上的一个可达的接口。</p>
+<p>例如，在一个以 <code>192.168.1.0/24</code>
+为标识的子网中，<code>192.168.1.0</code> 就是网络地址。</p></li>
+<li><p>此外，当用于广播地址时，主机部分全为1（例如，在
+<code>192.168.1.0/24</code> 网络中，广播地址是
+<code>192.168.1.255</code>），这个地址用于发送到该网络上所有主机的数据包。</p></li>
+<li><p><strong>本地回环（Local
+loopback）</strong>是计算机网络中用于测试网络接口的一种机制。在 IPv4
+中，它通常使用IP地址 <code>127.x.x.x</code> 来表示。</p></li>
+</ul>
+<h5 id="私有-ip-地址">私有 IP 地址</h5>
+<p><strong>私有 IP 地址（Private IP
+Address）</strong>是在互联网上不唯一且不可直接路由的IP地址。它们专为内部网络（如家庭、办公室或企业内部网络）使用。私有IP地址的设计目的是为了减轻公有
+IPv4 地址的需求压力，因为 IPv4 地址是有限的资源。</p>
+<p>以下是三个主要的 IPv4 私有地址范围：</p>
+<ol type="1">
+<li><code>10.0.0.0</code> - <code>10.255.255.255</code> ：
+<ul>
+<li>这个范围内的地址是 <code>10.0.0.0/8</code> 网络的一部分，提供了
+16777216 个私有 IP 地址。</li>
+<li>通常用于大型组织的内部网络。</li>
+</ul></li>
+<li><code>172.16.0.0</code> - <code>172.31.255.255</code> ：
+<ul>
+<li>这个范围内的地址是 <code>172.16.0.0/12</code> 网络的一部分，提供了
+1048576 个私有 IP 地址。</li>
+<li>适用于中等规模的组织。</li>
+</ul></li>
+<li><code>192.168.0.0</code> - <code>192.168.255.255</code> ：
+<ul>
+<li>这个范围内的地址是 <code>192.168.0.0/16</code> 网络的一部分，提供了
+65536 个私有 IP 地址。</li>
+<li>常见于家庭和小型办公室网络。</li>
+</ul></li>
+</ol>
+<h5 id="查看网页-ip-地址">查看网页 IP 地址</h5>
+<p>在 Windows、Linux 或者 MacOS 中，在终端使用 <code>ping</code>
+指令可以查看网页 IP 地址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ping [域名]<br></code></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure>
+<img
+src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-121637.png" srcset="/img/loading.gif" lazyload
+alt="使用 ping 指令查看百度和北邮官网的 IP 地址" />
+<figcaption aria-hidden="true">使用 ping 指令查看百度和北邮官网的 IP
+地址</figcaption>
+</figure>
+<h4 id="ip-数据报">IP 数据报</h4>
+<p><strong>IP 数据报（IP datagram）</strong>是 IP
+网络中<strong>传输信息的基本单元</strong>，<strong>其由传输层到网络层的数据（TCP
+或
+UDP）封装而成</strong>。其中包含了确保数据能够正确送达目的地的所有必要信息。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-124437.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>一个 IP
+数据报由<strong>首部（Header）</strong>和<strong>数据（Payload）</strong>两部分组成。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-123313.png" srcset="/img/loading.gif" lazyload style="zoom:66%;" /></p>
+<h5 id="首部">首部</h5>
+<p>首部包含了关于数据报自身的元数据（Meta data），例如：</p>
+<ol type="1">
+<li><strong>版本（Version）</strong>：指示 IP 协议的版本，IPv4 或
+IPv6。</li>
+<li><strong>首部长度（IHL, Internet Header
+Length）</strong>：指示首部的长度，以便知道数据部分从哪里开始。</li>
+<li>服务类型（Type of Service）：在 IPv4 中指示数据包的服务质量；在 IPv6
+中被简化为流量类别（Traffic Class）和流标签（Flow Label）。</li>
+<li><strong>总长度（Total
+Length）</strong>：数据报的总长度，<strong>包括首部和数据</strong>。</li>
+<li><strong>标识（Identification）</strong>、<strong>标志（Flags）</strong>和<strong>片偏移（Fragment
+Offset）</strong>：这些字段用于数据报的<strong>分片和重组</strong>。</li>
+<li><strong>生存时间（TTL, Time To
+Live）</strong>：每经过一个路由器，该值减一，当减到0时数据报被丢弃，以防止无限循环。</li>
+<li><strong>协议（Protocol）</strong>：指示数据部分使用的协议，如
+TCP、UDP 或其他。</li>
+<li><strong>首部校验和（Header
+Checksum）</strong>：确保首部在传输过程中未被损坏。</li>
+<li><strong>源 IP 地址（Source IP Address）和目的 IP 地址（Destination
+IP Address）</strong>：发送方和接收方的 IP 地址。</li>
+<li>在 IPv4 数据报的首部中，有两个可选的字段叫做
+<strong>“选项”（Options）</strong>和 <strong>“填充”（Padding）</strong>
+<ul>
+<li><strong>选项</strong>：这部分用于网络测试和调试。它提供了对数据报的额外控制和信息，但不是所有的数据报都会使用。</li>
+<li><strong>填充</strong>：这部分用于确保整个首部的长度是 32
+位的倍数，<strong>因为 IPv4 的首部长度字段只能表示以 32
+位为单位的长度</strong>。如果选项数据不是 32 位的倍数，填充字段会用 0
+来填充剩余的空间，确保首部长度的整齐。此字段没有任何意义，仅用来对齐。</li>
+</ul></li>
+</ol>
+<h5 id="分片和重组">分片和重组</h5>
+<p>IP
+数据报的<strong>分片（Fragmentation）</strong>和<strong>重组（Reassembly）</strong>是
+IP 协议处理大型数据包的一种机制。当一个 IP
+数据报的大小超过传输网络的最大传输单元（MTU）时，这个机制就会启动。</p>
+<p>下图展示一个简单的数据报分片模拟过程：</p>
+<ul>
+<li>消息编号：用于标识属于同一原始消息的所有片段</li>
+<li>第一个片段的编号：表示该片段在整个消息中的起始位置</li>
+<li>数据包结束位：表示这是否为该消息的最后一个片段</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-130049.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>以 5 Unit fragments 为例：</p>
+<ol type="1">
+<li>初始报文消息编号为 33，数据报结束位为
+1，说明该数据报不是最后一个片段，可以继续分片；</li>
+<li>第二个片段包含剩下的4个单位（f 到 i），其首部表明这是消息 33 从第 5
+个单位开始的片段（因为前一个片段已经包含了 0 到
+4），并且是最后一个片段（结束位为 0）。</li>
+</ol>
+<h4 id="ip-网络路由">IP 网络路由</h4>
+<p>IP 路由分类：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-130658.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h5 id="静态路由">静态路由</h5>
+<p>静态路由（Static
+Routing）是一种在路由表中手动设置的固定路由，不像动态路由那样通过路由选择协议自动更新。管理员必须明确指定网络的目的地址、子网掩码（对于
+IPv4）、下一跳地址或出口接口。</p>
+<p>优点：</p>
+<ol type="1">
+<li>对于网络结构不会更改的网络而言具有稳定性</li>
+<li>易于实现</li>
+<li>没有额外的 CPU 开销</li>
+</ol>
+<p>缺点：</p>
+<ol type="1">
+<li>如果指定的下一跳或路径故障，静态路由不会自动更新</li>
+<li>网络拓扑或连接经常变化时，维护静态路由的开销会变得非常大</li>
+</ol>
+<h5 id="动态路由">动态路由</h5>
+<p>与静态路由相反，<strong>如果网络拓扑发生变化，如链接故障或是新路由器的添加，动态路由协议会自动发现这些变化，并更新路由表</strong>。</p>
+<p><strong>收敛（Convergency）</strong></p>
+<p>动态路由协议通过一系列算法来确保所有路由器的路由表最终能够“收敛”到网络的最新状态。</p>
+<h5 id="rip">RIP</h5>
+<p><strong>DV 算法</strong></p>
+<p><strong>距离向量算法（Distance Vector algorithm，简称 DV
+算法）</strong>是一种用于计算路由表的路由选择算法。该算法由各个路由器使用，它们通过交换信息来发现网络中的最短路径。每个路由器都维护一张路由表，表中记录了到达网络中每个目的地的最佳距离（通常是以跳数为度量）以及下一跳路由器。</p>
+<p>工作原理：</p>
+<ol type="1">
+<li><strong>初始化</strong>：路由器启动时，距离向量表初始化为直接连接的邻居的距离。</li>
+<li><strong>交换信息</strong>：每个路由器<strong>定期与其邻居交换自己的距离向量表</strong>。</li>
+<li><strong>更新距离向量</strong>：当路由器收到邻居的距离向量表时，它会使用
+<strong>Bellman-Ford</strong> 算法来更新自己的表项。
+<ul>
+<li>对于每个目的地，如果通过该邻居的路径比当前记录的路径更短，路由器会更新该路径为更优的路径。</li>
+<li>更新包括设置新的距离和将下一跳设置为该邻居。</li>
+</ul></li>
+<li><strong>周期性更新</strong>：这个过程会周期性重复，以反映网络拓扑的变化。</li>
+</ol>
+<p><img
+src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-133222.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>RIP 协议</strong></p>
+<p><strong>RIP（Routing Information
+Protocol）</strong>是实现了距离向量算法的一个路由协议的例子。尽管有其局限性，RIP
+因其简单性和容易实施在一些环境中仍然被使用。</p>
+<p><strong>RIPv1 的数据包</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-133601.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ol type="1">
+<li><strong>命令（Command）</strong>：这是数据包的第一个字段，用于指示数据包的类型，如请求（1）或响应（2）</li>
+<li><strong>版本号（Version）</strong>：对于 RIPv1，这个字段的值为1</li>
+<li><strong>地址族标识符（Address Family
+Identifier，AFI）</strong>：用于指定地址的协议族</li>
+<li><strong>IP 地址（IP Address）</strong>：目的网络的IP地址</li>
+<li><strong>跳数（Metric）</strong>：到达目的网络的跳数，从
+1（直接连接的网络）到 15（可达网络的最大跳数），<strong>16
+表示不可达</strong></li>
+</ol>
+<p><strong>路由循环（Routing loop）</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-135407.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>如上图，如果 RB 和 RC 之间的连接失效，那么会导致 RB 和 RC
+之间不间断通信更新路由表，从而陷入无限循环。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-22-135959.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>解决方案：</p>
+<ol type="1">
+<li><p><strong>分裂水平（Split
+Horizon）</strong>：当一个路由器从某个接口学习到一个路由信息时，它不会通过这个接口将这个路由信息发送回去。这样做的目的是减少无效路由信息的传播，避免路由表中出现错误的路径信息。</p>
+<p>例如，假设有三个路由器 A、B 和 C，A 与 B 相连，B 与 C 相连。如果 A
+告诉 B 它有到达某个网络的路径，B 就不会把这个信息告诉 C 说它从 A
+那里学到的，这样 C 就不会通过 B
+来访问那个网络，因为这会形成一个环路。</p></li>
+<li><p><strong>保持计时器（Hold-Down
+Timer）</strong>：当一个路由器通过一个邻居收到一个到达特定网络更长的路径（比如更高的跳数或者度量值），它会启动一个保持计时器，并将该路由条目置于“保持”状态。</p></li>
+</ol>
+<h5 id="链路状态路由">链路状态路由</h5>
+<p>链路状态路由（Link-state
+Routing）是一种用于计算机网络中的路由算法。它的核心思想是每个路由器都维护一个关于整个网络拓扑结构的完整信息，然后使用这些信息来确定最短路径。</p>
+<ul>
+<li>每个节点都知道其到邻居节点的距离；</li>
+<li>每个节点的链路状态都会传递至网络的所有路由器；</li>
+<li>每个节点都有足够的信息来构建完整的网络拓扑结构；</li>
+<li>链路状态路由需要：
+<ul>
+<li><strong>可靠的广播（Reliable broadcasting）</strong></li>
+<li><strong>根据链路状态信息计算出最短路径</strong></li>
+</ul></li>
+</ul>
+<h5 id="ospf">OSPF</h5>
+<p>开放最短路径优先（OSPF）是一种链路状态协议，这意味着每个使用 OSPF
+的路由器都会构建一个完整的网络拓扑图，从而可以独立计算出到达网络中每个段的最佳路径。</p>
+<p><strong>OSPF 的工作模式</strong></p>
+<ol type="1">
+<li><p><strong>邻居发现</strong>：OSPF
+首先要求路由器发现相邻路由器，并建立邻居关系。路由器通过在特定的网络接口上发送
+Hello 消息<strong>（Hello
+Message）</strong>来实现这一点。当两个路由器成功收到彼此的 Hello
+消息并验证对方是可达的时候，它们就建立了邻居关系。</p>
+<ul>
+<li>广播到邻居</li>
+<li>有 ACK 接收机制</li>
+<li>建立双向通信</li>
+</ul></li>
+<li><p><strong>链路状态信息交换</strong>：一旦建立了邻居关系，路由器将开始交换链路状态信息。每个路由器将自己的链路状态信息打包成
+<strong>链路状态广告（Link-State
+Advertisement，LSA）</strong>并发送给相邻路由器。这些 LSA
+包含了路由器所知道的关于网络拓扑的信息，包括与相邻路由器的连接状态和链路成本。</p>
+<p>相邻路由器将收到的 LSA 保存在一个 Link-State
+Database（LSDB）中，并且将传输一个 LSA
+的复制给其他所有邻居，直到所有节点都收到信息。</p>
+<p>LSA 包括：</p>
+<ul>
+<li>Node ID</li>
+<li>SN 序列号</li>
+<li>...</li>
+</ul></li>
+<li><p><strong>最短路径计算</strong>：每个路由器都使用 <strong>Dijkstra
+算法</strong>基于 LSDB 计算<strong>最短路径树（SPF
+Tree）</strong>。这个最短路径树表示了到达网络中所有其他路由器的最短路径。路由器将根据这个树来确定下一跳路由器，以便将数据包传递到目的地。</p></li>
+</ol>
+<p><strong>OSPF 如何更新？</strong></p>
+<ol type="1">
+<li><strong>周期性的 Hello 消息</strong>：OSPF 路由器会定期发送 Hello
+消息以保持邻居关系。如果一个路由器停止接收到另一个路由器的 Hello
+消息，它将认为邻居关系已经断开，从而触发路由信息的更新。</li>
+<li><strong>LSA
+更新</strong>：<strong>当网络拓扑发生变化时，路由器会生成
+LSA</strong>，将这些信息广播给相邻路由器。这些 LSA
+包含有关路由器和链路状态的详细信息。相邻路由器将收到的 LSA
+存储在链路状态数据库（LSDB）中。</li>
+<li><strong>SPF 计算</strong>：<strong>每当 LSA
+更新到达或发生邻居关系变化时，路由器会使用 Dijkstra
+算法等算法计算最短路径树</strong>。这个最短路径树表示到达网络中所有其他路由器的最短路径。路由器使用这个树来更新它的路由表，以便正确地转发数据包。</li>
+</ol>
+<p><strong>OSPF 数据报结构</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-23-034416.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><strong>OSPF 信息类型</strong></p>
+<ul>
+<li>Hello：用于发现并与邻居建立通信</li>
+<li>数据库描述（Database Description）：用于交换网络拓扑结构</li>
+<li>链路请求（Link State
+Request）：请求更新（当前的数据库已经过时）</li>
+<li>链路更新（Link State Update）：传输 LSA</li>
+<li>链路确认（Link State Acknowledge）：作为 OSPF 数据的确认 ACK</li>
+</ul>
+<h4 id="ip-子网">IP 子网</h4>
+<p>IP <strong>子网（Subnet）</strong>是一种在 IP 网络中划分 IP
+地址空间的方法，使网络管理员可以更有效地管理和组织 IP
+地址。子网化允许将一个大的IP地址块分割成若干小的子网络，每个子网络可以分配给不同的部门、位置或用途，从而提高网络的灵活性和可管理性。</p>
+<h5 id="子网掩码">子网掩码</h5>
+<p><strong>子网掩码（Subnet Mask）</strong>是一个与 IP 地址一起使用的 32
+位二进制数字，用于标识 IP
+地址中哪部分是网络标识，哪部分是主机标识。它由一系列连续的 1 位和 0
+位组成，其中 1 位表示网络部分，0
+位表示主机部分。子网掩码的长度以无类别域间路由（Classless Inter-Domain
+Routing，CIDR）表示，通常以斜杠后面的数字表示，例如，/24 表示有 24
+位用于网络标识，剩余 8 位用于主机标识。</p>
+<p>无类别域间路由（CIDR）：CIDR 是一种灵活的 IP
+地址分配方法，允许以任意方式划分IP地址空间，而不受传统的类别（Class
+A、Class B、Class C 等）的限制。CIDR
+引入了更长或更短的子网掩码，以更精细地控制 IP 地址分配和路由。</p>
+<p>构建子网掩码：</p>
+<ol type="1">
+<li>判断 IP 类型，将所有 Net ID 部分全部赋值为 1；</li>
+<li>将子网部分全部赋值为 1；</li>
+<li>剩下的比特位都为 0；</li>
+<li>将二进制数字转化为十进制数字。</li>
+</ol>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-23-070823.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h5 id="子网分配方式">子网分配方式</h5>
+<p><strong>简单分配</strong></p>
+<ol type="1">
+<li><p>根据子网数量确定子网标识符需要的比特位数；</p>
+<blockquote>
+<p>例如，有 6 个子网，则需要至少 3 个 bit 来标识子网。</p>
+</blockquote></li>
+<li><p>在默认 Net ID 域后添加子网标识的几个 bit。</p></li>
+</ol>
+<p><strong>VLSM</strong></p>
+<p>可变长子网掩码（VLSM）是一种在子网划分中使用不同长度子网掩码的技术。它允许网络管理员将一个IP地址空间更有效地分割成多个子网，以满足不同大小网络的需求。VLSM的使用提供了比传统固定长度子网掩码（FLSM）更高的灵活性和地址空间利用率。</p>
+<p>在 VLSM
+中，不同的子网可以有不同长度的子网掩码，这意味着它们可以有不同数量的可用主机地址。例如，一个大的子网可能需要更多的地址，因此可以分配一个较短的子网掩码，而小的子网则可以使用更长的子网掩码，从而节省
+IP 地址空间。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/IP/">#IP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>网络层——IP 协议</div>
+      <div>http://example.com/2023/11/14/网络层——IP 协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
