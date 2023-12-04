@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="GPT（Generative Pre-trained Transformer）是一个由 OpenAI 开发的先进的自然语言处理（NLP）模型，专门用于处理各种语言任务。它基于 Transformer 架构，一种在 NLP 领域非常有效的深度学习模型结构。GPT 模型在多种语言任务上表现出色，包括但不限于：文本生成、问答系统、机器翻译、文本摘要、感情分析等。 要注意的是，不同于 BERT，GPT 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 Transfomer 的预训练模型 | GPT">
+<meta property="og:url" content="http://example.com/2023/12/03/Transfomer-%E5%AE%B6%E6%97%8F%E4%B9%8B-GPT/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="GPT（Generative Pre-trained Transformer）是一个由 OpenAI 开发的先进的自然语言处理（NLP）模型，专门用于处理各种语言任务。它基于 Transformer 架构，一种在 NLP 领域非常有效的深度学习模型结构。GPT 模型在多种语言任务上表现出色，包括但不限于：文本生成、问答系统、机器翻译、文本摘要、感情分析等。 要注意的是，不同于 BERT，GPT 是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-111835.png">
+<meta property="article:published_time" content="2023-12-03T08:22:42.000Z">
+<meta property="article:modified_time" content="2023-12-04T11:23:50.125Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="GPT">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-111835.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>基于 Transfomer 的预训练模型 | GPT - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">基于 Transfomer 的预训练模型 | GPT</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-03 16:22" pubdate>
+          2023年12月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          79 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">基于 Transfomer 的预训练模型 | GPT</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>GPT（Generative Pre-trained Transformer）是一个由 OpenAI
+开发的先进的自然语言处理（NLP）模型，专门用于处理各种语言任务。它基于
+Transformer 架构，一种在 NLP 领域非常有效的深度学习模型结构。GPT
+模型在多种语言任务上表现出色，包括但不限于：文本生成、问答系统、机器翻译、文本摘要、感情分析等。</p>
+<p>要注意的是，不同于 BERT，GPT
+是一个自回归模型，使用了监督学习的方式，进行从左到右的语言建模，因此 GPT
+在生成时只能查看之前的单词（单向上下文）。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-112129.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<h4 id="基本结构">基本结构</h4>
+<p>由于 GPT 任务的特殊性，其只保留了 Transformer
+的解码器（Decoder），舍弃了编码器（Encoder）。所以如果能够理解
+Transformer，那么理解 GPT 模型自然也就不难了。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-114307.png" srcset="/img/loading.gif" lazyload alt="GPT Decoder Layer 结构，删除了编码器-解码器注意力模块" style="zoom:35%;" /></p>
+<p class="note note-info">
+Decoder
+层面的自注意力机制允许模型在生成每个新词时看到之前的所有词，这对于生成连贯的文本至关重要。而
+Encoder 部分是为了编码输入序列到一个固定长度的连续表征中，这在 GPT
+的预训练目标中并不是必要的。此外，省略 Encoder
+可以简化模型的结构，并专注于提高文本生成能力。
+</p>
+<h4 id="两种文本生成策略">两种文本生成策略</h4>
+<ol type="1">
+<li><strong>贪心解码</strong>：
+<ul>
+<li>在每一步，模型选择概率最高的单词作为下一个单词。</li>
+<li>这种方法<strong>速度快，计算成本低，但可能不是最佳选择</strong>，因为它不考虑整体句子的最佳组合，可能导致局部最优解。</li>
+</ul></li>
+<li><strong>集束搜索解码</strong>：
+<ul>
+<li>在每一步保持多个可能的候选序列（称为 “集束” 或 “beam”）。</li>
+<li>集束的宽度（Beam width）决定了在每一步有多少候选序列被考虑。</li>
+<li><strong>集束搜索会在每个时间步骤考虑多个可能的继承候选，并在序列结束时选择整体得分最高的序列</strong>。</li>
+<li>这种方法<strong>更能找到质量高的序列，但计算成本更高，速度也较慢</strong>。</li>
+</ul></li>
+</ol>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-120502.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="代码实现">代码实现</h4>
+<h5 id="gpt-decoder">GPT Decoder</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ...</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DecoderLayer</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(DecoderLayer, self).__init__()<br>        self.self_attn = MultiHeadAttention()  <span class="hljs-comment"># 多头自注意力层</span><br>        self.feed_forward = FFN()  <span class="hljs-comment"># 位置前馈神经网络层</span><br>        self.norm1 = nn.LayerNorm(d_embedding)  <span class="hljs-comment"># 第一个层归一化</span><br>        self.norm2 = nn.LayerNorm(d_embedding)  <span class="hljs-comment"># 第二个层归一化</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, dec_inputs, attn_mask=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 使用多头自注意力处理输入</span><br>        attn_output, _ = self.self_attn(dec_inputs, dec_inputs, dec_inputs, attn_mask)<br>        <span class="hljs-comment"># 将注意力输出与输入相加并进行第一个层归一化</span><br>        norm1_outputs = self.norm1(dec_inputs + attn_output)<br>        <span class="hljs-comment"># 将归一化后的输出输入到位置前馈神经网络</span><br>        ff_outputs = self.feed_forward(norm1_outputs)<br>        <span class="hljs-comment"># 将前馈神经网络输出与第一次归一化后的输出相加并进行第二个层归一化</span><br>        dec_outputs = self.norm2(norm1_outputs + ff_outputs)<br>        <span class="hljs-keyword">return</span> dec_outputs<br><br>n_layers = <span class="hljs-number">6</span>  <span class="hljs-comment"># 设置 Decoder 的层数</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Decoder</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, corpus</span>):<br>        <span class="hljs-built_in">super</span>(Decoder, self).__init__()<br>        self.src_emb = nn.Embedding(corpus.vocab_size, d_embedding)  <span class="hljs-comment"># 词嵌入层（参数为词典维度）</span><br>        self.pos_emb = nn.Embedding(corpus.seq_len, d_embedding)  <span class="hljs-comment"># 位置编码层（参数为序列长度）        </span><br>        self.layers = nn.ModuleList([DecoderLayer() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n_layers)])<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, dec_inputs</span>):        <br>        positions = torch.arange(<span class="hljs-built_in">len</span>(dec_inputs), device=dec_inputs.device).unsqueeze(-<span class="hljs-number">1</span>) <span class="hljs-comment"># 位置信息        </span><br>        inputs_embedding = self.src_emb(dec_inputs) + self.pos_emb(positions) <span class="hljs-comment"># 词嵌入与位置编码相加        </span><br>        attn_mask = get_attn_subsequent_mask(inputs_embedding).to(dec_inputs.device) <span class="hljs-comment"># 生成自注意力掩码</span><br>        dec_outputs =  inputs_embedding <span class="hljs-comment"># 初始化解码器输入，这是第一层解码器层的输入      </span><br>        <span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> self.layers:<br>            <span class="hljs-comment"># 每个解码器层接收前一层的输出作为输入，并生成新的输出</span><br>            <span class="hljs-comment"># 对于第一层解码器层，其输入是 dec_outputs，即词嵌入和位置编码的和</span><br>            <span class="hljs-comment"># 对于后续的解码器层，其输入是前一层解码器层的输出            </span><br>            dec_outputs = layer(dec_outputs, attn_mask) <span class="hljs-comment"># 将输入数据传递给解码器层</span><br>        <span class="hljs-keyword">return</span> dec_outputs <span class="hljs-comment"># 返回最后一个解码器层的输出，作为整个解码器的输出</span><br></code></pre></td></tr></table></figure>
+<h5 id="文本生成">文本生成</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk.tokenize <span class="hljs-keyword">import</span> word_tokenize <span class="hljs-comment"># 分词工具</span><br><br><span class="hljs-comment"># 贪心搜索</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_text_greedy_search</span>(<span class="hljs-params">model, input_str, max_len=<span class="hljs-number">5</span></span>):<br>    <span class="hljs-comment"># 将模型设置为评估（测试）模式，关闭 dropout 和 batch normalization 等训练相关的层</span><br>    model.<span class="hljs-built_in">eval</span>()<br>    <span class="hljs-comment"># 使用 NLTK 工具进行词汇切分</span><br>    input_str = word_tokenize(input_str)<br>    <span class="hljs-comment"># 将输入字符串中的每个 token 转换为其在词汇表中的索引, 如果输入的词不在词表里面，就忽略这个词</span><br>    input_tokens = [model.corpus.vocab[token] <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> input_str <span class="hljs-keyword">if</span> token <span class="hljs-keyword">in</span> model.corpus.vocab]<br>    <span class="hljs-comment"># 检查输入的有意义的词汇长度是否为 0</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(input_tokens) == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span>         <br>    <span class="hljs-comment"># 创建一个列表，用于存储生成的词汇</span><br>    output_tokens = input_tokens<br>    <span class="hljs-comment"># 禁用梯度计算，以节省内存并加速测试过程</span><br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        <span class="hljs-comment"># 生成最多 max_len 个 tokens</span><br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(max_len):<br>            <span class="hljs-comment"># 将当前生成的 tokens 转换为 torch 张量并将其传递给模型</span><br>            device = <span class="hljs-string">&quot;cuda&quot;</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;cpu&quot;</span><br>            inputs = torch.LongTensor(output_tokens).unsqueeze(<span class="hljs-number">0</span>).to(device)<br>            outputs = model(inputs)                <br>            <span class="hljs-comment"># 只关心最后一个时间步（即最新生成的 token）的 logits</span><br>            logits = outputs[:, -<span class="hljs-number">1</span>, :]<br>            <span class="hljs-comment"># 找到具有最高分数的 token</span><br>            _, next_token = torch.topk(logits, <span class="hljs-number">1</span>, dim=-<span class="hljs-number">1</span>)<br>            <span class="hljs-comment"># 如果生成的 token 是 EOS（结束符），则停止生成</span><br>            <span class="hljs-keyword">if</span> next_token.item() == model.corpus.vocab[<span class="hljs-string">&quot;&lt;eos&gt;&quot;</span>]:<br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-comment"># 否则，将生成的 token 添加到生成的词汇列表中</span><br>            output_tokens.append(next_token.item())<br>    <span class="hljs-comment"># 将输出 tokens 转换回文本字符串</span><br>    output_str = <span class="hljs-string">&quot; &quot;</span>.join([model.corpus.idx2word[token] <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> output_tokens])<br>    <span class="hljs-keyword">return</span> output_str<br><br><span class="hljs-comment"># 集束搜索</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_text_beam_search</span>(<span class="hljs-params">model, input_str, max_len=<span class="hljs-number">5</span>, beam_width=<span class="hljs-number">5</span>, repetition_penalty=<span class="hljs-number">1.2</span></span>):<br>    <span class="hljs-comment"># 将模型设置为评估（测试）模式，关闭 dropout 和 batch normalization 等训练相关的层</span><br>    model.<span class="hljs-built_in">eval</span>()<br>    <span class="hljs-comment"># 分词</span><br>    input_str = word_tokenize(input_str)<br>    <span class="hljs-comment"># 将输入字符串中的每个 token 转换为其在词汇表中的索引, 如果输入的词不再词表里面，就忽略这个词</span><br>    input_tokens = [model.corpus.vocab[token] <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> input_str <span class="hljs-keyword">if</span> token <span class="hljs-keyword">in</span> model.corpus.vocab]<br>    <span class="hljs-comment"># 检查输入的有意义的词汇长度是否为0</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(input_tokens) == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span>         <br>    <span class="hljs-comment"># 创建一个列表，用于存储候选序列，初始候选序列只包含输入 tokens</span><br>    candidates = [(input_tokens, <span class="hljs-number">0.0</span>)]    <br>    <span class="hljs-comment"># 创建一个列表，用于存储所有生成的序列及其得分</span><br>    final_results = []<br>    <span class="hljs-comment"># 禁用梯度计算，以节省内存并加速测试过程</span><br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        <span class="hljs-comment"># 生成最多max_len个tokens</span><br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(max_len):<br>            <span class="hljs-comment"># 创建一个新的候选列表，用于存储当前时间步生成的候选序列</span><br>            new_candidates = []            <br>            <span class="hljs-comment"># 遍历当前候选序列</span><br>            <span class="hljs-keyword">for</span> candidate, candidate_score <span class="hljs-keyword">in</span> candidates:<br>                <span class="hljs-comment"># 将当前候选序列转换为 torch 张量并将其传递给模型</span><br>                device = <span class="hljs-string">&quot;cuda&quot;</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;cpu&quot;</span><br>                inputs = torch.LongTensor(candidate).unsqueeze(<span class="hljs-number">0</span>).to(device)<br>                outputs = model(inputs)                <br>                <span class="hljs-comment"># 只关心最后一个时间步（即最新生成的token）的logits</span><br>                logits = outputs[:, -<span class="hljs-number">1</span>, :]<br>                <span class="hljs-comment"># 应用重复惩罚：为已经生成的词汇应用惩罚，降低它们再次被选择的概率</span><br>                <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span>(candidate):<br>                    logits[<span class="hljs-number">0</span>, token] /= repetition_penalty<br>                <span class="hljs-comment"># 将 &lt;pad&gt; 标记的得分设置为一个很大的负数，以避免选择它</span><br>                logits[<span class="hljs-number">0</span>, model.corpus.vocab[<span class="hljs-string">&quot;&lt;pad&gt;&quot;</span>]] = -<span class="hljs-number">1e9</span>                <br>                <span class="hljs-comment"># 找到具有最高分数的前 beam_width 个 tokens</span><br>                scores, next_tokens = torch.topk(logits, beam_width, dim=-<span class="hljs-number">1</span>)<br>                <span class="hljs-comment"># 遍历生成的 tokens 及其得分</span><br>                <span class="hljs-keyword">for</span> score, next_token <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(scores.squeeze(), next_tokens.squeeze()):<br>                    <span class="hljs-comment"># 将生成的 token 添加到当前候选序列</span><br>                    new_candidate = candidate + [next_token.item()]                    <br>                    <span class="hljs-comment"># 更新候选序列得分</span><br>                    new_score = candidate_score - score.item()                    <br>                    <span class="hljs-comment"># 如果生成的 token 是 EOS（结束符），将其添加到最终结果中</span><br>                    <span class="hljs-keyword">if</span> next_token.item() == model.corpus.vocab[<span class="hljs-string">&quot;&lt;eos&gt;&quot;</span>]:<br>                        final_results.append((new_candidate, new_score))<br>                    <span class="hljs-keyword">else</span>:<br>                        <span class="hljs-comment"># 将新生成的候选序列添加到新候选列表中</span><br>                        new_candidates.append((new_candidate, new_score))<br>            <span class="hljs-comment"># 从新候选列表中选择得分最高的 beam_width 个序列</span><br>            candidates = <span class="hljs-built_in">sorted</span>(new_candidates, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>], reverse=<span class="hljs-literal">True</span>)[:beam_width]<br>    <span class="hljs-comment"># 选择得分最高的候选序列，如果 final_results 为空，选择当前得分最高的候选序列</span><br>    <span class="hljs-keyword">if</span> final_results:<br>        best_candidate, _ = <span class="hljs-built_in">sorted</span>(final_results, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>])[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">else</span>:<br>        best_candidate, _ = <span class="hljs-built_in">sorted</span>(candidates, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>])[<span class="hljs-number">0</span>]<br>    <span class="hljs-comment"># 将输出 token 转换回文本字符串</span><br>    output_str = <span class="hljs-string">&quot; &quot;</span>.join([model.corpus.idx2word[token] <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> best_candidate])<br>    <span class="hljs-keyword">return</span> output_str<br></code></pre></td></tr></table></figure>
+<h5 id="gpt-完整实现">GPT 完整实现</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">GPT</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, corpus</span>):<br>        <span class="hljs-built_in">super</span>(GPT, self).__init__()<br>        self.corpus = corpus<br>        self.decoder = Decoder(corpus) <span class="hljs-comment"># 解码器，用于学习文本生成能力</span><br>        self.projection = nn.Linear(d_embedding, corpus.vocab_size)  <span class="hljs-comment"># 全连接层，输出预测结果</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, dec_inputs</span>):        <br>        dec_outputs = self.decoder(dec_inputs) <span class="hljs-comment"># 将输入数据传递给解码器</span><br>        logits = self.projection(dec_outputs) <span class="hljs-comment"># 传递给全连接层以生成预测</span><br>        <span class="hljs-keyword">return</span> logits <span class="hljs-comment"># 返回预测结果</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">decode</span>(<span class="hljs-params">self, input_str, strategy=<span class="hljs-string">&#x27;greedy&#x27;</span>, **kwargs</span>):<br>        <span class="hljs-keyword">if</span> strategy == <span class="hljs-string">&#x27;greedy&#x27;</span>: <span class="hljs-comment"># 贪心解码函数</span><br>            <span class="hljs-keyword">return</span> generate_text_greedy_search(self, input_str, **kwargs)<br>        <span class="hljs-keyword">elif</span> strategy == <span class="hljs-string">&#x27;beam_search&#x27;</span>: <span class="hljs-comment"># 集束解码函数</span><br>            <span class="hljs-keyword">return</span> generate_text_beam_search(self, input_str, **kwargs)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;Unknown decoding strategy: <span class="hljs-subst">&#123;strategy&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h4 id="预训练一个轻量-gpt">预训练一个轻量 GPT</h4>
+<h5 id="定义语料库类">定义语料库类</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># WikiCorpus语料库类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">WikiCorpus</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, sentences, max_seq_len=<span class="hljs-number">256</span></span>):<br>        self.sentences = sentences<br>        self.seq_len = max_seq_len<br>        self.vocab = self.create_vocabularies()<br>        self.vocab_size = <span class="hljs-built_in">len</span>(self.vocab)<br>        self.idx2word = &#123;v: k <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> self.vocab.items()&#125;<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">create_vocabularies</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># counter = Counter(word for sentence in self.sentences for word in sentence.split())</span><br>        <span class="hljs-comment"># vocab = &#123;&#x27;&lt;pad&gt;&#x27;: 0, &#x27;&lt;sos&gt;&#x27;: 1, &#x27;&lt;eos&gt;&#x27;: 2, **&#123;word: i+3 for i, word in enumerate(counter)&#125;&#125;</span><br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;shared_vocab.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">as</span> f:<br>            vocab = &#123;line.split()[<span class="hljs-number">0</span>]: <span class="hljs-built_in">int</span>(line.split()[<span class="hljs-number">1</span>]) <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> f&#125;<br>        <span class="hljs-keyword">return</span> vocab   <br><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">make_batch</span>(<span class="hljs-params">self, batch_size</span>):<br>        input_batch, target_batch = [], []<br><br>        <span class="hljs-comment"># 随机选择句子索引</span><br>        sentence_indices = torch.randperm(<span class="hljs-built_in">len</span>(self.sentences))[:batch_size]<br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> sentence_indices:<br>            sentence = self.sentences[index]<br>            words = sentence.split()[:self.seq_len - <span class="hljs-number">2</span>]  <span class="hljs-comment"># 截断句子,确保长度不超过 max_seq_len - 2（为了留出 &lt;sos&gt; 和 &lt;eos&gt;）</span><br>            seq = [self.vocab[<span class="hljs-string">&#x27;&lt;sos&gt;&#x27;</span>]] + [self.vocab[word] <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words] + [self.vocab[<span class="hljs-string">&#x27;&lt;eos&gt;&#x27;</span>]]<br><br>            <span class="hljs-comment"># 对序列进行填充</span><br>            seq += [self.vocab[<span class="hljs-string">&#x27;&lt;pad&gt;&#x27;</span>]] * (self.seq_len - <span class="hljs-built_in">len</span>(seq))<br><br>            <span class="hljs-comment"># 将处理好的序列添加到批次中</span><br>            input_batch.append(seq[:-<span class="hljs-number">1</span>])<br>            target_batch.append(seq[<span class="hljs-number">1</span>:])<br><br>        <span class="hljs-comment"># 将批次转换为LongTensor类型</span><br>        input_batch = torch.LongTensor(input_batch)<br>        target_batch = torch.LongTensor(target_batch)<br><br>        <span class="hljs-keyword">return</span> input_batch, target_batch<br></code></pre></td></tr></table></figure>
+<h5 id="训练类">训练类</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> torch.optim <span class="hljs-keyword">as</span> optim<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trainer</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, model, corpus, batch_size=<span class="hljs-number">24</span>, learning_rate=<span class="hljs-number">0.01</span>, epochs=<span class="hljs-number">10</span>, device=<span class="hljs-literal">None</span></span>):<br>        self.model = model<br>        self.corpus = corpus<br>        self.vocab_size = corpus.vocab_size<br>        self.batch_size = batch_size<br>        self.lr = learning_rate<br>        self.epochs = epochs<br>        self.device = device <span class="hljs-keyword">or</span> (<span class="hljs-string">&quot;cuda&quot;</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;cpu&quot;</span>)        <br>        self.criterion = nn.CrossEntropyLoss(ignore_index=corpus.vocab[<span class="hljs-string">&quot;&lt;pad&gt;&quot;</span>])<br>        self.optimizer = optim.Adam(self.model.parameters(), self.lr)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">self</span>):<br>        self.model.to(self.device)<br>        <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.epochs):<br>            self.optimizer.zero_grad()<br>            dec_inputs, target_batch = self.corpus.make_batch(self.batch_size)<br>            dec_inputs, target_batch = dec_inputs.to(self.device), target_batch.to(self.device)<br>            outputs = self.model(dec_inputs)<br>            loss = self.criterion(outputs.view(-<span class="hljs-number">1</span>, self.corpus.vocab_size), target_batch.view(-<span class="hljs-number">1</span>))<br>            loss.backward()<br>            self.optimizer.step()<br></code></pre></td></tr></table></figure>
+<h5 id="训练过程">训练过程</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Utilities <span class="hljs-keyword">import</span> read_data<br><br><span class="hljs-comment"># 导入数据集    </span><br><span class="hljs-keyword">from</span> CorpusLoader <span class="hljs-keyword">import</span> WikiCorpus<br>corpus = WikiCorpus(read_data(<span class="hljs-string">&#x27;wikitext-103/wiki.train.txt&#x27;</span>)) <br><br><span class="hljs-comment"># 导入 GPT 模型</span><br><span class="hljs-keyword">from</span> GPT_Model_with_Decode <span class="hljs-keyword">import</span> GPT<br>WikiGPT = GPT(corpus)<br><span class="hljs-built_in">print</span>(WikiGPT) <span class="hljs-comment"># 打印模型架构</span><br><br><span class="hljs-comment"># 训练 GPT 模型</span><br><span class="hljs-keyword">from</span> ModelTrainer <span class="hljs-keyword">import</span> Trainer<br>trainer = Trainer(WikiGPT, corpus, learning_rate=<span class="hljs-number">0.01</span>, epochs = <span class="hljs-number">200</span>)<br>trainer.train()  <br><br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-comment"># 获取当前时间戳</span><br>now = datetime.datetime.now()<br>timestamp = now.strftime(<span class="hljs-string">&quot;%Y%m%d_%H%M%S&quot;</span>)<br><br><span class="hljs-comment"># 保存模型</span><br><span class="hljs-keyword">import</span> torch<br>model_save_path = <span class="hljs-string">f&#x27;99_TrainedModel/WikiGPT_<span class="hljs-subst">&#123;trainer.lr&#125;</span>_<span class="hljs-subst">&#123;trainer.epochs&#125;</span>_<span class="hljs-subst">&#123;timestamp&#125;</span>.pth&#x27;</span><br></code></pre></td></tr></table></figure>
+<h4 id="从-gpt-到-chatgpt">从 GPT 到 ChatGPT</h4>
+<p>GPT
+预训练模型是完整语言模型的基础。预训练模型通过在大量文本上学习语言的统计规律，来获得对语言的一般理解。这个阶段模型不专注于任何特定任务，只是学习如何预测文本中下一个单词的出现。</p>
+<p>完成预训练后，模型可以用于各种特定的语言任务，如文本生成、翻译、问答等。为了在这些任务上表现得更好，模型通常会进行<strong>微调（Fine-tuning）</strong>，在特定任务的数据集上进一步训练，以适应特定的语言使用场景。预训练模型为这个过程提供了一个强大的起点，微调则根据特定任务进一步优化模型。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-122925.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-03-114144.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Transformer/">#Transformer</a>
+      
+        <a href="/tags/NLP/">#NLP</a>
+      
+        <a href="/tags/GPT/">#GPT</a>
+      
+        <a href="/tags/LLM/">#LLM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于 Transfomer 的预训练模型 | GPT</div>
+      <div>http://example.com/2023/12/03/Transfomer-家族之-GPT/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/20/Scrapy%20%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Scrapy 框架学习笔记">
+                        <span class="hidden-mobile">Scrapy 框架学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
