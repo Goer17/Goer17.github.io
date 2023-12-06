@@ -16,16 +16,22 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="为什么需要内存管理？  计算机的内存被所有进程共享，但是编译器和程序员无法得知当前还有多少进程在内存中的什么地方。 内存管理的主要需求：  代码重定向（Code relocation） 代码重定位是指将程序中的某些代码或数据从一个位置移动到另一个位置的过程。 保护 &amp; 共享（Protection &amp; Sharing） 使得每个进程都有自己的地址空间，便于程序员编程   虚拟内存 &amp;">
+<meta property="og:type" content="article">
 <meta property="og:title" content="内存管理">
 <meta property="og:url" content="http://example.com/2023/11/02/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="为什么需要内存管理？  计算机的内存被所有进程共享，但是编译器和程序员无法得知当前还有多少进程在内存中的什么地方。 内存管理的主要需求：  代码重定向（Code relocation） 代码重定位是指将程序中的某些代码或数据从一个位置移动到另一个位置的过程。 保护 &amp; 共享（Protection &amp; Sharing） 使得每个进程都有自己的地址空间，便于程序员编程   虚拟内存 &amp;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-082053.png">
 <meta property="article:published_time" content="2023-11-02T05:04:52.000Z">
-<meta property="article:modified_time" content="2023-11-18T05:05:34.519Z">
+<meta property="article:modified_time" content="2023-12-06T08:21:17.600Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="内存管理">
+<meta property="article:tag" content="MMU">
+<meta property="article:tag" content="页表">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-082053.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -247,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          6.8k 字
         
       </span>
     
@@ -258,7 +264,7 @@
         
         
         
-          1 分钟
+          57 分钟
         
       </span>
     
@@ -301,7 +307,372 @@
             
               <div class="markdown-body">
                 
-                
+                <h3 id="为什么需要内存管理">为什么需要内存管理？</h3>
+<ul>
+<li><p>计算机的内存被所有进程共享，但是编译器和程序员无法得知当前还有多少进程在内存中的什么地方。</p></li>
+<li><p>内存管理的主要需求：</p>
+<ul>
+<li><p><strong>代码重定向（Code relocation）</strong></p>
+<p><strong>代码重定位</strong>是指将程序中的某些代码或数据从一个位置移动到另一个位置的过程。</p></li>
+<li><p><strong>保护 &amp; 共享（Protection &amp;
+Sharing）</strong></p></li>
+<li><p><strong>使得每个进程都有自己的地址空间，便于程序员编程</strong></p></li>
+</ul></li>
+</ul>
+<h3 id="虚拟内存-物理内存">虚拟内存 &amp; 物理内存</h3>
+<ul>
+<li><p><strong>虚拟内存（Virtual
+memory）</strong>，也称<strong>逻辑内存（Logical
+memory）</strong>，是给每个程序进程分配的内存，其大小由计算机寻址位数决定，对于
+32 位机器而言，虚拟内存的大小为 <span class="math inline">\(2 ^
+{32}\)</span> B <span class="math inline">\(=\)</span> <span
+class="math inline">\(4\)</span> GB；对于 64
+为机器而言，虚拟地址的大小为 <span class="math inline">\(2 ^
+{64}\)</span> B <span class="math inline">\(\approx\)</span> <span
+class="math inline">\(4 \times 10 ^ 9\)</span>
+GB，这已经满足绝大多数内存存储需求。</p>
+<p>虚拟内存中的地址称为虚拟地址，是每个进程可以访问的地址。如下图，使用
+64 位 ARM 机器编写的一个 C 语言程序，所打印的变量地址就是虚拟地址：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-05-163955.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p><strong>物理内存（Phsical
+memory）</strong>，也称<strong>真实内存（Real
+memory）</strong>，物理内存中的地址称为物理地址，是程序真正占用的地址，每个有效虚拟地址都会映射到与之特定的物理地址。</p></li>
+</ul>
+<h3 id="内存映射">内存映射</h3>
+<p>由于虚拟内存是不存在的，所以我们在寻址时要根据虚拟内存找到对应的物理内存，这样的技术称为内存映射。</p>
+<h4 id="内存分区">内存分区</h4>
+<p>内存分区（Partition
+Memory）是一种古老的内存映射方式，其有两个主要分类，一个是<strong>不变分区（Fixed
+Partitioning）</strong>，另一个是<strong>动态分区（Dynamic
+Partitioning）</strong>。</p>
+<ul>
+<li><p><strong>不变分区</strong>：</p>
+<ul>
+<li><p>在机器启动时间（Boot
+time）就将内存分为几个连续的块，此后这几个块分区不会发生变化。</p>
+<p>如下图所示，<code>x</code> 表示进程已使用内存：</p>
+<table>
+<thead>
+<tr class="header">
+<th>Block 1</th>
+<th>Block 2</th>
+<th>Block 3</th>
+<th>Block 4</th>
+<th>Block 5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>xxxxx</code></td>
+<td><code>xx000</code></td>
+<td><code>x0000</code></td>
+<td><code>xxx00</code></td>
+<td><code>x0000</code></td>
+</tr>
+</tbody>
+</table>
+<p>可见，这样简单粗暴的分区方式一是限制了每个进程内存的增长，同时产生了大量的<strong>内部碎片（Internel
+fragmentation）</strong>，即<strong>我们可能会给一些进程预留一些不会使用到的内存</strong>。</p></li>
+<li><p>硬件要求：一个<strong>基地址寄存器（Base
+register）</strong>，基地址寄存器存储了每个进程对应物理内存的起始地址，<strong>寄存器的数据在上下文切换（Context
+switch）时由 OS 加载</strong>。</p></li>
+<li><p>映射公式： <span class="math display">\[
+  \text{Physical Address} = \text{Logical Address} + \text{Base
+Register}
+  \]</span></p></li>
+</ul></li>
+<li><p><strong>动态分区</strong></p>
+<ul>
+<li><p>动态分区相对而言更加灵活，动态分区技术只在程序被加载，即操作系统创建新进程时创建分区。</p></li>
+<li><p>这种按需分配的分区技术<strong>可以避免内部碎片</strong>，但是未被分配的内存会零散分布在内存中，造成<strong>外部碎片（External
+fragmentation）</strong>，例如下图：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-05-172132.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p></li>
+<li><p>硬件要求：一个<strong>基地址寄存器</strong>，这一点和不变分区技术一致；同时还需要一个<strong>限制寄存器（Limit
+register）</strong>，限制寄存器限制了进程内存的最大偏移量。</p></li>
+<li><p>映射公式： <span class="math display">\[
+  \text{Physical Address} = \text{Logical Address} + \text{Base
+Register}
+  \]</span> 保护机制： <span class="math display">\[
+  \text{if}\ (\text{Physical Address} &gt; \text{Base register} +
+\text{Limit register}) \implies \text{TRAP!}
+  \]</span>
+当程序尝试访问超出其限制寄存器定义的内存段范围时，操作系统会捕获并处理异常，这就是我们常说的段错误（Segmentation
+fault）。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-05-173038.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p></li>
+</ul></li>
+</ul>
+<h4 id="页-帧">页 &amp; 帧</h4>
+<p><strong>页（Page）</strong>和<strong>帧（Frame）</strong>是现代计算机内存管理中两个重要概念，它们都是一种固定大小且相等的内存块（一般是
+4
+KB）。页用于指代虚拟内存，而帧用于指代物理内存。有效的页都可以映射到物理内存中的某个帧，即计算机会给每个正在运行的进程的每个页分配一个帧（不考虑多级页表）。</p>
+<p>我们根据页查找到帧，然后根据帧号找到真实的物理内存：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-05-174425.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>页到帧的映射是如何进行的呢？接下来就引入了我们的页表。</p>
+<h4 id="页表-一级页表寻址">页表 &amp; 一级页表寻址</h4>
+<p>以 32 位操作系统为例，每个逻辑地址我们可以分成两部分：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-022601.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ul>
+<li>高 20 位比特：用于表示<strong>页编号（Page number）</strong>，大小从
+<span class="math inline">\(0\)</span> 到 <span class="math inline">\(2
+^ {20}\)</span>。</li>
+<li>低 12 位比特：用于表示<strong>页偏移地址（Offset in
+page）</strong>，大小从 <span class="math inline">\(0\)</span> B 到
+<span class="math inline">\(2 ^ {12}\)</span> B，说明每个页的大小为
+<span class="math inline">\(4\)</span> KB。</li>
+</ul>
+<p>操作系统为每个进程维护了一个<strong>页表（Page
+table）</strong>，每个<strong>页表项（PTE）</strong>如下：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-023128.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<ul>
+<li><strong>高 20
+位比特表示页帧编号，对应的是物理地址的帧编号，即作为物理地址的高 20
+位比特</strong>。</li>
+<li>后续几个域：
+<ul>
+<li>P（Present）：一般用作有效位，即该页表项对应的帧是否在内存中。</li>
+<li>W（Writeable）：表示页面是否可写。</li>
+<li>U（User）：用于表示用户权限。</li>
+<li>PWT（Page Write
+Transparent）：用于指定页面级别的写透明策略（External cache
+write-through）。</li>
+<li>PCD（Page Cache Disabled）：是否禁用高速缓存。</li>
+<li>A（Accessd）：表示页面最近是否被访问过。</li>
+<li>D（Dirty）：页面最近是否被修改过（只用于 PTE）。</li>
+<li>L（Large）：指示操作系统和硬件是否使用大页面（Large
+Page）而不是标准的小页面（Small Page）来管理内存。</li>
+</ul></li>
+</ul>
+<p><strong>如何根据逻辑地址加页表寻址</strong>？</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-032450.png" srcset="/img/loading.gif" lazyload alt="Paging workflow" style="zoom:50%;" /></p>
+<ol type="1">
+<li><p>根据逻辑地址的页编号，加上<strong>存储页表地址的寄存器</strong>存储的值就可以找到目标页编号对应的页表项；</p>
+<blockquote>
+<p>以 x86 架构为例子，CR3（Control Register
+3）用于管理分页机制。CR3寄存器主要用于存储页目录表的基地址（Page
+Directory Base
+Address），它是分页机制中的重要组成部分，用于虚拟地址到物理地址的转换。</p>
+</blockquote></li>
+<li><p>页表项中的页帧号对应物理内存中的帧编号，加上逻辑地址的偏移值，即可映射到真实的物理地址。</p></li>
+</ol>
+<p>这种映射方式由许多<strong>优点</strong>：</p>
+<ul>
+<li><p><strong>消除了外部碎片</strong>，可能还会有内部碎片，但是对于 4KB
+的页面而言内部碎片不会造成多大的空间浪费；</p></li>
+<li><p>易于实现；</p></li>
+<li><p>易于保护和共享；</p></li>
+<li><p>很容易分配物理内存，每次从空闲帧列表中选择一些帧进行分配即可。</p>
+<blockquote>
+<p>空闲帧列表（List of free
+frames）是一个在操作系统内存管理中常见的数据结构，用于跟踪系统中哪些物理内存帧（或页面帧）当前是空闲的，可以用于分配给新的进程或任务。</p>
+</blockquote></li>
+</ul>
+<p>于此同时也造成了一些<strong>问题</strong>：</p>
+<ul>
+<li><p><strong>页表太大（Page table size is too large）</strong>：</p>
+<p>一个页表项一共 <span class="math inline">\(4\)</span>
+B，页面编号一共有 <span class="math inline">\(2 ^ {20}\)</span>
+个，每个进程都要维护一个 <span class="math inline">\(4 \times 2 ^
+{20}\)</span> B <span class="math inline">\(=\)</span> <span
+class="math inline">\(4\)</span> MB 的页表，如果当前系统有 1000
+个进程，则需要维护约 <span class="math inline">\(4\)</span> GB
+的页表，事实上每个进程有许多页面都是完全不使用的，造成了很大的空间浪费。</p></li>
+<li><p><strong>内存访问慢（Memory access is slow）</strong>：</p>
+<p>不同于之前的内存分区技术，页面映射需要通过页表进行内存访问，这样使得访问速度大打折扣。</p></li>
+</ul>
+<p>后文我们提及的<strong>多级页表</strong>和 <strong>TLB</strong>
+技术将解决这两个问题。</p>
+<h4 id="页面交换-页面错误">页面交换 &amp; 页面错误</h4>
+<h5 id="页面交换">页面交换</h5>
+<p>我们不难注意到，当前 64
+位机器的逻辑内存远远大于实际的物理内存大小，那么当物理内存不够后，逻辑内存又是如何分配的呢？</p>
+<p>事实上，物理内存中许多帧长期不会被使用，这样的帧操作系统会将其置换到磁盘中（这里可以类比进程的挂起），这样的技术称为<strong>页面交换（Page
+Swapping）</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-035909.png" srcset="/img/loading.gif" lazyload alt="Page Swapping" style="zoom:35%;" /></p>
+<p>回到刚刚的问题，当物理内存不够后，又要给新的逻辑地址分配帧时，又该如何做呢？</p>
+<p>答案是：将当前物理内存中的闲置帧转移到磁盘中，给新的帧预留位置，然后对页表进行对应的更新，如下图所示（<a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1924y1B7L7/?spm_id_from=333.788&amp;vd_source=8ba5b8b5f59444a6cbd4c3984325e82f">图源：B
+站</a>）。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-040903.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:40%;" /></p>
+<p><strong>帧锁定（Frame Locking）</strong></p>
+<p>注意，不是所有帧都可以被置换到磁盘，有些特殊的帧会被锁定而无法被置换到磁盘，比如：</p>
+<ul>
+<li>系统内核</li>
+<li>I/O 缓存</li>
+<li>...</li>
+</ul>
+<h5 id="页面错误">页面错误</h5>
+<p>如果某时刻，进程需要访问某个页面，如果发现该页面对应的帧不在内存中，这个时候就会触发<strong>页面错误（Page
+fault）</strong>。至于这个页面是否在内存中，由前文提到的 PTE
+中的比特位「P」决定。</p>
+<p>页面错误主要有两种：</p>
+<ul>
+<li><p><strong>Major Page Fault（主要页面错误）</strong></p>
+<p>进程尝试访问虚拟内存中的页面，但该页面尚未在物理内存中。一般是我们在上文提到的已加载的页面因为换出到磁盘而不再在物理内存中。</p></li>
+<li><p><strong>Minor Page Fault（次要页面错误）</strong></p>
+<p>次要页面错误是发生在虚拟内存系统中的一种事件。当一个进程尝试访问当前不在其<strong>转换后备缓冲器（TLB，这个一会会讲）</strong>中但实际上已经加载到物理内存中的页时，就会发生轻微页面错误。换句话说，这意味着所需的数据是在内存中的，只是没有在快速查找的硬件缓存中记录。</p></li>
+</ul>
+<p>这里我们说说主要页面错误的处理流程：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-044029.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<ol type="1">
+<li>处理器读取到进程访问逻辑地址的请求，将地址传送至内存管理单元（MMU，Memory
+Management Unit），通过页面编号找到对应的页表项，通过其判断位「P」为
+0，说明其对应物理帧不在内存中，触发了一个页面错误；</li>
+<li>接着将信息传达给操作系统的页面错误处理器，从磁盘找到对应的物理帧；</li>
+<li>找到对应帧后，将数据加载到内存中；</li>
+<li>更新对应的页表项；</li>
+</ol>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-044930.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<ol start="5" type="1">
+<li>完成上述步骤后，页面错误处理器通知调度器，重新进行调度。</li>
+</ol>
+<p><strong>常规保护错误（GPF）</strong></p>
+<p><strong>常规保护错误（General Protection
+Fault）</strong>是一种计算机硬件或操作系统的错误，它表示发生了一种无法处理的保护性异常。通常情况下，GPF
+会导致程序崩溃，操作系统终止程序的执行，并通常会生成错误报告以记录问题。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-050037.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<p>如果是<strong>用户级进程触发 GPF，则操作系统会将该进程
+kill</strong>，如果是<strong>内核级的进程，则可能导致系统崩溃而重启</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-050147.png" srcset="/img/loading.gif" lazyload alt="GPF" style="zoom:50%;" /></p>
+<h4 id="多级页表">多级页表</h4>
+<p>前文我们提到，如果使用一级页表结构，则每个进程都要维护一个包含大约
+100 万个 PTE
+的页表，十分占用空间。为了解决这个问题，现代操作系统中一般使用多级页表结构。</p>
+<h5 id="二级页表">二级页表</h5>
+<p>二级页表引入了<strong>页表目录（Page
+Directory）</strong>的概念，即很多个页表会被存储在一个页表目录中，处理器寻址时先通过页表目录找到逻辑地址对应的目录，然后找到目录中对应的页表，最后找到页表中的目标页表项，实现多级索引。</p>
+<p>以 32
+位操作系统为例，在二级页表目录中，一个逻辑地址可以被划分如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th>10 bits</th>
+<th>10 bits</th>
+<th>12 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Directory Index</td>
+<td>Page Table Index</td>
+<td>Offset in page</td>
+</tr>
+</tbody>
+</table>
+<p><strong>寻址过程</strong>：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-055334.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<ol type="1">
+<li>根据逻辑地址高 10 位比特（31 ～
+22）的目录索引，与基地址寄存器的值（页表目录的起始地址）相加，得到目标
+PDE 的值；</li>
+<li>目标 PDE 的高 20 位比特表示页表的编号，逻辑地址中间 10 位比特（21 ～
+12）表示页表项的索引，从而可以找到目标 PTE；</li>
+<li>目标 PTE 的高 20 位比特表示目标物理帧的编号，加上逻辑地址最后 12
+个比特表示的偏置，即可得到最后的地址。</li>
+</ol>
+<p><strong>为什么二级页表可以节省空间呢</strong>？</p>
+<p>让我们来算一算，对于每个进程而言，需要维护一个页表目录，页表目录一共有有
+<span class="math inline">\(2 ^ {10}\)</span> 个 PDE，每个 PDE 大小为
+<span class="math inline">\(4\)</span> B，因此总大小为 <span
+class="math inline">\(4 \times 2 ^ {10}\)</span> B = <span
+class="math inline">\(4\)</span>
+KB。接下来，我们根据程序内存需求给页表目录分配页表即可。因此对于每一个进程，需要维护的最小内存就只有
+<span class="math inline">\(4\)</span>
+KB，相对于一级页表足足小了近一千倍。</p>
+<p>事实上，如果进程内存分配比较密集，就意味着有大量的 PDE
+是不需要分配页表项的。</p>
+<h5 id="三级页表-四级页表">三级页表 &amp; 四级页表</h5>
+<p>三级页表和四级页表通常用于 64 位操作系统，特别是在 x86_64 或 AMD64
+架构中。这是因为 64 位操作系统能够访问非常大的虚拟地址空间，通常超过了
+32
+位操作系统的限制。为了有效地管理如此大的虚拟内存空间，需要更多级的页表来进行地址映射和管理。</p>
+<p>事实上它们的原理和二级页表差不多，无非就是多了几层映射罢了。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-061913.png" srcset="/img/loading.gif" lazyload alt="3-Level Paging" style="zoom:50%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-062030.png" srcset="/img/loading.gif" lazyload alt="4-Level Paging" style="zoom:70%;" /></p>
+<p>引入多级页表后，我们解决了进程页表空间过大的问题，但我们还没有解决寻址速度慢的问题，而且随着访问级数的增加，访问慢的问题甚至被加剧了。为了解决这个问题，人们又提出了
+<strong>TLB</strong> 技术。</p>
+<h4 id="tlb">TLB</h4>
+<h5 id="tlb-介绍">TLB 介绍</h5>
+<p>TLB（Translation Lookaside
+Buffer），是计算机体系结构中的一个关键硬件组件，<strong>用于加速虚拟内存到物理内存的地址转换过程</strong>。TLB是<strong>全关联高速缓存（Fully
+Associative
+Cache）</strong>的一种，专门用于存储最近执行的虚拟地址到物理地址的映射关系，以提高内存访问速度。</p>
+<blockquote>
+<p>Fully associative
+cache（全关联高速缓存）是一种高速缓存（Cache）的组织结构，其中缓存中的每个数据块可以存储在任何位置，而不受特定的缓存行或集的限制。与其他类型的高速缓存结构相比，全关联高速缓存提供了更大的灵活性，但通常需要更复杂的硬件来实现。</p>
+</blockquote>
+<p>TLB
+存储了虚拟地址到物理地址的映射表项。每个表项包括<strong>虚拟地址</strong>、<strong>物理地址</strong>和其他控制信息。当处理器执行内存访问指令时，它会首先检查
+TLB，看是否存在所需的映射，如果存在，就会使用 TLB
+中的映射进行地址转换（<strong>TLB
+hit</strong>），否则，它将访问主内存或页表来获取映射（<strong>TLB
+miss</strong>），使用页表映射获取物理内存后回过头来更新
+TLB，下一次访问同一个进程的同一页只需要访问 TLB 就行。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-063754.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>当操作系统进行进程<strong>上下文切换</strong>时，TLB
+通常会被刷新。这是因为不同的进程具有不同的虚拟地址空间，因此之前在 TLB
+中的虚拟地址到物理地址的映射不再有效。切换到新的进程时，TLB
+需要被清空，以确保新进程的地址映射生效。</p>
+<p><strong>现代操作系统寻址过程</strong>：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-070137.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<h5 id="引用局部性">引用局部性</h5>
+<p>尽管 TLB 可以提高 CPU 访问逻辑地址的速度，但 TLB
+能存储的空间非常小，远小于实际内存大小，它是如何实现一个全局加速效果的呢？</p>
+<p><strong>引用局部性（Locality of
+reference）</strong>是计算机科学和计算机体系结构中的一个重要概念，用于描述在程序访问内存或数据时的一种观察现象。引用局部性指的是程序在一段时间内倾向于多次访问相邻的内存地址或数据元素，而不是随机分散地访问内存。</p>
+<p>引用局部性通常分为两种主要类型：</p>
+<ol type="1">
+<li><strong>时间局部性（Temporal
+Locality）</strong>：时间局部性表示程序在短时间内多次访问相同的内存地址或数据元素。这意味着一旦程序访问了某个内存位置，它可能会在不久的将来再次访问相同的位置。这种情况下，缓存（如
+TLB
+等）可以有效地提高性能，因为它们可以<strong>保存最近访问的数据</strong>，以供稍后的访问使用。</li>
+<li><strong>空间局部性（Spatial
+Locality）</strong>：空间局部性表示程序在访问一个内存地址或数据元素时，可能会紧接着访问相邻的内存地址或数据元素。这意味着程序倾向于连续地访问内存位置，而不是跳跃式地访问。空间局部性有助于高效地使用缓存，因为缓存<strong>可以将相邻的数据块一起加载</strong>，从而提高数据的有效性。</li>
+</ol>
+<p>这是一个统计意义上的概念，其很好解释了 TLB 的加速原理。</p>
+<p><strong>几个问题</strong></p>
+<ul>
+<li><p>页面大小对寻址速度的影响？</p>
+<p>页面越大，其包含的内存就越大，则可以减少 TLB miss
+的数量，可以加快页面映射的速度。</p></li>
+<li><p>缓存慢之后如何更新 TLB 的条目？</p>
+<p>采用 FIFO 算法进行调度，保证 TLB
+存储的页面中永远有最新访问的。</p></li>
+</ul>
+<h4 id="thrashing">Thrashing</h4>
+<p><strong>Thrashing</strong>
+通常用来描述在虚拟内存系统中的一种严重性能问题。Thrashing
+指的是操作系统不断地将页面从物理内存交换到磁盘，然后再将其换回物理内存，不断地重复这个过程。这种情况导致系统的性能急剧下降，因为大部分时间都用于页面交换，而不是执行实际的计算任务。Thrashing
+一般发生在<strong>工作集（Working
+Set）</strong>不在内存中从而导致<strong>页面错误率（Page Fault
+Rate）</strong>高的情况。</p>
+<blockquote>
+<p>Working
+Set（工作集）是计算机内存管理领域的一个重要概念，它用于描述<strong>一个进程或应用程序在一段时间内所活跃地使用的物理内存中的一组页面或内存块</strong>。工作集有助于了解进程的内存访问模式，以便更好地管理内存资源并优化性能。</p>
+</blockquote>
+<p>除此之外，页面大小也可以影响页面错误率：</p>
+<ul>
+<li>小页面：在主存中会发现大量的页面随着执行过程中时间的推移将包含进程中靠近最近引用的部分，从而导致低页面错误率。</li>
+<li>大页面：导致页面包含远离最近引用的位置，从而导致高页面错误率。</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-080949.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p><strong>当一个进程在 Paging
+上花费的时间比程序本身执行的时间要长，我们就可以称这个进程处于 Thrashing
+状态</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-075920.png" srcset="/img/loading.gif" lazyload alt="Thrashing 状态下系统资源基本用于 Paging，导致处理器的执行使用率低" style="zoom:67%;" /></p>
+<p>解决 Thrashing 的方案：</p>
+<ol type="1">
+<li><p>增加物理内存；</p></li>
+<li><p>进程的页按需分配；</p></li>
+<li><p>使用更高效的页面替换策略（如 LRU 或 LFU 等）。</p>
+<blockquote>
+<p>LRU（Least Recently
+Used）是一种常见的页面置换算法，用于管理计算机系统中的高速缓存或虚拟内存中的页面。LRU
+算法的目标是<strong>确定哪个页面最久没有被访问，并将其替换掉，以便给新的页面或数据腾出空间</strong>。</p>
+<ul>
+<li>如何实现？—— 比如利用 x86 32 位 PTE 中的比特位「A」</li>
+</ul>
+</blockquote></li>
+</ol>
 
                 
               </div>
@@ -336,6 +707,10 @@
       <i class="iconfont icon-tags"></i>
       
         <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">#内存管理</a>
+      
+        <a href="/tags/MMU/">#MMU</a>
+      
+        <a href="/tags/%E9%A1%B5%E8%A1%A8/">#页表</a>
       
     </div>
   
@@ -393,6 +768,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/05/%E7%BB%99%E4%BD%A0%E7%9A%84%20Python%20%E5%BE%AA%E7%8E%AF%E5%8A%A0%E4%B8%8A%E8%BF%9B%E5%BA%A6%E6%9D%A1/" title="给你的 Python 循环加上进度条">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">给你的 Python 循环加上进度条</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/01/N-gram-%E6%9C%80%E6%97%A9%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" title="N-gram: 最早的语言模型">
+                        <span class="hidden-mobile">N-gram: 最早的语言模型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
