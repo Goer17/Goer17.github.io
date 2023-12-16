@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-082320.png">
 <meta property="article:published_time" content="2023-10-03T05:46:39.000Z">
-<meta property="article:modified_time" content="2023-10-27T08:37:13.871Z">
+<meta property="article:modified_time" content="2023-12-13T06:02:12.356Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="Servlet">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.7k 字
+          9.5k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          56 分钟
+          79 分钟
         
       </span>
     
@@ -396,6 +396,63 @@ Web 应用程序。</p>
 Servlet 组件。Deployment Descriptor 提供了一种在 Servlet 容器中配置
 Servlet 和其他 Web 应用程序组件的方式，这样 Web
 服务器可以正确地加载和运行这些组件。</p>
+<p>以下是一些常用的 <code>web.xml</code> 配置标签及其功能：</p>
+<ol type="1">
+<li><code>&lt;web-app&gt;</code> ：<code>web.xml</code>
+文件的根元素，用于定义整个 Web 应用程序的配置。它包含各种子元素，如
+<code>&lt;servlet&gt;</code>、<code>&lt;servlet-mapping&gt;</code>、<code>&lt;filter&gt;</code>、<code>&lt;filter-mapping&gt;</code>
+等，用于配置 Servlet、Filter、Listener 等。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;3.1&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 配置其他元素 --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li><code>&lt;servlet&gt;</code> ：用于配置 Servlet，指定 Servlet
+类名、Servlet 名称等信息。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>MyServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>com.example.MyServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li><code>&lt;servlet-mapping&gt;</code> ：将 Servlet 映射到 URL
+模式，指定哪些 URL 请求将由哪个 Servlet 处理。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>MyServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/Myservlet<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li><code>&lt;filter&gt;</code>：用于配置过滤器（Filter），允许对请求和响应进行处理。过滤器通常用于执行预处理、日志记录、身份验证等任务。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>MyFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-class</span>&gt;</span>com.example.MyFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="5" type="1">
+<li><code>&lt;filter-mapping&gt;</code>：将过滤器映射到 URL
+模式，指定哪些请求将由哪个过滤器处理。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">filter-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>MyFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/myfilter<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="6" type="1">
+<li><code>&lt;listener&gt;</code>：配置监听器（Listener），用于监听 Web
+应用程序的生命周期事件，如启动和销毁。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">listener</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">listener-class</span>&gt;</span>com.example.MyListener<span class="hljs-tag">&lt;/<span class="hljs-name">listener-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">listener</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="7" type="1">
+<li><code>&lt;init-param&gt;</code> ：用于为特定的 Servlet
+提供初始化参数。这些初始化参数可以在 Servlet
+的初始化阶段读取，以配置和自定义 Servlet
+的行为。通常情况下，<code>&lt;init-param&gt;</code> 标签是放在
+<code>&lt;servlet&gt;</code> 标签内的，用于为特定的 Servlet
+配置参数。以下是有关 <code>&lt;init-param&gt;</code> 的详细信息：</li>
+</ol>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>MyServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>com.example.MyServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>param1<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>value1<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>param2<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>value2<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br></code></pre></td></tr></table></figure></p>
+<p>上述示例中，我们在 <code>&lt;servlet&gt;</code> 标签内定义了两个
+<code>&lt;init-param&gt;</code> 子元素，每个
+<code>&lt;init-param&gt;</code> 都包含一个
+<code>&lt;param-name&gt;</code> 和一个
+<code>&lt;param-value&gt;</code>。这些元素的含义如下：</p>
+<ul>
+<li><code>&lt;param-name&gt;</code>：用于指定初始化参数的名称。这是一个字符串，用于标识参数。</li>
+<li><code>&lt;param-value&gt;</code>：用于指定初始化参数的值。这是实际的参数值，可以是字符串、数字或其他合适的数据类型。</li>
+</ul>
+<p>在 Servlet 类中，您可以通过
+<code>getInitParameter(String paramName)</code>
+方法来获取这些初始化参数的值。例如：</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">(ServletConfig config)</span> <span class="hljs-keyword">throws</span> ServletException &#123;<br>        <span class="hljs-built_in">super</span>.init(config);<br>        <br>        <span class="hljs-comment">// 获取初始化参数</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">param1</span> <span class="hljs-operator">=</span> getInitParameter(<span class="hljs-string">&quot;param1&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">param2</span> <span class="hljs-operator">=</span> getInitParameter(<span class="hljs-string">&quot;param2&quot;</span>);<br>        <br>        <span class="hljs-comment">// 使用参数值进行初始化</span><br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// 其他 Servlet 方法</span><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>通过这种方式，您可以在部署描述符中为 Servlet 配置一些参数，以在
+Servlet 初始化时使用这些参数进行定制。这对于在不同环境中部署同一个
+Servlet 并根据需要进行不同的配置非常有用。</p>
 </blockquote>
 <p><code>index.jsp</code> 文件：</p>
 <figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span> %&gt;<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>    &lt;title&gt;JSP - Hello World&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&lt;h1&gt;&lt;%= <span class="hljs-string">&quot;Hello World!&quot;</span> %&gt;<br>&lt;/h1&gt;<br>&lt;br/&gt;<br>&lt;a href=<span class="hljs-string">&quot;hello-servlet&quot;</span>&gt;Hello Servlet&lt;/a&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
@@ -509,7 +566,8 @@ Servlet 的资源路径</li>
 <li>该方法用于处理 HTTP PUT 请求。</li>
 <li>PUT
 请求通常用于更新或替换指定的资源，客户端通常会提供完整的资源表示。</li>
-<li>通过<code>request</code>对象获取请求参数、头信息等，并通过<code>response</code>对象生成响应内容发送给客户端。</li>
+<li>通过<code>request</code>对象获取请求参数、头信息等，并通过
+<code>response</code> 对象生成响应内容发送给客户端。</li>
 </ul></li>
 <li><code>doDelete(HttpServletRequest request, HttpServletResponse response)</code>
 ：

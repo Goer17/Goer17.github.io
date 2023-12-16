@@ -16,28 +16,26 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="什么是正则表达式？ 正则表达式（regular expression），又称为规则表达式，是一种文本模式，其拥有独特的语法和独立的处理引擎，可以帮助我们实现文本匹配，特别是当匹配模式比较复杂时，正则表达式有相当大的优势。 构造正则表达式的方法和创建数学表达式的方法一样。也就是用多种元字符与运算符可以将小的表达式结合在一起来创建更大的表达式。正则表达式的组件可以是单个的字符、字符集合、字符范围、字符">
+    <meta name="description" content="介绍 K-邻近算法（K-Nearest Neighbors Algorithm），即 kNN 算法，是一种基本且广泛应用的分类和回归算法。 基本原理  近邻概念：kNN 算法基于这样一个假设，即类别相近的数据点在特征空间中也是彼此接近的。 k 的选择：k 表示考虑最近的多少个邻居。例如，k &#x3D; 1 意味着仅考虑最近的一个邻居。  工作流程 kNN 算法属于懒惰学习（Lazy Learning）算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则表达式">
-<meta property="og:url" content="http://example.com/2023/04/01/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:title" content="K-邻近算法">
+<meta property="og:url" content="http://example.com/2023/10/10/K-%E9%82%BB%E8%BF%91%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="什么是正则表达式？ 正则表达式（regular expression），又称为规则表达式，是一种文本模式，其拥有独特的语法和独立的处理引擎，可以帮助我们实现文本匹配，特别是当匹配模式比较复杂时，正则表达式有相当大的优势。 构造正则表达式的方法和创建数学表达式的方法一样。也就是用多种元字符与运算符可以将小的表达式结合在一起来创建更大的表达式。正则表达式的组件可以是单个的字符、字符集合、字符范围、字符">
+<meta property="og:description" content="介绍 K-邻近算法（K-Nearest Neighbors Algorithm），即 kNN 算法，是一种基本且广泛应用的分类和回归算法。 基本原理  近邻概念：kNN 算法基于这样一个假设，即类别相近的数据点在特征空间中也是彼此接近的。 k 的选择：k 表示考虑最近的多少个邻居。例如，k &#x3D; 1 意味着仅考虑最近的一个邻居。  工作流程 kNN 算法属于懒惰学习（Lazy Learning）算法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-082320.png">
-<meta property="article:published_time" content="2023-04-01T02:54:12.000Z">
-<meta property="article:modified_time" content="2023-07-10T08:23:40.818Z">
+<meta property="article:published_time" content="2023-10-09T16:23:02.000Z">
+<meta property="article:modified_time" content="2023-12-16T13:38:26.318Z">
 <meta property="article:author" content="Captain_Lee">
-<meta property="article:tag" content="Java">
-<meta property="article:tag" content="字符串">
-<meta property="article:tag" content="正则表达式">
+<meta property="article:tag" content="PyTorch">
+<meta property="article:tag" content="kNN">
+<meta property="article:tag" content="Scikit-learn">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-082320.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>正则表达式 - Yuanyang-Lee&#39;s Blog</title>
+  <title>K-邻近算法 - Yuanyang-Lee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">正则表达式</span>
+            <span id="subtitle">K-邻近算法</span>
           
         </div>
 
@@ -241,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-01 10:54" pubdate>
-          2023年4月1日 上午
+        <time datetime="2023-10-10 00:23" pubdate>
+          2023年10月10日 凌晨
         </time>
       </span>
     
@@ -253,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          578 字
         
       </span>
     
@@ -264,7 +262,7 @@
         
         
         
-          23 分钟
+          5 分钟
         
       </span>
     
@@ -302,207 +300,51 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">正则表达式</h1>
+            <h1 style="display: none">K-邻近算法</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="什么是正则表达式">什么是正则表达式？</h4>
-<p><strong>正则表达式（regular
-expression）</strong>，又称为规则表达式，是一种文本模式，其拥有独特的语法和独立的处理引擎，可以帮助我们实现文本匹配，特别是当匹配模式比较复杂时，正则表达式有相当大的优势。</p>
-<p>构造正则表达式的方法和创建数学表达式的方法一样。也就是用多种元字符与运算符可以将小的表达式结合在一起来创建更大的表达式。正则表达式的组件可以是单个的字符、字符集合、字符范围、字符间的选择或者所有这些组件的任意组合。</p>
-<h4 id="正则表达式基本语法">正则表达式基本语法</h4>
-<h5 id="字符类">字符类</h5>
-<table>
-<thead>
-<tr class="header">
-<th>表达式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>[abc]</code></td>
-<td>只能是 a, b, c</td>
-</tr>
-<tr class="even">
-<td><code>[^abc]</code></td>
-<td>除了 a, b, c 之外的任何字符</td>
-</tr>
-<tr class="odd">
-<td><code>[a-zA-Z]</code></td>
-<td>a 到 z，A 到 Z 的所有字符</td>
-</tr>
-<tr class="even">
-<td><code>[a-d[m-p]]</code></td>
-<td>a 到 d，m 到 p</td>
-</tr>
-<tr class="odd">
-<td><code>[a-z&amp;&amp;[def]]</code></td>
-<td>a-z 和 def 到交集，在这里相当于 <code>[def]</code></td>
-</tr>
-<tr class="even">
-<td><code>[a-z&amp;&amp;[^bc]]</code></td>
-<td>a-z 和非 bc 的交集</td>
-</tr>
-<tr class="odd">
-<td><code>[a-z&amp;&amp;[^m-p]]</code></td>
-<td>a-z 和除了 m 到 p 的交集</td>
-</tr>
-</tbody>
-</table>
-<h5 id="预定义字符">预定义字符</h5>
-<table>
-<thead>
-<tr class="header">
-<th>表达式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>.</code></td>
-<td>任何字符</td>
-</tr>
-<tr class="even">
-<td><code>\d</code></td>
-<td>一个数字（<code>[0-9]</code>）</td>
-</tr>
-<tr class="odd">
-<td><code>\D</code></td>
-<td>非数字（<code>[^0-9]</code>）</td>
-</tr>
-<tr class="even">
-<td><code>\s</code></td>
-<td>一个空白字符（<code>[\t\n\x0B\f\r]</code>）</td>
-</tr>
-<tr class="odd">
-<td><code>\S</code></td>
-<td>非空白字符（<code>[^\t\n\x0B\f\r]</code>）</td>
-</tr>
-<tr class="even">
-<td><code>\w</code></td>
-<td>英文、数字、下划线（<code>[a-zA-Z0-9_]</code>）</td>
-</tr>
-<tr class="odd">
-<td><code>\W</code></td>
-<td>一个非单词字符（<code>[^a-zA-Z0-9_]</code>）</td>
-</tr>
-</tbody>
-</table>
-<h5 id="数量词">数量词</h5>
-<table>
-<thead>
-<tr class="header">
-<th>表达式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>X?</code></td>
-<td><code>X</code>， 一次或者零次</td>
-</tr>
-<tr class="even">
-<td><code>X*</code></td>
-<td><code>X</code> ，零次或者多次</td>
-</tr>
-<tr class="odd">
-<td><code>X+</code></td>
-<td><code>X</code> ，一次或者多次</td>
-</tr>
-<tr class="even">
-<td><code>X&#123;n&#125;</code></td>
-<td><code>X</code> ，正好 n 次</td>
-</tr>
-<tr class="odd">
-<td><code>X&#123;n,&#125;</code></td>
-<td><code>X</code> ，至少 n 次</td>
-</tr>
-<tr class="even">
-<td><code>X&#123;n,m&#125;</code></td>
-<td><code>X</code> ，至少 n 次，不超过 m 次</td>
-</tr>
-</tbody>
-</table>
-<h5 id="特殊字符">特殊字符</h5>
-<table>
-
-<thead>
-<tr class="header">
-<th>表达式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>$</code></td>
-<td>匹配输入字符串的结尾位置。如果设置了 RegExp 对象的 Multiline
-属性，则 <code>$</code> 也匹配 <code>\n</code> 或
-<code>\r</code>。要匹配 <code>$</code> 字符本身，请使用 <code>\$</code>
-。</td>
-</tr>
-<tr class="even">
-<td><code>()</code></td>
-<td>标记一个子表达式的开始和结束位置。子表达式可以获取供以后使用。要匹配这些字符，请使用
-<code>\(</code> 和 <code>\)</code> 。</td>
-</tr>
-<tr class="odd">
-<td><code>|</code></td>
-<td>指明两项之间的一个选择。要匹配 <code>|</code> ，请使用
-<code>\|</code> 。</td>
-</tr>
-</tbody>
-</table>
-<h5 id="典型案例">典型案例</h5>
+                <h4 id="介绍">介绍</h4>
+<p>K-邻近算法（K-Nearest Neighbors Algorithm），即 kNN
+算法，是一种基本且广泛应用的分类和回归算法。</p>
+<h5 id="基本原理">基本原理</h5>
 <ul>
-<li>匹配网址 URL：<code>[a-zA-z]+://[^\s]*</code></li>
-<li>匹配中国邮编编码：<code>[1-9]\d&#123;5&#125;(?!\d)</code></li>
-<li>匹配 18
-位身份证：<code>^(\d&#123;6&#125;)(\d&#123;4&#125;)(\d&#123;2&#125;)(\d&#123;2&#125;)(\d&#123;3&#125;)([0-9]|X)$</code></li>
+<li><strong>近邻概念</strong>：kNN
+算法基于这样一个假设，即类别相近的数据点在特征空间中也是彼此接近的。</li>
+<li><strong>k 的选择</strong>：k 表示考虑最近的多少个邻居。例如，k = 1
+意味着仅考虑最近的一个邻居。</li>
 </ul>
-<p><a
-target="_blank" rel="noopener" href="https://tool.oschina.net/regex">正则表达式在线测试工具</a></p>
-<h4 id="实际运用">实际运用</h4>
-<p>当前大多数流行语言都有自己的正则表达式库，例如 C++11 更新的 <a
-target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/regex">Regex 库</a> 。</p>
-<p>今天我们以 Java 为例，讲解正则表达式的一些实际运用。</p>
-<p><strong>Java 中的 <code>String</code> 内置正则匹配方法</strong></p>
+<h5 id="工作流程">工作流程</h5>
+<p>kNN 算法属于懒惰学习（Lazy Learning）算法，不需要训练过程。</p>
+<ol type="1">
+<li><p><strong>确定 k 的值</strong>，即选择最近的 k 个点；</p></li>
+<li><p><strong>计算未知数据点与所有已知数据点之间的距离</strong>；</p>
+<p>常用的距离度量方法包括欧几里得距离（Euclidean
+Distance）、曼哈顿距离（Manhattan Distance）和闵可夫斯基距离（Minkowski
+Distance）等。</p></li>
+<li><p>对这些距离进行排序，<strong>选出距离最近的 k
+个点</strong>；</p></li>
+<li><p>根据这 k
+个点的类别，<strong>通过投票等方式确定未知点的类别</strong>。</p>
 <ul>
-<li><p><code>matches()</code> 方法：</p>
-<blockquote>
-<p><code>boolean matches(String regex)</code>
-，根据正则表达式，判断字符串是否能匹配成功，返回对应的布尔值</p>
-</blockquote>
-<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 匹配手机号码</span><br><span class="hljs-comment">// 以 1 开头</span><br><span class="hljs-comment">// 第二位只能是 3 到 9</span><br><span class="hljs-comment">// 任意数字 9 位</span><br><span class="hljs-type">String</span> <span class="hljs-variable">regex_1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;1[3-9]\\d&#123;9&#125;&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;13170488669&quot;</span>.matches(regex_1)); <span class="hljs-comment">// true</span><br><br><span class="hljs-comment">// 匹配座机号码</span><br><span class="hljs-comment">// 区号 以 0 开头</span><br><span class="hljs-comment">// 中间可能有 -</span><br><span class="hljs-comment">// 号码总长度 5 到 10 位</span><br><span class="hljs-type">String</span> <span class="hljs-variable">regex_2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;0\\d&#123;2,3&#125;-?[1-9]\\d&#123;4,9&#125;&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;027-142424&quot;</span>.matches(regex_2)); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure></p></li>
-<li><p><code>replaceFirst()</code> 方法和 <code>replaceAll()</code>
-方法：</p>
-<blockquote>
-<p><code>String replaceFirst(String regex, String replacement)</code>
-，将字符串匹配到的第一个子串进行替换，返回新字符串。</p>
-<p><code>String replaceAll(String regex, String replacement)</code>
-，将字符串所有匹配成功的子串进行替换，返回新字符串。</p>
-</blockquote>
-<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Isaac Newton&quot;</span>;<br><span class="hljs-comment">// 隐藏姓名</span><br>System.out.println(name.replaceFirst(<span class="hljs-string">&quot;[a-zA-Z]+&quot;</span>, <span class="hljs-string">&quot;*****&quot;</span>)); <span class="hljs-comment">// ***** Newton</span><br><br><span class="hljs-type">String</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;12-(900)84632&quot;</span>;<br><span class="hljs-comment">// 删除所有非数字字符</span><br>System.out.println(number.replaceAll(<span class="hljs-string">&quot;[^0-9]&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)); <span class="hljs-comment">// 1290084632</span><br></code></pre></td></tr></table></figure></p></li>
-<li><p><code>split()</code> 方法：</p>
-<blockquote>
-<p><code>String[] split(String regex)</code></p>
-<p><code>String[] split(String regex, int limit)</code></p>
-<p>根据正则表达式对字符串进行分割，返回分割后的字符串数组。</p>
-<p>这里 <code>limit</code> 参数用来控制分割次数：</p>
+<li><p><strong>投票机制</strong>：</p>
 <ul>
-<li>若 <code>limit &gt; 0</code> ：字符串最多被分割 n - 1 次，返回长度为
-n 的字符串数组</li>
-<li>若 <code>limit &lt;= 0</code>
-：字符串被尽可能多次分割，返回尽可能长的字符串数组</li>
-</ul>
-</blockquote>
-<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">String[] member = <span class="hljs-string">&quot;张三, 李四, 王五&quot;</span>.split(<span class="hljs-string">&quot;, &quot;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> name : member) System.out.println(name);<br><span class="hljs-comment">// 张三</span><br><span class="hljs-comment">// 李四</span><br><span class="hljs-comment">// 王五</span><br></code></pre></td></tr></table></figure></p></li>
-</ul>
-<p><strong>练习</strong></p>
-<p><a
-target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matching">驼峰匹配</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> List&lt;Boolean&gt; <span class="hljs-title function_">camelMatch</span><span class="hljs-params">(String[] queries, String pattern)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">regexModel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;[a-z]*&quot;</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, len = pattern.length(); i &lt; len; i++) &#123;<br>            regexModel += (pattern.charAt(i) + <span class="hljs-string">&quot;[a-z]*&quot;</span>);<br>        &#125;<br>        ArrayList&lt;Boolean&gt; ans = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, len = queries.length; i &lt; len; i++) &#123;<br>            ans.add(queries[i].matches(regexModel));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<li><p>这些最近的 k 个点各自属于某个类别。kNN 算法通过 “投票”
+来确定待分类点的类别。</p></li>
+<li><p>在最简单的情况下，每个邻居点都有一票，待分类点被划分到票数最多的类别。</p></li>
+<li><p>例如，如果 k = 5，且这 5 个最近邻居中有 3 个属于类别 A，2
+个属于类别 B，则待分类点被划分为类别 A。</p></li>
+</ul></li>
+<li><p><strong>加权投票</strong>：</p>
+<ul>
+<li><p>在某些变体中，kNN
+算法使用加权投票，其中不是每个邻居的票数都相等。</p></li>
+<li><p>加权方式通常基于距离，离待分类点越近的邻居影响力越大。这意味着更近的点会有更大的投票权重。</p></li>
+</ul></li>
+</ul></li>
+</ol>
+<h4 id="代码实现">代码实现</h4>
 
                 
               </div>
@@ -521,7 +363,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matc
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
   
   
 
@@ -536,11 +378,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matc
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Java/">#Java</a>
+        <a href="/tags/PyTorch/">#PyTorch</a>
       
-        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
+        <a href="/tags/kNN/">#kNN</a>
       
-        <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">#正则表达式</a>
+        <a href="/tags/Scikit-learn/">#Scikit-learn</a>
       
     </div>
   
@@ -552,8 +394,8 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matc
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>正则表达式</div>
-      <div>http://example.com/2023/04/01/正则表达式/</div>
+      <div>K-邻近算法</div>
+      <div>http://example.com/2023/10/10/K-邻近算法/</div>
     </div>
     <div class="license-meta">
       
@@ -565,7 +407,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matc
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月1日</div>
+          <div>2023年10月10日</div>
         </div>
       
       
@@ -598,29 +440,6 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/camelcase-matc
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2023/04/02/%E7%B4%A0%E6%95%B0%E7%AD%9B/" title="素数筛">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">素数筛</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/03/30/%E8%AE%B2%E8%A7%A3%20C++%20%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0/" title="讲解 C++ 匿名函数">
-                        <span class="hidden-mobile">讲解 C++ 匿名函数</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 

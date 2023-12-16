@@ -1,0 +1,1070 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MAC 子层 什么是 MAC 子层？ MAC（Medium Access Control）子层，是数据链路层的一部分，主要负责在物理介质上传输数据包。 在 OSI 模型中，数据链路层被分为逻辑链路控制（LLC）子层和媒体访问控制（MAC）子层，其中： LLC 子层负责管理服务质量，例如流量控制和错误检测（不同于MAC层的错误检测）。这包括重发机制，以确保信息的正确传输等；而 MAC 子层处理物理地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据链路层——MAC 子层">
+<meta property="og:url" content="http://example.com/2023/12/11/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E2%80%94%E2%80%94MAC-%E5%AD%90%E5%B1%82/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="MAC 子层 什么是 MAC 子层？ MAC（Medium Access Control）子层，是数据链路层的一部分，主要负责在物理介质上传输数据包。 在 OSI 模型中，数据链路层被分为逻辑链路控制（LLC）子层和媒体访问控制（MAC）子层，其中： LLC 子层负责管理服务质量，例如流量控制和错误检测（不同于MAC层的错误检测）。这包括重发机制，以确保信息的正确传输等；而 MAC 子层处理物理地">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-073334.png">
+<meta property="article:published_time" content="2023-12-11T01:42:37.000Z">
+<meta property="article:modified_time" content="2023-12-16T13:37:05.593Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="数据链路层">
+<meta property="article:tag" content="媒体访问控制">
+<meta property="article:tag" content="ALOHA">
+<meta property="article:tag" content="CSMA">
+<meta property="article:tag" content="以太网">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-073334.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>数据链路层——MAC 子层 - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">数据链路层——MAC 子层</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-11 09:42" pubdate>
+          2023年12月11日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          54 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数据链路层——MAC 子层</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="mac-子层">MAC 子层</h4>
+<p><strong>什么是 MAC 子层？</strong></p>
+<p><strong>MAC（Medium Access
+Control）</strong>子层，是数据链路层的一部分，主要负责在物理介质上传输数据包。</p>
+<p>在 OSI
+模型中，数据链路层被分为<strong>逻辑链路控制（LLC）子层</strong>和<strong>媒体访问控制（MAC）子层</strong>，其中：</p>
+<p>LLC
+子层负责管理服务质量，例如<strong>流量控制</strong>和<strong>错误检测</strong>（不同于MAC层的错误检测）。这包括重发机制，以确保信息的正确传输等；而
+MAC 子层处理物理地址（MAC
+地址），用于在同一网络内识别设备，它负责封装数据，在数据包周围添加帧头和帧尾，包括源和目的地的物理地址。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-11-124316.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>总结来说，LLC 子层主要负责管理链路层与网络层之间的接口和服务质量，而
+MAC
+子层则集中于<strong>物理地址</strong>的处理、数据帧的封装和媒体访问控制。这种分层使得数据链路层可以灵活地支持多种不同类型的物理网络技术，同时为上层网络提供统一的接口和服务。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-054029.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<h3 id="媒体访问技术">媒体访问技术</h3>
+<p>两类常见的媒体访问技术：</p>
+<ul>
+<li><p><strong>预约协议（Reservation Based Protocol）</strong></p>
+<ul>
+<li>需要知道网络的拓扑结构</li>
+<li><strong>无冲突（Collision Free）</strong></li>
+</ul>
+<p>Eg：令牌环、TDMA</p></li>
+<li><p><strong>争抢协议（Contension Based Protocol）</strong></p>
+<ul>
+<li>不需要知道网络的拓扑结构</li>
+<li>各个节点会竞争资源，可能产生冲突</li>
+</ul>
+<p>Eg：ALOHA、CSMA</p></li>
+</ul>
+<h4 id="令牌环">令牌环</h4>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-022815.png" srcset="/img/loading.gif" lazyload  style="zoom:33%;" /></p>
+<p>一种古老的技术，定义了一种短帧，称为<strong>令牌（Token）</strong>。令牌环网络的<strong>拓扑结构呈环状</strong>，所有计算机连接成一个闭合的环路。每台计算机都直接连接到环上，并通过物理介质（通常是双绞线或光纤）相互连接。在令牌环中令牌以固定速率在网络中沿着环路传递。只有拥有令牌的计算机才能发送数据，其他计算机必须等待令牌传递到它们之前才能发送。</p>
+<ul>
+<li>优点：不会产生冲突</li>
+<li>缺点：一个节点失效会影响到整个信道</li>
+</ul>
+<h4 id="tdma">TDMA</h4>
+<p>TDMA（Time Division Multiple
+Access）技术将传输过程分成不同的<strong>时槽（Time
+Slot）</strong>，每个时槽只允许一个用户传输信息。TDMA 在大多数 2G
+系统中使用。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-023632.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ul>
+<li><p>优点：和令牌环一样，TDMA 也能避免冲突</p></li>
+<li><p>缺点：某个节点如果长期没有请求，则可能造成信道浪费</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-024129.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+</ul>
+<h4 id="aloha">ALOHA</h4>
+<p>不同于令牌环和 TDMA，ALOHA 属于冲突协议，即每个节点会竞争资源。</p>
+<h5 id="纯-aloha">纯 ALOHA</h5>
+<p>纯 ALOHA 协议相当简单，它是一种<strong>无协商（Without
+coordination）</strong>的协议，每个节点可以在任意时刻传输信息，如果在规定时间没有收到
+ACK，则重传该帧。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-025247.png" srcset="/img/loading.gif" lazyload style="zoom:25%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-024716.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<p>想象一根总线拓扑结构，所有节点可以在任何时刻传输信息，则无可避免会产生冲突：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-024814.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<p>当两个不同的节点在同一时刻传输信息就会发生冲突，脆弱时间（Vulnerable
+Time）等于 <span class="math inline">\(2 \times T_{fr}\)</span>，这里的
+<span class="math inline">\(T_{fr}\)</span> 指<strong>帧传递时间（Frame
+transmission time）</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-025130.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<h5 id="slotted-aloha">Slotted ALOHA</h5>
+<p>时槽 ALOHA（Slotted ALOHA）就是在纯 ALOHA
+协议的基础上，把时间段分为许多等长的时槽，每一帧只允许在时槽的起始点开始传输，这么设计之后，所有的帧要么<strong>错开（Miss）</strong>，要么<strong>重合（Overlap）</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-025704.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>脆弱时间：<span class="math inline">\(T_0\)</span>，这里的 <span
+class="math inline">\(T_0\)</span> 指时槽的长度。</p>
+<h4 id="csma">CSMA</h4>
+<p>CSMA，全称 Carrier Sense Multiple Access，这里的 Carrir Sense
+指的就是监听信道，其基于一个假设，就是节点可以监听信道是否空闲。</p>
+<h5 id="传统-csma">传统 CSMA</h5>
+<ul>
+<li>如果信道是<strong>空闲的（Idle）</strong>，节点会传输信息</li>
+<li>如果信道是<strong>繁忙的（Busy）</strong>，节点则会一直等待直到信道空闲</li>
+</ul>
+<p>这是否意味着 CSMA
+就不会产生冲突呢？答案是否定的，如果两个节点恰巧在同一时刻传输帧，则会发生冲突：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-030457.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>和 ALOHA 一样，CSMA 通过 ACK
+确定是否发送冲突，如果节点在发送帧后未在指定时间内收到
+ACK，则确定为帧可能发生冲突或出错，则重传帧。</p>
+<p>脆弱时间：<span class="math inline">\(\tau\)</span>，<span
+class="math inline">\(\tau\)</span> 在这里指传输时延。</p>
+<p>CSMA 还可以分为两种类型：</p>
+<ul>
+<li><p><strong>非坚持 CSMA（Nonpersistant CSMA）</strong></p>
+<p>在非坚持 CSMA
+中，如果节点检测到信道是繁忙的，则会<strong>随机等待</strong>一定的时间，然后重新监听信道。</p></li>
+<li><p><strong>坚持 CSMA（Persistant CSMA）</strong></p>
+<p>在坚持 CSMA
+中，如果节点检测到信道是繁忙的，则会一直监听信道直到信道变得空闲然后传输帧。</p>
+<p>在坚持 CSMA 中，还可以细分两类：</p>
+<ul>
+<li><p><strong>1-坚持 CSMA（1-persistent CSMA）</strong></p>
+<p>检测到信道空闲，则立马发送帧</p>
+<blockquote>
+<p>在<strong>低负载</strong>的情况下可以实现<strong>高吞吐量（High
+throughput）</strong>和<strong>低时延（Low
+delay）</strong>，而在高负载的情况下可能会造成低吞吐量，因为所有节点在信道空闲的时候都会争抢着发送帧，跟有可能造成冲突。</p>
+</blockquote></li>
+<li><p><strong>p-坚持 CSMA（p-persistant CSMA）</strong></p>
+<p>检测到信道空闲，以概率 p（0 &lt; p &lt; 1）发送帧</p>
+<blockquote>
+<p>在高负载的情况下可以实现<strong>高吞吐量</strong>。但其在低时延的情况下可能会<strong>增大时延</strong>。</p>
+</blockquote></li>
+</ul></li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-031427.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<h5 id="csmacd">CSMA/CD</h5>
+<p>CSMA/CD（Carrier Sense Multiple Access with <strong>Collision
+Detection</strong>），在 CSMA 的基础上添加了<strong>冲突检测（Collision
+Detection）</strong>。</p>
+<p>这是什么意思呢，就是说在 CSMA
+的基础上给了节点能够在传输过程中检测到冲突的能力，一旦检测到冲突，改节点会立刻舍弃此次传输。具体来说步骤如下：</p>
+<ol type="1">
+<li>如果冲突被检测，则<strong>取消传输（Cease
+transmission）</strong>并且传输一个<strong>强化信号（Jam
+signal）</strong>而不是传递完整个帧。</li>
+<li>在发送强化信号之后，节点随机等待一段时间然后重新开始，这一步我们称为<strong>退避（Back-off）</strong>。</li>
+<li>使用这个机制，可以节约时间和带宽。</li>
+</ol>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-033702.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<p>CSMA/CD 最差情况下每个节点要多长时间检测到冲突：答案是 <span
+class="math inline">\(2 \times \tau\)</span>。</p>
+<p>假设节点 A 和节点 B 是分布在总线上两端的两个节点，A
+在检测到信道空闲后发送帧，在即将到 B 时 B 也发送了一帧，此刻发送冲突，A
+需要两倍传输时延才能检测到冲突。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-033846.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<p><strong>指数退避（Exponential Back-off）</strong></p>
+<p>在检测到冲突后，节点会退避并且重新等待一段随机时间。这里的随机时间是如何定义的呢？</p>
+<p>我们定义 <span class="math inline">\(K = min\{10, \text{number of
+attempt}\}\)</span>，每次退避时从区间 <span class="math inline">\([0, 2
+^ k)\)</span> 中随机选取一个整数作为退避系数 <span
+class="math inline">\(r\)</span>，退避时间 = <span
+class="math inline">\(r \hat t\)</span>，这里的 <span
+class="math inline">\(\hat t\)</span> 表示<strong>基本重传时间（Basic
+retransmission time）</strong>，一般是 51.2 <span
+class="math inline">\(\mu s\)</span>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-035337.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<p>在 16 次冲突后，改请求就会取消，这一帧会被舍弃。</p>
+<p>完整流程：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-035445.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<h4 id="参考协议ieee-802">参考协议：IEEE 802</h4>
+<p>IEEE 802 是一种包括了物理层和数据链路层的网络协议。不同的 IEEE 802
+子标准针对不同的局域网和城域网技术，如以太网、无线局域网（Wi-Fi）、WiMAX
+等，都基于这一模型进行规范和实现。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-053922.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-054244.png" srcset="/img/loading.gif" lazyload alt="IEEE 802 Standards" style="zoom:33%;" /></p>
+<h3 id="以太网">以太网</h3>
+<p>以太网（Ethernet）是一种常见的局域网（LAN）技术，用于在计算机和网络设备之间进行数据通信。以太网起源于
+20 世纪 70 年代，是由 Xerox、Intel 和 Digital Equipment
+Corporation（DEC）共同开发的，后来被广泛采用，并成为最常见的局域网技术之一。</p>
+<p>以太网支持多种数据传输速度，包括10 Mbps（常称为10BASE-T）、100
+Mbps（100BASE-TX）、1 Gbps（1000BASE-T）和更高速度。IEEE
+802.3系列标准定义了以太网的规范，不同速度的以太网遵循不同的 IEEE 802.3
+子标准。</p>
+<h4 id="nic">NIC</h4>
+<p>网卡（Network Interface
+Card，NIC），是一种用于建立和管理计算机连接到设备，其包含了物理层和数据链路层（LLC
+与 MAC）的功能，每张网卡都有一个唯一的物理地址，称为 MAC 地址。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-063859.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<h5 id="mac-地址">MAC 地址</h5>
+<p>每个 MAC 地址由 6 个字节组成，前 3 个字节表示供应商的标识符，后 3
+个字节表示供应商提供的序列号。</p>
+<p>Eg：<code>1c:57:dc:68:23:0d</code></p>
+<h4 id="传统以太网">传统以太网</h4>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-064547.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p><strong>拓扑结构</strong>：逻辑上都是总线型的。</p>
+<p>传统以太网比如 10Base-T
+通过一个<strong>集线器（Hub）</strong>连接所有主机：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-064940.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<p>从上述结构可知，每一台主机发送的帧所有其他主机都可以接收，看上去拓扑结构是星型的，实际上还是总线型的。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-065428.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p><strong>使用的媒体访问技术</strong>：CSMA/CD</p>
+<p>传统以太网使用 CSMA/CD 作为媒体访问技术，更具体来说，使用的是
+1-persistent CSMA/CD 技术，这个前文已经说过，再次就不赘述了。</p>
+<p><strong>以太网的数据帧</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-070426.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<ul>
+<li><p>Preamble：前导码，用于<strong>时钟同步（Clock
+synchronization）</strong>，SFD 用于标记帧的开始。</p></li>
+<li><p>Address：包括目的地和出发地的 6 字节 MAC
+地址，由于以太网是广播链路传播，因此地址是必须的。</p>
+<blockquote>
+<p>如果 Destination address 的值为
+<code>FF:FF:FF:FF:FF:FF</code>，那就说明该帧是发送给全部节点的，所有计算机都会接收。</p>
+</blockquote></li>
+<li><p>Type：指定帧的类型，IPv4 或 IPv6。</p></li>
+<li><p>Data and padding：数据和填充，这部分的大小在 46 字节到 1500
+字节。</p>
+<blockquote>
+<p>这部分至少 46 字节就是为了保证整个帧大小不小于
+64B，这么设计的目的就是让<strong>帧的传输时间不少于传输时延</strong>。否则
+CSMA/CD 有时候将无法检测到冲突。</p>
+</blockquote></li>
+<li><p>CRC：校错码。</p></li>
+</ul>
+<h4 id="交换以太网">交换以太网</h4>
+<p>交换以太网在传统以太网的基础上将集线器改成了<strong>交换机（Switch）</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-071603.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>与传统的以太网集线器（Hub）不同，交换机能够根据数据帧中的目标 MAC
+地址，将数据帧有针对性地发送到正确的端口，而不是广播给所有连接设备。为了实现有针对性的数据帧交换，交换机维护一个
+MAC 地址表，记录了各个设备的 MAC
+地址与相应端口之间的映射关系。当数据帧到达交换机时，它会查找 MAC
+地址表以确定如何转发数据帧。</p>
+<p>集线器（Hub）属于<strong>半双工通信</strong>，这是因为它在数据传输方面有一些限制和局限性。半双工通信意味着在同一时间内，设备只能进行单向的数据传输，要么发送数据，要么接收数据，而不能同时进行发送和接收。</p>
+<p>相比之下，交换机（Switch）是一种支持<strong>全双工通信</strong>的设备，因为它具有智能的数据帧处理功能，可以在不同的端口之间建立虚拟电路，允许同时进行双向通信。交换机更高效、可靠，并且不容易发生碰撞，因此在现代网络中广泛使用，取代了集线器。集线器通常仅用于旧的网络中或特定的测试和诊断场景中。由于在交换机中不存在资源的争抢，也就<strong>不需要像
+CSMA/CD 这样的介质访问技术</strong>。</p>
+<h4 id="快速以太网">快速以太网</h4>
+<p>快速以太网（Fast
+Ethernet）是对传统以太网的升级，旨在提供更高的数据传输速度。</p>
+<p>快速以太网支持 100 Mbps（兆位每秒）的数据传输速度，相对于传统以太网的
+10 Mbps 来说，它提供了更快的网络连接速度。因此，它通常被称为
+100BASE-T。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-072147.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h4 id="gigabit-以太网">Gigabit 以太网</h4>
+<p>Gigabit 以太网是一种高速的以太网技术，提供了 1 Gbps
+的传输速度，用于满足高带宽需求的各种应用，如企业网络、数据中心和多媒体传输。它是现代网络基础设施的关键组成部分，为快速和可靠的数据传输提供了支持。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-072747.png" srcset="/img/loading.gif" lazyload style="zoom:55%;" /></p>
+<h3 id="无线局域网">无线局域网</h3>
+<p><strong>为什么 CSMA/CD 不适用于无线通信？</strong></p>
+<p>CSMA/CD 不适用于无线通信是因为其可能产生两个问题：</p>
+<ol type="1">
+<li><p><strong>隐藏基站问题（Hidden station problem）</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-050551.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>如上图所示，假设 A 要传输帧给 B，于此同时 C 也要传输帧给
+B，由于无线信号的范围覆盖问题，A 和 C 均不能接收到彼此的信号，因此 A 和
+C 都无法检测到 B 处发生了冲突。</p></li>
+<li><p><strong>暴露基站问题（Exposed station problem）</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-050832.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>如上图所示，B 要传输帧给 A，C 要传输帧给 D，C 在发送帧时检测到与 B
+传输的帧发送冲突，于是便会立刻停止帧的传输。而事实上 C 传输帧给 D 不收到
+B 的影响，因为 B 的帧无法传输到 D，实际上不存在冲突问题。</p></li>
+</ol>
+<p>以上两种情况可以总结为在无线通信中<strong>检测不到冲突</strong>和<strong>错误判断了冲突</strong>。</p>
+<h4 id="maca">MACA</h4>
+<p>为了解决隐藏站和暴露站到问题，人们提出了 MACA（Multiple Access
+<strong>Collision
+Avoidance</strong>），不同于冲突检测，该技术强调冲突避免。</p>
+<p>MACA 的具体是通过基站之间的握手机制实现的，步骤如下：</p>
+<ol type="1">
+<li>若 S 要传递帧给 R，那么首先 S 会传输一个称为 RTS 的帧</li>
+<li>终点 R 收到 RTS 后，会传输一个 CTS</li>
+<li>S 接收到 CTS 后传输帧给 R</li>
+<li>R 成功接受帧后返回 ACK 给 S</li>
+</ol>
+<p>在此过程中：</p>
+<ul>
+<li>节点只收到 CTS，未收到 RTS：节点在接收节点 R 的范围内，不在发送节点
+S 的范围内，所以该节点是一个<strong>隐藏站</strong>，也就是说该节点在 S
+到 R 的传输过程将无法传输信息。</li>
+<li>节点只收到 RTS，微收到 CTS：节点在发送节点 S 到范围内，不在接受节点
+R
+到范围内，所以该节点是一个<strong>暴露站</strong>，也就是说该节点无法影响到终点
+R，固可以传输信息。</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-053646.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="lan-架构">LAN 架构</h4>
+<p>LAN 架构主要可以分为以下两个部分：</p>
+<ul>
+<li><p><strong>接入点（Access Point，AP）</strong>：</p>
+<p>AP
+是一种网络设备，通常是一个无线路由器或无线接入设备，用于创建一个无线局域网，比如<strong>基站</strong>。它允许无线设备（如笔记本电脑、智能手机、平板电脑）连接到有线局域网或互联网。AP
+负责将有线网络信号转换成无线信号，并为连接到它的无线设备提供网络连接。它通常有一个或多个无线接口（通常是
+Wi-Fi），以允许多个设备连接。</p></li>
+<li><p><strong>基本服务集（Basic Service Set，BSS）</strong>：</p>
+<p>BSS 是一个概念，用于描述一个无线局域网中的基本单元。每个 BSS 由一个
+AP（或无线路由器）和与之连接的无线设备组成。BSS
+通常包括一个无线网络的一个小覆盖区域，所有连接到同一个 AP
+的设备属于同一个 BSS。在同一个 BSS 内，设备可以相互通信。BSS
+还有一个唯一的标识符，称为 BSSID，通常是 AP 的 MAC
+地址，用于在网络中唯一标识一个 BSS。</p></li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-123900.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p><strong>Ad hoc</strong></p>
+<p>Ad hoc，也就是自组织网络，是一种无线 LAN
+模式，其不依赖基站，这种网络只能通过节点的连接覆盖来将数据传输给其他节点，所有节点将自己组织成网络。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-124858.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p>
+<p><strong>寻找可用节点的两种方法</strong></p>
+<ul>
+<li><p><strong>被动扫描（Passive Scanning）</strong></p>
+<p>被动扫描是一种相对较简单的方法，其中无线设备只是监听周围的 Wi-Fi
+信号，而不主动发送请求。它通常用于发现并显示附近可用的 Wi-Fi
+网络列表，以供用户选择连接。无线设备在特定时间间隔内监听 Wi-Fi
+信道上的信号帧，以检测是否有 AP 广播它们的<strong>信标帧（Beacon
+Frames）</strong>。这些信标帧包含有关 AP 的信息，如
+SSID（网络名称）、BSSID（AP的MAC地址）、信号强度等。一旦设备收到信标帧，它就可以在扫描结果中列出相应的
+Wi-Fi 网络，以便用户选择连接。</p></li>
+<li><p><strong>主动扫描（Positive Scanning）</strong></p>
+<p>主动扫描涉及到无线设备主动发送探测请求来查找附近的 Wi-Fi
+网络。这个请求通常是一个 802.11 探测请求帧（Probe Request
+Frame），其中包含了设备想要连接的 SSID
+信息。接入点在收到探测请求后，可以响应并发送一个探测响应帧（Probe
+Response
+Frame），其中包含有关网络的信息，如支持的加密方法、信号强度、频道等。主动扫描允许设备更主动地发现附近的Wi-Fi网络，而不仅仅是等待信标帧的广播。这对于设备在新环境中快速连接到
+Wi-Fi 网络或在切换网络时非常有用。</p></li>
+</ul>
+<h4 id="csmaca">CSMA/CA</h4>
+<p>CSMA/CA（Carrier Sense Multiple Access with <strong>Collision
+Avoidance</strong>）是一种用于无线通信的可以避免冲突的载波监听多路访问技术。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-131413.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>工作流程：</p>
+<ul>
+<li><p>不同于 persistent CSMA，802.11 Sender
+不会在信道空闲的第一时刻发送数据，而是等待一个时间段 DIFS（Distributed
+Inter-Frame Space）后发送数据。</p>
+<p>如果检测到信道处于繁忙状态，则会随机等待一个退避时间。如果没有收到
+ACK
+应答，则认为产生了冲突或错误，此时会增大随机退避区间，这里的增加机制和
+CSMA/CD 是一样的。</p></li>
+<li><p>同时，802.11 Receicer 在收到数据帧后会等待一个时间段 SIFS（Short
+Inter-Frame Space）后再传输 ACK。</p></li>
+</ul>
+<p>为了解决隐藏站和暴露站的问题，CSMA/CA 还可以使用 MACA 中的 RTS/CTS
+握手机制：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-132859.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="帧结构">802.11 帧结构</h4>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-133123.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">#数据链路层</a>
+      
+        <a href="/tags/%E5%AA%92%E4%BD%93%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">#媒体访问控制</a>
+      
+        <a href="/tags/ALOHA/">#ALOHA</a>
+      
+        <a href="/tags/CSMA/">#CSMA</a>
+      
+        <a href="/tags/%E4%BB%A5%E5%A4%AA%E7%BD%91/">#以太网</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>数据链路层——MAC 子层</div>
+      <div>http://example.com/2023/12/11/数据链路层——MAC-子层/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/03/Transfomer-%E5%AE%B6%E6%97%8F%E4%B9%8B-GPT/" title="基于 Transfomer 的预训练模型 | GPT">
+                        <span class="hidden-mobile">基于 Transfomer 的预训练模型 | GPT</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

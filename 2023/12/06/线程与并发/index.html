@@ -16,17 +16,36 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="线程 线程与进程的关系 回顾：什么是进程？ 进程（Process）是程序运行的实例。一个进程由当前状态和系统资源组成。  当前状态（Current State） 包括 CPU 寄存器、栈指针、PC 指针等。 系统资源（System Resources） 地址空间、I&#x2F;O 状态等。  每个进程的系统资源都是受到保护的。 什么是线程？ 线程（Thread）是进程中的顺序执行流（Sequential e">
+<meta property="og:type" content="article">
 <meta property="og:title" content="线程与并发">
 <meta property="og:url" content="http://example.com/2023/12/06/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="线程 线程与进程的关系 回顾：什么是进程？ 进程（Process）是程序运行的实例。一个进程由当前状态和系统资源组成。  当前状态（Current State） 包括 CPU 寄存器、栈指针、PC 指针等。 系统资源（System Resources） 地址空间、I&#x2F;O 状态等。  每个进程的系统资源都是受到保护的。 什么是线程？ 线程（Thread）是进程中的顺序执行流（Sequential e">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-041608.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-033558.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-040955.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042037.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042159.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042628.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042702.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-045011.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-060714.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-061423.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062041.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062851.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062935.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-084846.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-090619.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-092818.png">
 <meta property="article:published_time" content="2023-12-06T10:03:13.000Z">
-<meta property="article:modified_time" content="2023-12-06T10:04:10.397Z">
+<meta property="article:modified_time" content="2023-12-09T16:21:50.036Z">
 <meta property="article:author" content="Captain_Lee">
-<meta property="article:tag" content="线程">
 <meta property="article:tag" content="并发">
+<meta property="article:tag" content="线程">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-041608.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -248,7 +267,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          4.2k 字
         
       </span>
     
@@ -259,7 +278,7 @@
         
         
         
-          1 分钟
+          35 分钟
         
       </span>
     
@@ -302,7 +321,225 @@
             
               <div class="markdown-body">
                 
-                
+                <h3 id="线程">线程</h3>
+<h4 id="线程与进程的关系">线程与进程的关系</h4>
+<p><strong>回顾：什么是进程？</strong></p>
+<p><strong>进程（Process）</strong>是程序运行的实例。一个进程由当前状态和<strong>系统资源</strong>组成。</p>
+<ul>
+<li><p><strong>当前状态（Current State）</strong></p>
+<p>包括 CPU 寄存器、栈指针、PC 指针等。</p></li>
+<li><p><strong>系统资源（System Resources）</strong></p>
+<p>地址空间、I/O 状态等。</p></li>
+</ul>
+<p>每个进程的系统资源都是<strong>受到保护</strong>的。</p>
+<p><strong>什么是线程？</strong></p>
+<p><strong>线程（Thread）</strong>是进程中的<strong>顺序执行流（Sequential
+execution
+stream）</strong>，进程的一组线程<strong>共用进程的系统资源</strong>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-041608.png" srcset="/img/loading.gif" lazyload alt="线程的生命周期" style="zoom:67%;" /></p>
+<h4 id="多线程-tcb">多线程 &amp; TCB</h4>
+<p><strong>多线程（Multithread）</strong>是一种技术，即一个程序的进程可以有多个不同的并发线程。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-033558.png" srcset="/img/loading.gif" lazyload alt="单线程进程和多线程进程" style="zoom:67%;" /></p>
+<p>就如进程会将其信息存储在 PCB
+中，每个线程也有一个维护自身信息的数据结构 —— <strong>TCB（Thread
+Control Block）</strong></p>
+<p>那些线程的私有状态会保存在 TCB 内，如：</p>
+<ul>
+<li><strong>CPU 寄存器（包括 PC 寄存器）</strong></li>
+<li><strong>程序执行的栈指针（Execution stack pointer）</strong></li>
+<li><strong>调度信息（包括状态、优先级、CPU 执行时间等）</strong></li>
+<li>...</li>
+</ul>
+<p><strong>操作系统将 TCB
+存储在内核内存中</strong>，以便能够轻松地访问和管理所有线程的信息。这样，操作系统可以在需要时对线程进行调度、切换线程的上下文以及管理线程的状态等操作，而这些操作需要访问
+TCB 中存储的信息。</p>
+<p>每个 PCB 都会指向多个 TCB：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-040955.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>线程切换可以分为两种：</p>
+<ul>
+<li><strong>在同一个 PCB 内（Within a
+PCB）</strong>，这种切换地址空间保持一致；</li>
+<li><strong>在不同的 PCB 之间（Across
+PCBs）</strong>，这种切换需要改变地址空间。</li>
+</ul>
+<p><strong>多线程的优点</strong></p>
+<ul>
+<li>不同于进程的上下文切换，<strong>线程切换（Thread
+Switch）</strong>开销低很多；</li>
+<li>线程的创建和取消都比进程快很多；</li>
+<li>线程之间可以共享内存，更利于通信。</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042037.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><strong>多核操作系统中的线程</strong></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042159.png" srcset="/img/loading.gif" lazyload style="zoom:55%;" /></p>
+<p>多核操作系统中两种线程调度的方式：</p>
+<ul>
+<li><p>每个核维护自己的线程队列</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042628.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<ul>
+<li>需要更有效的高速缓存</li>
+<li>需要平衡的调度策略</li>
+</ul></li>
+<li><p>所有线程都放置在一个单独的队列内</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042702.png" srcset="/img/loading.gif" lazyload alt="image-20231208122701523" style="zoom:50%;" /></p>
+<ul>
+<li>有可能会导致<strong>竞态条件</strong>，需要锁机制</li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>处理器亲和性（Processor
+Affinity）</strong>是计算机操作系统中的一个概念，它用于指定一个进程或线程在多核处理器系统中执行时应该绑定到哪个特定的处理器核心上。处理器亲和性允许开发者或系统管理员控制进程或线程的执行位置，以优化性能、降低延迟或满足特定的系统需求。</p>
+</blockquote>
+<h4 id="ult-klt">ULT &amp; KLT</h4>
+<p>就像进程分为内核进程和用户进程一样，线程也有同样的分类：</p>
+<ul>
+<li><p><strong>内核级别线程（Kernel Level Thread，KLT）</strong></p>
+<p>KLT
+是由操作系统内核管理和调度的线程。每个线程都有一个对应的内核线程。</p>
+<ul>
+<li>所有现代操作系统都支持 KLT</li>
+<li>直接被内核控制</li>
+<li><strong>每个 KLT 都能独立运行或者被阻塞</strong></li>
+<li>一个进程可以有多个 KLT 在等待不同的事件</li>
+<li>缺点
+<ul>
+<li>相比于 ULT 更 “昂贵”，因为要经常和内核打交道</li>
+</ul></li>
+</ul></li>
+<li><p><strong>用户级别线程（User Level Thread，ULT）</strong></p>
+<p>ULT
+是在用户空间中由应用程序或线程库管理的线程。操作系统对它们一无所知，只会认为应用程序只有一个线程在运行。</p>
+<ul>
+<li><p>ULT 相比于 KLT 更加轻量级，用户的<strong>程序自身一般就能提供进
+ULT 的线程调度</strong>，由于不需要内核的参与，<strong>ULT
+的切换一般更快</strong></p></li>
+<li><p>ULT
+在相对于彼此而言，可能会以<strong>非抢占（Non-preemptive）的方式</strong>进行调度</p></li>
+<li><p>缺点：</p>
+<ul>
+<li><p>一个线程处于 I/O 阻断，所有线程都会被阻断</p></li>
+<li><p>内核无法干预 ULT 的调度，这意味着其不能利用多核处理器的优势</p>
+<blockquote>
+<p>由于操作系统对用户级线程一无所知，它无法将不同的 ULT
+分配给不同的处理器核心并进行并行执行。因此，无论多核处理器上有多少个核心，操作系统只会认为应用程序只有一个线程在运行。这限制了
+ULT 利用多核处理器的能力。</p>
+</blockquote></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-045011.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="线程交错">线程交错</h4>
+<p><strong>线程交错（Thread
+Interleaving）</strong>是指在多线程编程中，多个线程的执行在时间上交错进行的现象。当一个计算机系统具有多个处理核心（例如多核处理器）或者操作系统采用分时调度策略时，多个线程之间会竞争执行权，导致它们交替运行，这就是线程交错。</p>
+<h3 id="并行与并发">并行与并发</h3>
+<h4 id="二者区别">二者区别</h4>
+<p><strong>并行（Parallelism）</strong>和<strong>并发（Concurrency）</strong>是两个在多任务处理领域常被讨论的概念，它们描述了系统处理多个任务的方式，但它们指的并不是相同的情形。</p>
+<p><strong>并行（Parallelism）</strong>：</p>
+<ul>
+<li>并行处理指的是系统同时进行多个任务的能力。<strong>这通常涉及到多核或多处理器的系统</strong>，其中每个核或处理器可以同时执行不同的任务或同一个任务的不同部分。</li>
+<li>并行性的关键在于性能的提升，因为它可以显著减少完成多个任务的总时间。</li>
+<li>例如，在一个四核处理器上，四个独立的计算可以同时进行，每个核心处理一个计算。</li>
+</ul>
+<p><strong>并发（Concurrency）</strong>：</p>
+<ul>
+<li><strong>并发处理是指系统能够处理多个任务的能力，但不一定是同时进行的</strong>。在单核处理器上，操作系统可以通过任务切换，使得用户感觉到多个任务似乎是同时执行的。</li>
+<li>并发性不一定提高性能（相对于单任务来说），而是关于多任务管理的效率。并发可以在单核或多核机器上实现。</li>
+<li>例如，一个服务器运行多个进程，通过快速切换来服务多个客户端，即使在任何给定的微秒内，只有一个进程在执行。</li>
+</ul>
+<p>简而言之，<strong>并行</strong>是关于<strong>同时</strong>做多件事情（提高吞吐量），而<strong>并发</strong>是关于处理多件事情（管理共享资源的访问）。<strong>并行是并发的一个子集</strong>；所有并行系统都是并发的，但不是所有并发系统都是并行的。并发强调的是正确性和管理多个同时活动的任务，而并行强调的是性能和做相同的事情来加速计算。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-060714.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="并发中的一些概念">并发中的一些概念</h4>
+<h5 id="竞态条件">竞态条件</h5>
+<p><strong>竞态条件（Race
+Condition）</strong>是指一种在并发程序中的错误，它出现在当<strong>程序的结果依赖于线程的调度顺序的情况</strong>，其强调结果的不可预判性。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-061423.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h5 id="互斥">互斥</h5>
+<p><strong>互斥（Mutual
+Exclusion）</strong>指一个资源无法被多个线程共享，即一个线程在完成某个任务直到释放资源之前，其他进程都不能访问该资源。</p>
+<h5 id="临界区">临界区</h5>
+<p><strong>临界区（Critical
+Region）</strong>就是程序中需要<strong>互斥</strong>的部分。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062041.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>为了实现临界区，操作系统会给一些资源分配<strong>锁（Lock）</strong>，当一个线程访问该资源时会拿到该资源的锁，此时其他线程均无法访问而被放置在一个<strong>入队列集合</strong>。</p>
+<blockquote>
+<p><strong>入队列集合（Entry Set
+Queue）</strong>是一个数据结构，用于存储等待获取锁的线程。每当一个线程尝试获取锁但锁已经被其他线程占用时，该线程会被加入到集合中，<strong>等待锁释放</strong>。</p>
+</blockquote>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062851.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>很多编程语言给了这个抽象概念的具体实现方式，比如 Java 中的
+<code>synchronized</code> 关键字。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062935.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h5 id="死锁">死锁</h5>
+<p><strong>死锁（Deadlock）</strong>是指在多线程或多进程环境中，两个或多个线程（或进程）由于相互等待对方释放资源而陷入无法继续执行的状态。在死锁状态下，每个线程都在等待其他线程释放资源，但由于相互之间的依赖关系，它们都无法继续执行下去。死锁是一种常见的并发编程问题，可以导致系统停滞，无法正常运行。</p>
+<p>死锁通常涉及以下几个<strong>关键要素</strong>：</p>
+<ol type="1">
+<li><strong>互斥（Mutual
+Exclusion）</strong>：多个线程或进程竞争获取某个资源，但同一时刻只能有一个线程或进程占有资源。</li>
+<li><strong>请求和保持（Hold and
+Wait）</strong>：线程在持有某些资源的同时，又请求其他资源，但由于资源被其他线程占有，请求线程必须等待。</li>
+<li><strong>不可抢占（No
+Preemption）</strong>：资源只能由占有它的线程主动释放，而不能被强制抢占。</li>
+<li><strong>循环等待（Circular
+Wait）</strong>：多个线程之间形成了一个循环链，每个线程都在等待下一个线程释放资源，从而造成了死锁。</li>
+</ol>
+<p>以上四个条件是死锁的必要条件，缺一不可。</p>
+<p><strong>分配图</strong></p>
+<p><strong>分配图（Allocation
+Graph）</strong>是一种检测死锁的方式，分配图中一共有两类节点：一是线程，而是资源，如下图。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-084846.png" srcset="/img/loading.gif" lazyload style="zoom:55%;" /></p>
+<p>分配图中所有的边都是有向的：</p>
+<ul>
+<li>从线程指向资源的边称为<strong>请求边（Request
+Edge）</strong>，表示线程正在请求某个资源。</li>
+<li>从资源指向线程的边称为<strong>分配边（Assignment
+Edge）</strong>，表示该资源正在被某个线程占有。</li>
+</ul>
+<p>再上图中，资源和线程形成了一个回环，产生了死锁，但并不是有回环就一定会有死锁。关于线程分配图中的回环与死锁之间的关系，有以下几点需要了解：</p>
+<ul>
+<li><p><strong>存在回环不一定意味着死锁</strong>：虽然死锁的一个典型特征是资源分配图中的回环，但并不是所有回环都表示死锁。关键在于这个回环是否包含了所有相关资源和线程。如果一个线程（或几个线程）在回环中，<strong>但是它们还可以访问其它资源来继续运行，那么这个回环就不一定代表死锁</strong>。</p>
+<ul>
+<li>如果都只有一个实例，那么回环意味着死锁</li>
+<li>如果回环中的资源有很多个实例，那么就不意味着死锁</li>
+</ul>
+<p>如下图：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-090619.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>图中存在回环：<span class="math inline">\(T_1 \to R_1 \to T_3 \to R_2
+\to T_1\)</span>，但注意到 <span class="math inline">\(T_4\)</span>
+在这里没有请求，说明 <span class="math inline">\(T_4\)</span>
+可以正常运行，那么当 <span class="math inline">\(T_4\)</span> 运行结束后
+<span class="math inline">\(R_2\)</span> 会被释放，<span
+class="math inline">\(T_3\)</span> 便可以成功获得 <span
+class="math inline">\(R_2\)</span> 的请求，
+从而打破循环等待，所以不会产生死锁。</p></li>
+<li><p><strong>没有回环通常意味着没有死锁</strong>：如果资源分配图中没有回环，那么一般可以认为系统中没有死锁。这是因为死锁的一个条件是循环等待，这在资源分配图中表现为回环。</p></li>
+</ul>
+<p>因此，线程资源分配图存在回环是产生死锁的<strong>必要不充分条件</strong>。</p>
+<p><strong>如何避免死锁</strong></p>
+<p>要避免死锁，就要从死锁产生的四个条件入手，只要破除四个条件中的任何一个就可以成功解决死锁的问题。</p>
+<ul>
+<li><p><strong>解决「互斥」</strong></p>
+<p>一种解决方案是让资源可共享，这样就不会有互斥的需求。在某些情况下，这是可能的，例如，多个线程可以同时读取同一个只读文件，因为它们不会对文件内容进行修改，从而不会发生冲突。这个想法很理想，但多数时候不允许。</p></li>
+<li><p><strong>解决「请求和保持」</strong></p>
+<p>我们可以考虑一次性让一个线程拿到所有它请求的资源，阻断其他占取它资源的线程。这样也不现实，可能会导致每个线程在等待资源上浪费过多时间。</p></li>
+<li><p><strong>解决「不可抢占」</strong></p>
+<p>我们可以考虑运行线程抢占资源，从而打破循环请求。但这样又可能导致线程饥饿。</p></li>
+<li><p><strong>解决「循环等待」</strong></p>
+<p>我们可以定义一个严格的资源分配顺序，从而避免循环等待的情况。</p>
+<p>例如我们可以给资源进行编号，要求每个线程以递增的枚举顺序请求资源来解决这个问题。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-092818.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>如上图所示，假如 <span class="math inline">\(i &lt;
+j\)</span>，那么线程 A 可以请求 <span
+class="math inline">\(j\)</span>，但线程 <span
+class="math inline">\(B\)</span> 无法请求 <span
+class="math inline">\(i\)</span>，从而避免了死锁。</p></li>
+</ul>
+<h4 id="并发原语">并发原语</h4>
+<p><strong>并发原语（Concurrency
+Primitive）</strong>是一系列操作，它们在多线程或多进程的编程环境中用于管理对共享资源的访问，以避免冲突和确保数据一致性。这些原语通常是由操作系统内核提供的，可以确保在多个线程之间正确同步资源访问。以下是一些常见的并发原语：</p>
+<ul>
+<li><p><strong>信号量（Semaphores）</strong>:</p>
+<p>信号量是一个更高级别的同步机制，可以被用来控制对资源的访问。</p></li>
+</ul>
 
                 
               </div>
@@ -336,9 +573,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%BA%BF%E7%A8%8B/">#线程</a>
-      
         <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
+      
+        <a href="/tags/%E7%BA%BF%E7%A8%8B/">#线程</a>
       
     </div>
   
