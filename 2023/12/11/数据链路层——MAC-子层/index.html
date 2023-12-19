@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-29-073334.png">
 <meta property="article:published_time" content="2023-12-11T01:42:37.000Z">
-<meta property="article:modified_time" content="2023-12-16T13:37:05.593Z">
+<meta property="article:modified_time" content="2023-12-19T00:46:54.095Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="数据链路层">
 <meta property="article:tag" content="媒体访问控制">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.4k 字
+          6.5k 字
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          54 分钟
+          55 分钟
         
       </span>
     
@@ -548,7 +548,7 @@ B 的影响，因为 B 的帧无法传输到 D，实际上不存在冲突问题�
 </ol>
 <p>以上两种情况可以总结为在无线通信中<strong>检测不到冲突</strong>和<strong>错误判断了冲突</strong>。</p>
 <h4 id="maca">MACA</h4>
-<p>为了解决隐藏站和暴露站到问题，人们提出了 MACA（Multiple Access
+<p>为了解决隐藏站的问题，人们提出了 MACA（Multiple Access
 <strong>Collision
 Avoidance</strong>），不同于冲突检测，该技术强调冲突避免。</p>
 <p>MACA 的具体是通过基站之间的握手机制实现的，步骤如下：</p>
@@ -558,17 +558,21 @@ Avoidance</strong>），不同于冲突检测，该技术强调冲突避免。</
 <li>S 接收到 CTS 后传输帧给 R</li>
 <li>R 成功接受帧后返回 ACK 给 S</li>
 </ol>
-<p>在此过程中：</p>
-<ul>
-<li>节点只收到 CTS，未收到 RTS：节点在接收节点 R 的范围内，不在发送节点
-S 的范围内，所以该节点是一个<strong>隐藏站</strong>，也就是说该节点在 S
-到 R 的传输过程将无法传输信息。</li>
-<li>节点只收到 RTS，微收到 CTS：节点在发送节点 S 到范围内，不在接受节点
-R
-到范围内，所以该节点是一个<strong>暴露站</strong>，也就是说该节点无法影响到终点
-R，固可以传输信息。</li>
-</ul>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-16-053646.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><strong>具体流程</strong></p>
+<ol type="1">
+<li>A 与 B 建立通信，发送 RTS，C 和 E 收到 RTS
+帧，接下来将保持沉默；</li>
+<li>B 收到 A 传输的 RTS，返回一个 CTS，D 和 E 收到 CTS
+帧，接下来将保持沉默。</li>
+</ol>
+<p>MACA 为什么可以解决隐藏站的问题？</p>
+<p>节点只收到 CTS，未收到 RTS：节点在接收节点 R 的范围内，不在发送节点 S
+的范围内，所以该节点是一个<strong>隐藏站</strong>，也就是说该节点在 S 到
+R 的传输过程将无法传输信息。如上图，D 是一个隐藏站，在 A 与 B
+通信的过程中会被沉默。</p>
+<p>注意：MACA 无法解决暴露站的问题，如上图，C
+是一个暴露站，其通信是不受到影响的，但其错误判断可能会产生冲突从而造成信道浪费。</p>
 <h4 id="lan-架构">LAN 架构</h4>
 <p>LAN 架构主要可以分为以下两个部分：</p>
 <ul>
@@ -609,6 +613,7 @@ Response
 Frame），其中包含有关网络的信息，如支持的加密方法、信号强度、频道等。主动扫描允许设备更主动地发现附近的Wi-Fi网络，而不仅仅是等待信标帧的广播。这对于设备在新环境中快速连接到
 Wi-Fi 网络或在切换网络时非常有用。</p></li>
 </ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-19-004646.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <h4 id="csmaca">CSMA/CA</h4>
 <p>CSMA/CA（Carrier Sense Multiple Access with <strong>Collision
 Avoidance</strong>）是一种用于无线通信的可以避免冲突的载波监听多路访问技术。</p>
