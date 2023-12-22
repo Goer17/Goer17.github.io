@@ -1,0 +1,817 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本篇文章主要介绍一下这次机器学习大作业的解决方案，主要是从方法论的角度出发，不会涉及到过多的代码。 前置工作  至少了解一门 Python 的深度学习框架（PyTorch、TensorFlow 等） 这里说的了解，就是你至少得知道如何用框架语言组织一次正常的深度学习，即如何用程序语言描述从模型搭建到训练再到测试的一个全流程。 如果这些都不了解，以 PyTorch 为例，可以去学习一下最基本的全连接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML coursework">
+<meta property="og:url" content="http://example.com/2023/12/20/ML-coursework-%E6%96%B9%E6%B3%95%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="本篇文章主要介绍一下这次机器学习大作业的解决方案，主要是从方法论的角度出发，不会涉及到过多的代码。 前置工作  至少了解一门 Python 的深度学习框架（PyTorch、TensorFlow 等） 这里说的了解，就是你至少得知道如何用框架语言组织一次正常的深度学习，即如何用程序语言描述从模型搭建到训练再到测试的一个全流程。 如果这些都不了解，以 PyTorch 为例，可以去学习一下最基本的全连接">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-051917.png">
+<meta property="article:published_time" content="2023-12-20T08:17:15.000Z">
+<meta property="article:modified_time" content="2023-12-22T05:21:38.983Z">
+<meta property="article:author" content="Captain_Lee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-051917.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ML coursework - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">ML coursework</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-20 16:17" pubdate>
+          2023年12月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ML coursework</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>本篇文章主要介绍一下这次机器学习大作业的解决方案，主要是从方法论的角度出发，不会涉及到过多的代码。</p>
+<p><strong>前置工作</strong></p>
+<ol type="1">
+<li><p>至少了解一门 Python 的深度学习框架（PyTorch、TensorFlow 等）</p>
+<p>这里说的了解，就是你至少得知道如何用框架语言组织一次正常的深度学习，即如何用程序语言描述从模型搭建到训练再到测试的一个全流程。</p>
+<p>如果这些都不了解，以 PyTorch
+为例，可以去学习一下最基本的全连接网络识别 MNIST
+手写数字的案例，这个网上都有大量开源的代码，在这里不做赘述。</p></li>
+<li><p>一台支持 CUDA 的机器</p>
+<p>在后面的训练过程中，我们可能会涉及到比较深的网络，在训练的过程中无可避免需要使用
+GPU 加速。如果你使用的是 MacOS 或者你的电脑是 A 卡，可以尝试租云 GPU
+实例，这个我们放在后面介绍。</p></li>
+</ol>
+<h4 id="数据清洗-特征提取">数据清洗 &amp; 特征提取</h4>
+<p>首先，要求明确提及，只能使用 Genki4k
+数据集中的图像。其次，这次我们要完成的第一个 Task
+下的两个任务似乎只关注人的头部特征，而提供的数据集里面的图片有大量的全身照和无关背景，这些无关量可能会给我们的数据集引入大量的噪音，从而增加过拟合的风险，甚至可能导致模型无法收敛。</p>
+<p>为了解决这个问题，我们需要对数据进行一轮清洗。具体来说，就是要将图片中的人脸裁剪出来。</p>
+<p>在这里，我们可以使用 YOLO 进行目标分割，也可以使用开源的 <a
+target="_blank" rel="noopener" href="https://github.com/timesler/facenet-pytorch">FaceNet</a>
+进行面部裁剪与标记。</p>
+<p>以 FaceNet 中的 MTCNN 为例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> facenet_pytorch <span class="hljs-keyword">import</span> MTCNN<br><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> transforms<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br>mtcnn = MTCNN(image_size=<span class="hljs-number">256</span>)<br><br>img = Image.<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test.png&#x27;</span>).convert(<span class="hljs-string">&#x27;RGB&#x27;</span>)<br>img = mtcnn(img)<br><span class="hljs-comment"># 将一个 Image 对象转化为一个特征提取后的张量</span><br><br>transforms.ToPILImage()(img).show()<br></code></pre></td></tr></table></figure>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-21-174654.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>进行这样一轮数据清洗后的数据能很好保留面部特征，防止模型学习数据集的噪声而造成过拟合的现象，同时模型可以更快收敛。</p>
+<h4 id="task-1.1">Task 1.1</h4>
+<p>Task 1.1
+是一个简单的二分类任务，你需要设计一个模型，判断输入的人脸是否在笑。</p>
+<p>假设你已经成功处理好了数据集并进行了合适的划分，并且熟悉了 PyTorch
+的基本训练流程，那接下来的工作就比较固定了。</p>
+<ol type="1">
+<li><p><strong>选择一个网络模型</strong></p>
+<p>针对此任务而言，不管是使用基于传统 CNN 架构的 VGGNet
+还是增加了残差连接的
+ResNet，都能取得一个比较好的结果。这些模型不需要自己重新设计，直接从
+<code>torchvision.models</code> 库中导入即可，以 ResNet18
+为例，只需要修改最后一层全连接的神经元数量即可：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> models<br><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn<br><br>model = models.resnet18()<br>model.fc = nn.Linear(model.fc.in_features, <span class="hljs-number">2</span>)<br><br><span class="hljs-built_in">print</span>(model)<br></code></pre></td></tr></table></figure></p>
+<p>控制台输出：</p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs output">ResNet(<br>  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)<br>  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)<br>  (relu): ReLU(inplace=True)<br>  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)<br>  (layer1): Sequential(<br>    (0): BasicBlock(<br>      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)<br>      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)<br>      (relu): ReLU(inplace=True)<br>      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)<br>      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)<br>    )<br>    ...<br>  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))<br>  (fc): Linear(in_features=512, out_features=2, bias=True)<br>)<br></code></pre></td></tr></table></figure></p></li>
+<li><p><strong>选择合适的损失函数、优化器、学习率、批次大小以及训练轮数量</strong></p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> optim<br><br><span class="hljs-comment"># 作为参考</span><br>loss_fn = nn.CrossEntropyLoss()<br>optimizer = optim.Adam(params=model.parameters(), lr=<span class="hljs-number">0.001</span>)<br>num_epochs = <span class="hljs-number">20</span><br>batch_size = <span class="hljs-number">128</span><br></code></pre></td></tr></table></figure></p></li>
+<li><p><strong>训练</strong></p>
+<p>如果以上步骤都正确，最后模型在验证集的准确率大概收敛在 92%
+左右。</p></li>
+<li><p><strong>在测试集上测试模型效果</strong></p>
+<p>最后模型的 AUC 指标可以达到大约 0.98：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-043040.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p></li>
+</ol>
+<blockquote>
+<p><strong>Q &amp; A</strong></p>
+<ul>
+<li><p><strong>需不需要使用预训练参数</strong>？</p>
+<p>笔者认为这是可以的，但没有很大的必要，这个问题本身不算复杂，没有必要在导入模型的时候加载预训练参数。</p></li>
+<li><p><strong>训练集的的损失一直在降，但验证集的损失保持不变甚至是上升怎么办？</strong></p>
+<p>这种情况一般是过拟合了，可以试着使用正则化技术或者在模型最后添加
+Dropout 层（同样适用于 Task 1.2）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">optimizer = optim.Adam(params=model.parameters(), lr=<span class="hljs-number">0.001</span>, weight_decay=<span class="hljs-number">1e-5</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">model.fc = nn.Sequential(<br>    nn.Linear(model.fc.in_features, <span class="hljs-number">1024</span>),<br>    nn.ReLU(),<br>    nn.Dropout(<span class="hljs-number">0.4</span>),<br>    nn.Linear(<span class="hljs-number">1024</span>, <span class="hljs-number">2</span>)<br>)<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>为什么模型的输入大小不需要调整？</strong></p>
+<p>ResNet
+在设计时使用了全局池化技术，使其可以接受任何尺寸的三通道张量。所以不需要调整
+ResNet 的输入层。</p></li>
+</ul>
+</blockquote>
+<h4 id="task-1.2">Task 1.2</h4>
+<p>不同于 Task 1.1，Task 1.2 是一个回归问题，本问题中 ResNet18
+依然可以取得比较好的效果，你要做的就是把模型最后一层的输出特征数改成 3
+以及替换损失函数为 MSELoss。</p>
+<p>但注意到这里的标签的三位空间弧度坐标的值都比较小，在训练的过程中可能导致梯度过小而收敛慢，我们可以先讲标签中的<strong>弧度值改成角度制进行训练</strong>，也可以适当增加学习率。但即便如此，模型可能在小角度上表现出较大的误差，这里可以使用
+Boosting 集成学习，训练多个 Weak
+model，然后将其结合起来部署在测试集。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-044334.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h4 id="task-2">Task 2</h4>
+<p>Task 2 的意思就是说我们可以根据 Genki4k
+这个数据集设计自己的任务，根据这个描述，应该就是要让我们自己设计一个无监督学习任务（显然不可能让你用手标记
+4000 张训练样本）</p>
+<p>这里笔者提供一些思路，仅供参考：</p>
+<ul>
+<li><p>尝试使用 K-means 或者 BDSCAN 对样本进行聚类，然后使用 PCA 和
+t-SNE 对数据进行降维从而将其分布进行可视化（最简单）</p></li>
+<li><p>运用 Transformer，使用 MAE
+架构进行图片空白填充，实现一个自监督学习（可以类比 NLP 中的
+BERT）。具体来说就是把 Genki4k
+中的人脸图像进行随机空白填充，然后作为编码器的输入，目标输出就是原图。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-04-104543.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p></li>
+<li><p>使用生成对抗网络（GAN）和反卷积层实现一个根据随机种子生成人脸的
+Generator（这是我最后的选择，中间调整生成器和判别器的超参时会比较麻烦，大概在
+250 个 epoch 之后可以生成可识别的人脸）</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-045856.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p></li>
+</ul>
+<h4 id="使用云-gpu-加速学习">使用云 GPU 加速学习</h4>
+<p>如果你手上缺少算力资源，使用云 GPU
+实例也是一个不错的选择，这里推荐两个平台：</p>
+<ul>
+<li><p>Google Colab（免费，需要科学上网）</p>
+<p>Google Colab，正式名称为 Colaboratory，是 Google
+提供的一项服务，旨在促进机器学习教育和研究。它是一个免费的云服务，基于
+Jupyter 笔记本环境，允许用户编写和执行 Python 代码，而且自动帮你安装好了
+CUDA，不需要手动安装。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-050540.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p>AutoDL（付费，更稳定）</p>
+<p><a href="autodl.com">链接</a></p>
+<p>AutoDL 是一个付费的租用 GPU 实例的平台，和 Google Colab 一样，也支持
+Jupyter 笔记本环境，同时支持 SSH 进行远程终端连接。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-050956.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<p>尽管是付费的，但这些方案还是挺经济的，并且由于服务器在国内，相对而言更加稳定。（实例是按时付费的，不用的时候记得把实例关机）</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-051653.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ML coursework</div>
+      <div>http://example.com/2023/12/20/ML-coursework-方法论/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/11/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E2%80%94%E2%80%94MAC-%E5%AD%90%E5%B1%82/" title="数据链路层——MAC 子层">
+                        <span class="hidden-mobile">数据链路层——MAC 子层</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

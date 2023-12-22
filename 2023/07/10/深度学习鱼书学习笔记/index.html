@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-07-10-125638.png">
 <meta property="article:published_time" content="2023-07-10T12:55:04.000Z">
-<meta property="article:modified_time" content="2023-11-27T10:02:41.203Z">
+<meta property="article:modified_time" content="2023-12-21T12:42:47.147Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="NumPy">
@@ -526,10 +526,10 @@ y_{k, j}} x_{k, i}
 \]</span></p>
 <p><span class="math display">\[
 \implies \frac{\partial L}{\partial W} = X ^ T \frac{\partial
-L}{\partial y}
+L}{\partial Y}
 \]</span></p>
 <p>同理，有：<span class="math inline">\(\frac{\partial L}{\partial X} =
-\frac{\partial L}{\partial y} W ^ T\)</span></p>
+\frac{\partial L}{\partial Y} W ^ T\)</span></p>
 <p>而对于 <span class="math inline">\(b\)</span>
 而言，我们采取同样的方法： <span class="math display">\[
 \frac{\partial L}{\partial b_i} = \sum_k \frac{\partial L}{\partial
@@ -537,7 +537,7 @@ y_{k, i}} \frac{\partial y_{k, i}}{\partial b_i} = \sum_k \frac{\partial
 L}{\partial y_{k, i}}
 \]</span> 这说明 <span class="math inline">\(\frac{\partial L}{\partial
 b}\)</span> 就等于 <span class="math inline">\(\frac{\partial
-L}{\partial y}\)</span> 对列求和。</p>
+L}{\partial Y}\)</span> 沿列求和。</p>
 <p>基于以上的数学证明，我们不难写出 Affine 层的代码实现：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Affine</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, W, b</span>):<br>        self.W = W<br>        self.b = b<br><br>        self.x = <span class="hljs-literal">None</span><br>        self.dW = <span class="hljs-literal">None</span><br>        self.db = <span class="hljs-literal">None</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-keyword">if</span> x.ndim == <span class="hljs-number">1</span>:<br>            self.x = x.reshape((<span class="hljs-number">1</span>, x.size))<br>        <span class="hljs-keyword">else</span>:<br>            self.x = x<br>        out = np.dot(self.x, self.W) + self.b<br><br>        <span class="hljs-keyword">return</span> out<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, dout</span>):<br>        <span class="hljs-keyword">if</span> dout.ndim == <span class="hljs-number">1</span>:<br>            dout = dout.reshape((<span class="hljs-number">1</span>, dout.size))<br>        dx = np.dot(dout, self.W.T)<br>        self.dW = np.dot(self.x.T, dout)<br>        self.db = np.<span class="hljs-built_in">sum</span>(dout, axis = <span class="hljs-number">0</span>)<br><br>        <span class="hljs-keyword">return</span> dx<br></code></pre></td></tr></table></figure>
 <h5 id="softmax-with-loss-层">Softmax-with-Loss 层</h5>
