@@ -16,25 +16,21 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本篇文章主要介绍一下这次机器学习大作业的解决方案，主要是从方法论的角度出发，不会涉及到过多的代码。 前置工作  至少了解一门 Python 的深度学习框架（PyTorch、TensorFlow 等） 这里说的了解，就是你至少得知道如何用框架语言组织一次正常的深度学习，即如何用程序语言描述从模型搭建到训练再到测试的一个全流程。 如果这些都不了解，以 PyTorch 为例，可以去学习一下最基本的全连接">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ML coursework">
-<meta property="og:url" content="http://example.com/2023/12/20/ML-coursework-%E6%96%B9%E6%B3%95%E8%AE%BA/index.html">
+    <meta property="og:type" content="article">
+<meta property="og:title" content="Kerberos 网络认证协议">
+<meta property="og:url" content="http://example.com/2023/12/25/Kerberos-%E7%BD%91%E7%BB%9C%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="本篇文章主要介绍一下这次机器学习大作业的解决方案，主要是从方法论的角度出发，不会涉及到过多的代码。 前置工作  至少了解一门 Python 的深度学习框架（PyTorch、TensorFlow 等） 这里说的了解，就是你至少得知道如何用框架语言组织一次正常的深度学习，即如何用程序语言描述从模型搭建到训练再到测试的一个全流程。 如果这些都不了解，以 PyTorch 为例，可以去学习一下最基本的全连接">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-051917.png">
-<meta property="article:published_time" content="2023-12-20T08:17:15.000Z">
-<meta property="article:modified_time" content="2023-12-25T12:34:53.378Z">
+<meta property="article:published_time" content="2023-12-25T10:20:47.000Z">
+<meta property="article:modified_time" content="2023-12-26T04:27:25.450Z">
 <meta property="article:author" content="Captain_Lee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-051917.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ML coursework - Yuanyang-Lee&#39;s Blog</title>
+  <title>Kerberos 网络认证协议 - Yuanyang-Lee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +223,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">ML coursework</span>
+            <span id="subtitle">Kerberos 网络认证协议</span>
           
         </div>
 
@@ -238,8 +234,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-20 16:17" pubdate>
-          2023年12月20日 下午
+        <time datetime="2023-12-25 18:20" pubdate>
+          2023年12月25日 晚上
         </time>
       </span>
     
@@ -250,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          0 字
         
       </span>
     
@@ -261,7 +257,7 @@
         
         
         
-          31 分钟
+          1 分钟
         
       </span>
     
@@ -299,120 +295,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ML coursework</h1>
+            <h1 style="display: none">Kerberos 网络认证协议</h1>
             
             
               <div class="markdown-body">
                 
-                <p>本篇文章主要介绍一下这次机器学习大作业的解决方案，主要是从方法论的角度出发，不会涉及到过多的代码。</p>
-<p><strong>前置工作</strong></p>
-<ol type="1">
-<li><p>至少了解一门 Python 的深度学习框架（PyTorch、TensorFlow 等）</p>
-<p>这里说的了解，就是你至少得知道如何用框架语言组织一次正常的深度学习，即如何用程序语言描述从模型搭建到训练再到测试的一个全流程。</p>
-<p>如果这些都不了解，以 PyTorch
-为例，可以去学习一下最基本的全连接网络识别 MNIST
-手写数字的案例，这个网上都有大量开源的代码，在这里不做赘述。</p></li>
-<li><p>一台支持 CUDA 的机器</p>
-<p>在后面的训练过程中，我们可能会涉及到比较深的网络，在训练的过程中无可避免需要使用
-GPU 加速。如果你使用的是 MacOS 或者你的电脑是 A 卡，可以尝试租云 GPU
-实例，这个我们放在后面介绍。</p></li>
-</ol>
-<h4 id="数据清洗-特征提取">数据清洗 &amp; 特征提取</h4>
-<p>首先，要求明确提及，只能使用 Genki4k
-数据集中的图像。其次，这次我们要完成的第一个 Task
-下的两个任务似乎只关注人的头部特征，而提供的数据集里面的图片有大量的全身照和无关背景，这些无关量可能会给我们的数据集引入大量的噪音，从而增加过拟合的风险，甚至可能导致模型无法收敛。</p>
-<p>为了解决这个问题，我们需要对数据进行一轮清洗。具体来说，就是要将图片中的人脸裁剪出来。</p>
-<p>在这里，我们可以使用 YOLO 进行目标分割，也可以使用开源的 <a
-target="_blank" rel="noopener" href="https://github.com/timesler/facenet-pytorch">FaceNet</a>
-进行面部裁剪与标记。</p>
-<p>以 FaceNet 中的 MTCNN 为例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> facenet_pytorch <span class="hljs-keyword">import</span> MTCNN<br><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> transforms<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br>mtcnn = MTCNN(image_size=<span class="hljs-number">256</span>)<br><br>img = Image.<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test.png&#x27;</span>).convert(<span class="hljs-string">&#x27;RGB&#x27;</span>)<br>img = mtcnn(img)<br><span class="hljs-comment"># 将一个 Image 对象转化为一个特征提取后的张量</span><br><br>transforms.ToPILImage()(img).show()<br></code></pre></td></tr></table></figure>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-21-174654.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
-<p>进行这样一轮数据清洗后的数据能很好保留面部特征，防止模型学习数据集的噪声而造成过拟合的现象，同时模型可以更快收敛。</p>
-<h4 id="task-1.1">Task 1.1</h4>
-<p>Task 1.1
-是一个简单的二分类任务，你需要设计一个模型，判断输入的人脸是否在笑。</p>
-<p>假设你已经成功处理好了数据集并进行了合适的划分，并且熟悉了 PyTorch
-的基本训练流程，那接下来的工作就比较固定了。</p>
-<ol type="1">
-<li><p><strong>选择一个网络模型</strong></p>
-<p>针对此任务而言，不管是使用基于传统 CNN 架构的 VGGNet
-还是增加了残差连接的
-ResNet，都能取得一个比较好的结果。这些模型不需要自己重新设计，直接从
-<code>torchvision.models</code> 库中导入即可，以 ResNet18
-为例，只需要修改最后一层全连接的神经元数量即可：</p>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> models<br><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn<br><br>model = models.resnet18()<br>model.fc = nn.Linear(model.fc.in_features, <span class="hljs-number">2</span>)<br><br><span class="hljs-built_in">print</span>(model)<br></code></pre></td></tr></table></figure></p>
-<p>控制台输出：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs output">ResNet(<br>  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)<br>  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)<br>  (relu): ReLU(inplace=True)<br>  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)<br>  (layer1): Sequential(<br>    (0): BasicBlock(<br>      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)<br>      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)<br>      (relu): ReLU(inplace=True)<br>      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)<br>      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)<br>    )<br>    ...<br>  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))<br>  (fc): Linear(in_features=512, out_features=2, bias=True)<br>)<br></code></pre></td></tr></table></figure></p></li>
-<li><p><strong>选择合适的损失函数、优化器、学习率、批次大小以及训练轮数量</strong></p>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> optim<br><br><span class="hljs-comment"># 作为参考</span><br>loss_fn = nn.CrossEntropyLoss()<br>optimizer = optim.Adam(params=model.parameters(), lr=<span class="hljs-number">0.001</span>)<br>num_epochs = <span class="hljs-number">20</span><br>batch_size = <span class="hljs-number">128</span><br></code></pre></td></tr></table></figure></p></li>
-<li><p><strong>训练</strong></p>
-<p>如果以上步骤都正确，最后模型在验证集的准确率大概收敛在 92%
-左右。</p></li>
-<li><p><strong>在测试集上测试模型效果</strong></p>
-<p>最后模型的 AUC 指标可以达到大约 0.98：</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-043040.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p></li>
-</ol>
-<blockquote>
-<p><strong>Q &amp; A</strong></p>
-<ul>
-<li><p><strong>需不需要使用预训练参数</strong>？</p>
-<p>笔者认为这是可以的，但没有很大的必要，这个问题本身不算复杂，没有必要在导入模型的时候加载预训练参数。</p></li>
-<li><p><strong>训练集的的损失一直在降，但验证集的损失保持不变甚至是上升怎么办？</strong></p>
-<p>这种情况一般是过拟合了，可以试着使用正则化技术或者在模型最后添加
-Dropout 层（同样适用于 Task 1.2）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">optimizer = optim.Adam(params=model.parameters(), lr=<span class="hljs-number">0.001</span>, weight_decay=<span class="hljs-number">1e-5</span>)<br></code></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">model.fc = nn.Sequential(<br>    nn.Linear(model.fc.in_features, <span class="hljs-number">1024</span>),<br>    nn.ReLU(),<br>    nn.Dropout(<span class="hljs-number">0.4</span>),<br>    nn.Linear(<span class="hljs-number">1024</span>, <span class="hljs-number">2</span>)<br>)<br></code></pre></td></tr></table></figure></li>
-<li><p><strong>为什么模型的输入大小不需要调整？</strong></p>
-<p>ResNet
-在设计时使用了全局池化技术，使其可以接受任何尺寸的三通道张量。所以不需要调整
-ResNet 的输入层。</p></li>
-</ul>
-</blockquote>
-<h4 id="task-1.2">Task 1.2</h4>
-<p>不同于 Task 1.1，Task 1.2 是一个回归问题，本问题中 ResNet18
-依然可以取得比较好的效果，你要做的就是把模型最后一层的输出特征数改成 3
-以及替换损失函数为 MSELoss。</p>
-<p>但注意到这里的标签的三位空间弧度坐标的值都比较小，在训练的过程中可能导致梯度过小而收敛慢，我们可以先讲标签中的<strong>弧度值改成角度制进行训练</strong>，也可以适当增加学习率。但即便如此，模型可能在小角度上表现出较大的误差，这里可以使用
-Boosting 集成学习，训练多个 Weak
-model，然后将其结合起来部署在测试集。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-044334.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<h4 id="task-2">Task 2</h4>
-<p>Task 2 的意思就是说我们可以根据 Genki4k
-这个数据集设计自己的任务，根据这个描述，应该就是要让我们自己设计一个无监督学习任务（显然不可能让你用手标记
-4000 张训练样本）</p>
-<p>这里笔者提供一些思路，仅供参考：</p>
-<ul>
-<li><p>尝试使用 K-means 或者 BDSCAN 对样本进行聚类，然后使用 PCA 和
-t-SNE 对数据进行降维从而将其分布进行可视化（最简单）</p></li>
-<li><p>运用 Transformer，使用 MAE
-架构进行图片空白填充，实现一个自监督学习（可以类比 NLP 中的
-BERT）。具体来说就是把 Genki4k
-中的人脸图像进行随机空白填充，然后作为编码器的输入，目标输出就是原图。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-04-104543.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p></li>
-<li><p>使用生成对抗网络（GAN）和反卷积层实现一个根据随机种子生成人脸的
-Generator（这是我最后的选择，中间调整生成器和判别器的超参时会比较麻烦，大概在
-250 个 epoch 之后可以生成可识别的人脸）</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-045856.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p></li>
-</ul>
-<h4 id="使用云-gpu-加速学习">使用云 GPU 加速学习</h4>
-<p>如果你手上缺少算力资源，使用云 GPU
-实例也是一个不错的选择，这里推荐两个平台：</p>
-<ul>
-<li><p>Google Colab（免费，需要科学上网）</p>
-<p>Google Colab，正式名称为 Colaboratory，是 Google
-提供的一项服务，旨在促进机器学习教育和研究。它是一个免费的云服务，基于
-Jupyter 笔记本环境，允许用户编写和执行 Python 代码，而且自动帮你安装好了
-CUDA，不需要手动安装。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-050540.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
-<li><p>AutoDL（付费，更稳定）</p>
-<p><a href="autodl.com">链接</a></p>
-<p>AutoDL 是一个付费的租用 GPU 实例的平台，和 Google Colab 一样，也支持
-Jupyter 笔记本环境，同时支持 SSH 进行远程终端连接。</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-050956.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
-<p>尽管是付费的，但这些方案还是挺经济的，并且由于服务器在国内，相对而言更加稳定。（实例是按时付费的，不用的时候记得把实例关机）</p>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-22-051653.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></p></li>
-</ul>
+                
 
                 
               </div>
@@ -430,8 +318,8 @@ Jupyter 笔记本环境，同时支持 SSH 进行远程终端连接。</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ML coursework</div>
-      <div>http://example.com/2023/12/20/ML-coursework-方法论/</div>
+      <div>Kerberos 网络认证协议</div>
+      <div>http://example.com/2023/12/25/Kerberos-网络认证协议/</div>
     </div>
     <div class="license-meta">
       
@@ -443,7 +331,7 @@ Jupyter 笔记本环境，同时支持 SSH 进行远程终端连接。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年12月20日</div>
+          <div>2023年12月25日</div>
         </div>
       
       

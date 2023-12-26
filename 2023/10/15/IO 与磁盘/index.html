@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-052334.png">
 <meta property="article:published_time" content="2023-10-15T15:43:38.000Z">
-<meta property="article:modified_time" content="2023-10-25T12:28:58.261Z">
+<meta property="article:modified_time" content="2023-12-25T03:33:45.215Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="I&#x2F;O">
 <meta name="twitter:card" content="summary_large_image">
@@ -463,7 +463,7 @@ I/O 和直接内存访问。</p>
 <li><p><strong>编程 I/O（Programmed I/O）</strong></p>
 <p>编程 I/O（Programmed I/O）是计算机系统中的一种基本 I/O
 操作方法，它<strong>通过 CPU
-执行的程序来控制数据的传输和通信</strong>。在Programmed I/O中，CPU
+执行的程序来控制数据的传输和通信</strong>。在 Programmed I/O中，CPU
 负责直接处理 I/O
 操作，包括从外部设备读取数据或将数据写入外部设备。<strong>即编程 I/O
 所有数据的传输都依托于处理器的指令</strong>。</p>
@@ -537,7 +537,7 @@ Drive，HDD）是一种用于存储数据的计算机存储设备。HDD
 </ul></li>
 </ol>
 <h5 id="时延分析">时延分析</h5>
-<p>HHD 技术寻址并传输数据的时间开销我们可以认为由以下 3 部分组成：</p>
+<p>HDD 技术寻址并传输数据的时间开销我们可以认为由以下 3 部分组成：</p>
 <ol type="1">
 <li><strong>寻道时间（Seek
 time）</strong>：即移动磁头到目标所在柱面和磁道所花费的时间。寻道时间受到磁头移动的距离和速度的影响。较短的寻道时间表示硬盘可以更快地访问数据，因此是一个性能指标。</li>
@@ -547,7 +547,7 @@ delay）</strong>：找到目标位置后需要旋转磁盘使得磁头落在目
 delay）</strong>：使用读写头来传输数据。实际的数据传输时间取决于硬盘的数据传输速度。这通常以每秒字节（Bps）或兆字节每秒（MBps）来表示。</li>
 </ol>
 <blockquote>
-<p>我们假设某个 HHD 设备的平均寻道时间是 5ms，盘片旋转速度为 7200
+<p>我们假设某个 HDD 设备的平均寻道时间是 5ms，盘片旋转速度为 7200
 RPM，传输速率为 50 MB/s，一个数据块的大小为 4KB，则有：</p>
 <ul>
 <li><p>平均旋转延迟 = 盘片旋转一圈的时间 / 2 = 8ms / 2 = 4ms</p></li>

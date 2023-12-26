@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-09-24-055541.png">
 <meta property="article:published_time" content="2023-09-24T05:13:21.000Z">
-<meta property="article:modified_time" content="2023-10-25T12:44:41.462Z">
+<meta property="article:modified_time" content="2023-12-23T12:24:06.783Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="进程管理">
@@ -677,11 +677,10 @@ Robin）。不同队列可以使用不同的基本调度策略。</p>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-02-135541.png" srcset="/img/loading.gif" lazyload alt="MLFQ" style="zoom:50%;" /></p>
 <ul>
 <li><p><strong>反馈机制</strong>：</p>
-<p>MLFQ
-使用反馈机制来动态调整进程的优先级。如果一个进程在高优先级队列中等待了一段时间但没有完成，它将被移到较低优先级的队列中，从而允许其他进程有机会获得
-CPU 时间。如果进程执行了很长时间（例如 I/O
-阻塞），它可能会升级到更高优先级的队列，以防止长时间运行的进程垄断
-CPU。</p></li>
+<p>MLFQ 使用反馈机制来动态调整进程的优先级。</p>
+<p>如果一个进程在高优先级队列中等待了一段时间但没有完成，它将被移到较低优先级的队列中，从而允许其他进程有机会获得
+CPU 时间。</p>
+<p>如果一个进程在低优先级队列中等待了很长时间而没有被执行，系统可能会提高其优先级。这是为了防止饥饿现象，即确保所有进程最终都能获得处理器时间。</p></li>
 <li><p><strong>解决饥饿问题</strong>：</p>
 <p>MLFQ
 调度中如果频繁有新的进程进入系统，可能导致优先级低的进程频繁被抢占，从而造成进程饥饿问题。</p>
