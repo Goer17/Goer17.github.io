@@ -25,11 +25,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-082053.png">
 <meta property="article:published_time" content="2023-11-02T05:04:52.000Z">
-<meta property="article:modified_time" content="2023-12-06T16:43:32.980Z">
+<meta property="article:modified_time" content="2023-12-31T04:03:08.680Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="内存管理">
 <meta property="article:tag" content="MMU">
 <meta property="article:tag" content="页表">
+<meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-06-082053.png">
   
@@ -349,7 +350,7 @@ Partitioning）</strong>。</p>
 <li><p><strong>不变分区</strong>：</p>
 <ul>
 <li><p>在机器启动时间（Boot
-time）就将内存分为几个连续的块，此后这几个块分区不会发生变化。</p>
+time）就将内存分为几个连续的分区，<strong>每个分区只能装载一个进程，分区大小在系统启动时确定，并在整个运行期间保持不变。</strong></p>
 <p>如下图所示，<code>x</code> 表示进程已使用内存：</p>
 <table>
 <thead>
@@ -736,6 +737,8 @@ Used）是一种常见的页面置换算法，用于管理计算机系统中的�
         <a href="/tags/MMU/">#MMU</a>
       
         <a href="/tags/%E9%A1%B5%E8%A1%A8/">#页表</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>
       
     </div>
   

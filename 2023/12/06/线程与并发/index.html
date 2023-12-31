@@ -23,29 +23,16 @@
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
 <meta property="og:description" content="线程 线程与进程的关系 回顾：什么是进程？ 进程（Process）是程序运行的实例。一个进程由当前状态和系统资源组成。  当前状态（Current State） 包括 CPU 寄存器、栈指针、PC 指针等。 系统资源（System Resources） 地址空间、I&#x2F;O 状态等。  每个进程的系统资源都是受到保护的。 什么是线程？ 线程（Thread）是进程中的顺序执行流（Sequential e">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-041608.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-033558.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-040955.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042037.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042159.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042628.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-042702.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-045011.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-060714.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-061423.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062041.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062851.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-062935.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-084846.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-090619.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-092818.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-31-040143.png">
 <meta property="article:published_time" content="2023-12-06T10:03:13.000Z">
-<meta property="article:modified_time" content="2023-12-09T16:21:50.036Z">
+<meta property="article:modified_time" content="2023-12-31T04:03:55.227Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="并发">
 <meta property="article:tag" content="线程">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="死锁">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-041608.png">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-31-040143.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -267,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k 字
+          5k 字
         
       </span>
     
@@ -278,7 +265,7 @@
         
         
         
-          35 分钟
+          42 分钟
         
       </span>
     
@@ -388,7 +375,27 @@ Switch）</strong>开销低很多；</li>
 </ul>
 <blockquote>
 <p><strong>处理器亲和性（Processor
-Affinity）</strong>是计算机操作系统中的一个概念，它用于指定一个进程或线程在多核处理器系统中执行时应该绑定到哪个特定的处理器核心上。处理器亲和性允许开发者或系统管理员控制进程或线程的执行位置，以优化性能、降低延迟或满足特定的系统需求。</p>
+Affinity）</strong>是计算机操作系统中的一个概念，它用于指定一个进程或线程在多核处理器系统中执行时应该绑定到哪个特定的处理器核心上。<strong>处理器亲和性允许开发者或系统管理员控制进程或线程的执行位置</strong>，以优化性能、降低延迟或满足特定的系统需求。</p>
+<p>亲和性有两种类型：<strong>软亲和性（Soft
+Affinity）</strong>和<strong>硬亲和性（Hard Affinity）</strong>。</p>
+<ul>
+<li>软亲和性是指系统<strong>尝试将进程/线程保持在同一个处理器上运行的策略</strong>，<strong>但不保证一定能够做到</strong>。例如，由于处理器之间的负载平衡，进程可能会迁移到其他处理器。</li>
+<li>硬亲和性指的是某些系统提供的系统调用，<strong>允许进程指定一组处理器来运行</strong>。这意味着进程可以绑定在特定的处理器上，不会被系统迁移。</li>
+</ul>
+<p>许多系统同时提供这两种类型的亲和性设置。</p>
+<ul>
+<li><p>Linux系统中的 <code>sched_setaffinity()</code>
+是一个系统调用，用于实现硬亲和性。通过这个调用，进程可以指定一个或多个处理器，以便系统将其调度到这些处理器上运行。</p>
+<p><code>sched_setaffinity()</code> 函数接受三个参数：</p>
+<ol type="1">
+<li><code>pid_t pid</code> ：进程ID。如果该值为0，则表示当前进程。</li>
+<li><code>size_t cpusetsize</code> ：<code>cpu_set_t</code>
+结构大小，通常为系统 CPU 数量的字节大小。</li>
+<li><code>const cpu_set_t *mask</code> ：指向 <code>cpu_set_t</code>
+结构的指针，该结构定义了进程可以运行的 CPU 集合。使用 CPU
+集合，可以指定一个或多个 CPU 核心。</li>
+</ol></li>
+</ul>
 </blockquote>
 <h4 id="ult-klt">ULT &amp; KLT</h4>
 <p>就像进程分为内核进程和用户进程一样，线程也有同样的分类：</p>
@@ -417,17 +424,49 @@ ULT 的线程调度</strong>，由于不需要内核的参与，<strong>ULT
 在相对于彼此而言，可能会以<strong>非抢占（Non-preemptive）的方式</strong>进行调度</p></li>
 <li><p>缺点：</p>
 <ul>
-<li><p>一个线程处于 I/O 阻断，所有线程都会被阻断</p></li>
+<li><p>一个线程处于 I/O 阻断，所有线程都会被阻断（多对一模式）</p></li>
 <li><p>内核无法干预 ULT 的调度，这意味着其不能利用多核处理器的优势</p>
 <blockquote>
 <p>由于操作系统对用户级线程一无所知，它无法将不同的 ULT
 分配给不同的处理器核心并进行并行执行。因此，无论多核处理器上有多少个核心，操作系统只会认为应用程序只有一个线程在运行。这限制了
 ULT 利用多核处理器的能力。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-045011.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
 </blockquote></li>
 </ul></li>
 </ul></li>
+<li><p><strong>三种线程模式（Threading Model）</strong></p>
+<ol type="1">
+<li><strong>一对一（One-to-One）</strong>：</li>
+</ol>
+<ul>
+<li>在这个模型中，每个用户级线程都直接映射到一个内核级线程。</li>
+<li>这种模型的优点是一个线程在执行系统调用或者进行阻塞操作时，不会影响到其他线程。</li>
+<li>这是 Linux 和 Windows
+系统中常用的模型，它<strong>可以很好地利用多核处理器的并行处理能力</strong>。</li>
+<li>但是，因为每个线程都需要内核级的结构，所以线程的数量<strong>可能受到系统资源的限制</strong>。</li>
 </ul>
-<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-08-045011.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-31-035500.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<ol start="2" type="1">
+<li><strong>多对一（Many-to-One）</strong>：</li>
+</ol>
+<ul>
+<li>在这个模型中，多个用户级线程映射到单个内核级线程。</li>
+<li>优点是线程<strong>切换和管理的开销很小</strong>，因为这些操作都在用户空间完成。</li>
+<li>缺点是<strong>如果任何一个线程执行阻塞系统调用，整个进程都会被阻塞</strong>，因为操作系统只看到一个线程。</li>
+<li>这种模型不适合多核处理器，因为它无法同时在多个核心上并行执行多个线程。</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-31-035404.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<ol start="3" type="1">
+<li><strong>多对多（Many-to-Many）</strong>：</li>
+</ol>
+<ul>
+<li>这个模型结合了前两者的优点。</li>
+<li>允许多个用户级线程映射到多个内核级线程，<strong>提供了很大的灵活性</strong>。</li>
+<li>这种模型既可以防止一个线程的阻塞操作影响其他线程，也可以利用多核处理器的并行处理能力。</li>
+<li>但是，这种<strong>模型的管理相对复杂</strong>，调度也更为困难，因为需要在用户和内核空间之间协调线程的管理。</li>
+</ul>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-31-035524.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p></li>
+</ul>
 <h4 id="线程交错">线程交错</h4>
 <p><strong>线程交错（Thread
 Interleaving）</strong>是指在多线程编程中，多个线程的执行在时间上交错进行的现象。当一个计算机系统具有多个处理核心（例如多核处理器）或者操作系统采用分时调度策略时，多个线程之间会竞争执行权，导致它们交替运行，这就是线程交错。</p>
@@ -533,13 +572,6 @@ class="math inline">\(j\)</span>，但线程 <span
 class="math inline">\(B\)</span> 无法请求 <span
 class="math inline">\(i\)</span>，从而避免了死锁。</p></li>
 </ul>
-<h4 id="并发原语">并发原语</h4>
-<p><strong>并发原语（Concurrency
-Primitive）</strong>是一系列操作，它们在多线程或多进程的编程环境中用于管理对共享资源的访问，以避免冲突和确保数据一致性。这些原语通常是由操作系统内核提供的，可以确保在多个线程之间正确同步资源访问。以下是一些常见的并发原语：</p>
-<ul>
-<li><p><strong>信号量（Semaphores）</strong>:</p>
-<p>信号量是一个更高级别的同步机制，可以被用来控制对资源的访问。</p></li>
-</ul>
 
                 
               </div>
@@ -576,6 +608,10 @@ Primitive）</strong>是一系列操作，它们在多线程或多进程的编�
         <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
       
         <a href="/tags/%E7%BA%BF%E7%A8%8B/">#线程</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>
+      
+        <a href="/tags/%E6%AD%BB%E9%94%81/">#死锁</a>
       
     </div>
   
@@ -633,6 +669,29 @@ Primitive）</strong>是一系列操作，它们在多线程或多进程的编�
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/12/11/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E2%80%94%E2%80%94MAC-%E5%AD%90%E5%B1%82/" title="数据链路层——MAC 子层">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据链路层——MAC 子层</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/03/Transfomer-%E5%AE%B6%E6%97%8F%E4%B9%8B-GPT/" title="基于 Transfomer 的预训练模型 | GPT">
+                        <span class="hidden-mobile">基于 Transfomer 的预训练模型 | GPT</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 

@@ -25,9 +25,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-052334.png">
 <meta property="article:published_time" content="2023-10-15T15:43:38.000Z">
-<meta property="article:modified_time" content="2023-12-25T03:33:45.215Z">
+<meta property="article:modified_time" content="2023-12-31T04:02:58.519Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="I&#x2F;O">
+<meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-21-052334.png">
   
@@ -251,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7k 字
+          7.6k 字
         
       </span>
     
@@ -262,7 +263,7 @@
         
         
         
-          58 分钟
+          64 分钟
         
       </span>
     
@@ -506,7 +507,36 @@ I/O）</strong>是一种在计算机系统中用于管理 I/O
 设备都被分配一个在物理内存地址空间中的范围。这个地址范围通常称为设备寄存器的地址空间，其中包含了与设备通信的特定<strong>寄存器</strong>（状态寄存器、数据寄存器、命令寄存器等等）和<strong>数据缓冲（Buffer）</strong>。</p>
 <p>注：该内存分配区域<strong>一般只用于 I/O
 通信而不会进行其他操作</strong>。</p>
-<h5 id="一个-io-请求的生命周期">一个 I/O 请求的生命周期</h5>
+<h4 id="io-的四大类型">I/O 的四大类型</h4>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-27-022210.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ul>
+<li><p><strong>同步阻塞 I/O（Synchronous Blocking I/O）</strong></p>
+<p>最常见的 I/O 模型之一就是同步阻塞 I/O
+模型。在这种模型中，用户空间应用程序执行一个系统调用，导致应用程序阻塞。这意味着应用程序会一直阻塞，直到系统调用完成（数据传输或出错）。调用应用程序处于不消耗
+CPU 的状态，只是等待响应，因此从处理角度来看是高效的。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-27-022803.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p><strong>同步非阻塞 I/O（Synchronous Non-blocking
+I/O）</strong></p>
+<p>同步非阻塞 I/O
+是同步阻塞的一个效率较低的变体。在这种模型中，设备以非阻塞方式打开。这意味着，与其立即完成一个
+I/O
+操作，读操作可能返回一个错误代码，表明命令不能立即得到满足（<code>EAGAIN</code>
+或 <code>EWOULDBLOCK</code>）。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-27-023111.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p><strong>异步阻塞 I/O（Asynchronous Blocking I/O）</strong></p>
+<p>另一种阻塞范式是使用阻塞通知的非阻塞 I/O。在这种模型中，配置了非阻塞
+I/O，然后使用阻塞的 select 系统调用来确定何时存在针对 I/O
+描述符的任何活动。使 select
+调用变得有趣的是，它可以用来为不只一个描述符提供通知，而是多个。对于每个描述符，你可以请求通知描述符写数据的能力、可读数据的可用性，以及是否发生了错误。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-27-024023.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p><strong>异步非阻塞 I/O（Ansynchronous Non-blocking
+I/O）</strong></p>
+<p>最后，异步非阻塞 I/O 模型是一个 <strong>I/O
+与处理重叠</strong>的模型。读取请求立即返回，表示读取操作已经成功启动。应用程序随后可以在后台读取操作完成的同时执行其他处理。当读取响应到达时，可以生成一个信号或基于线程的回调来完成
+I/O 事务。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-12-27-024211.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+</ul>
+<h4 id="一个-io-请求的生命周期">一个 I/O 请求的生命周期</h4>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-10-22-081225.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
 <h3 id="磁盘">磁盘</h3>
 <p>磁盘（Disk）是计算机系统中用于存储数据的主要外部设备之一。磁盘是一种非易失性存储媒体，意味着数据会在断电或重启后仍然保留。</p>
@@ -702,6 +732,8 @@ I/O）</strong>，二者差距较小。</li>
       <i class="iconfont icon-tags"></i>
       
         <a href="/tags/I-O/">#I/O</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>
       
     </div>
   
