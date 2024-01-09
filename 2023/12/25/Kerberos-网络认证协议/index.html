@@ -16,15 +16,21 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="Kerberos 是一种基于票据的网络认证协议，用于在不安全的网络环境中安全地验证用户和服务的身份。它采用对称密钥加密和密钥分发中心（KDC）来管理凭证和票据。这个名字来自希腊神话中的三头犬 “Cerberus”，守护冥界之门，象征着 Kerberos 协议在网络世界中的守门人角色，确保网络交互的安全性。  术语 下图展示了 Kerberos 协议的主要组成部分：   KDC（Key Distri">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Kerberos 网络认证协议">
 <meta property="og:url" content="http://example.com/2023/12/25/Kerberos-%E7%BD%91%E7%BB%9C%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="Kerberos 是一种基于票据的网络认证协议，用于在不安全的网络环境中安全地验证用户和服务的身份。它采用对称密钥加密和密钥分发中心（KDC）来管理凭证和票据。这个名字来自希腊神话中的三头犬 “Cerberus”，守护冥界之门，象征着 Kerberos 协议在网络世界中的守门人角色，确保网络交互的安全性。  术语 下图展示了 Kerberos 协议的主要组成部分：   KDC（Key Distri">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-01-025943.png">
 <meta property="article:published_time" content="2023-12-25T10:20:47.000Z">
-<meta property="article:modified_time" content="2023-12-26T04:27:25.450Z">
+<meta property="article:modified_time" content="2024-01-01T04:05:21.365Z">
 <meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="Kerberos">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-01-025943.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -246,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          884 字
         
       </span>
     
@@ -257,7 +263,7 @@
         
         
         
-          1 分钟
+          8 分钟
         
       </span>
     
@@ -300,7 +306,47 @@
             
               <div class="markdown-body">
                 
-                
+                <p>Kerberos
+是一种基于票据的网络认证协议，用于在不安全的网络环境中安全地验证用户和服务的身份。它采用对称密钥加密和密钥分发中心（KDC）来管理凭证和票据。这个名字来自希腊神话中的三头犬
+“Cerberus”，守护冥界之门，象征着 Kerberos
+协议在网络世界中的守门人角色，确保网络交互的安全性。</p>
+<hr />
+<h4 id="术语">术语</h4>
+<p>下图展示了 Kerberos 协议的主要组成部分：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-01-032354.png" srcset="/img/loading.gif" lazyload style="zoom:55%;" /></p>
+<ul>
+<li><p><strong>KDC（Key Distribution Center）</strong>：这是 Kerberos
+环境中的中心认证实体，它负责存储所有用户和服务的密钥信息。KDC
+由两个部分组成：AS 和 TGS。</p></li>
+<li><p><strong>AS（Authentication Server）</strong>：AS 是 KDC
+的一部分，负责验证用户的初始登录尝试，并提供一个时间戳的票据授权票据（TGT）。</p></li>
+<li><p><strong>TGS（Ticket Granting Server）</strong>：也是 KDC
+的一部分，它使用从 AS 接收的 TGT 来提供访问特定服务的票据。用户需要向
+TGS 提出服务请求，并使用 TGT 证明自己的身份。</p></li>
+<li><p><strong>Clients</strong>：客户端是请求服务的用户或用户的设备。在
+Kerberos 认证中，客户端首先与 AS 交互以获得 TGT，然后使用 TGT 与 TGS
+交互以获取服务票据。</p></li>
+<li><p><strong>Servers</strong>：这些是客户端希望访问的服务。服务器预先与
+KDC 注册，以便它们可以识别和接受由 TGS 发出的有效票据。</p></li>
+</ul>
+<p>在 Keberos 内，有两类特殊信息：</p>
+<ul>
+<li><strong>Authenticator</strong>：这是一个由客户端生成的一次性证明身份的数据结构，通常与票据一起发送给服务，用于证明客户端是票据的合法持有者。</li>
+<li><strong>Ticket</strong>：这是一个由 KDC
+发给客户端的，用于向服务器证明身份的加密凭证。票据中包含了关于客户端的身份信息以及其他相关的验证信息。</li>
+</ul>
+<h4 id="kerbores-协议认证流程">Kerbores 协议认证流程</h4>
+<h5 id="客户端与-as-的通信">客户端与 AS 的通信</h5>
+<p>首先，客户端向 AS 发送一个请求，包括用户 ID，请求的 TGS 的
+ID，还有一个时间戳 <span class="math inline">\(TS_1\)</span>。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-01-035616.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<span class="math display">\[
+C \to AS : ID_C || ID_{TGS} || TS_1
+\]</span> AS 接收到客户端的响应后，接下来就会在数据库内找到与 <span
+class="math inline">\(ID_c\)</span> 对应的密钥 <span
+class="math inline">\(K_C\)</span>，验证成功后，会发送</p>
+<h5 id="客户端与-tgs-的通信">客户端与 TGS 的通信</h5>
+<h5 id="客户端与服务器的通信">客户端与服务器的通信</h5>
 
                 
               </div>
@@ -309,6 +355,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="category-chain-item">计算机网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全</a>
+      
+        <a href="/tags/Kerberos/">#Kerberos</a>
+      
+    </div>
   
 </div>
 
