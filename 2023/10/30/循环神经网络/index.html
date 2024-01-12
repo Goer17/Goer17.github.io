@@ -16,28 +16,30 @@
   <meta name="author" content="Captain_Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="时序神经网络 时序神经网络（Time Series Neural Networks, TSNN）并不是一个特定的神经网络类型，而是指那些用于处理时间序列数据的神经网络。这种数据具有时间顺序的特点，如自然语言、股票价格、气象数据、音频信号、视频帧等。 设想接下来一个场景：我们设计了一个自动购票系统，我们根据用户输入的语句自动判断其起点、终点以及出发时间。  Input：  I wish to go">
+    <meta name="description" content="时序神经网络 时序神经网络（Time Series Neural Networks, TSNN）并不是一个特定的神经网络类型，而是指那些用于处理时间序列数据的神经网络。这种数据具有时间顺序的特点，如自然语言、股票价格、气象数据、音频信号、视频帧等。常见的时序神经网络有 RNN、LSTM、GRU、1D CNN 等等。 设想接下来一个场景：我们设计了一个自动购票系统，我们根据用户输入的语句自动判断其起">
 <meta property="og:type" content="article">
-<meta property="og:title" content="循环神经网络与 Seq2Seq">
-<meta property="og:url" content="http://example.com/2023/10/30/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%20Seq2Seq/index.html">
+<meta property="og:title" content="循环神经网络 RNN">
+<meta property="og:url" content="http://example.com/2023/10/30/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
-<meta property="og:description" content="时序神经网络 时序神经网络（Time Series Neural Networks, TSNN）并不是一个特定的神经网络类型，而是指那些用于处理时间序列数据的神经网络。这种数据具有时间顺序的特点，如自然语言、股票价格、气象数据、音频信号、视频帧等。 设想接下来一个场景：我们设计了一个自动购票系统，我们根据用户输入的语句自动判断其起点、终点以及出发时间。  Input：  I wish to go">
+<meta property="og:description" content="时序神经网络 时序神经网络（Time Series Neural Networks, TSNN）并不是一个特定的神经网络类型，而是指那些用于处理时间序列数据的神经网络。这种数据具有时间顺序的特点，如自然语言、股票价格、气象数据、音频信号、视频帧等。常见的时序神经网络有 RNN、LSTM、GRU、1D CNN 等等。 设想接下来一个场景：我们设计了一个自动购票系统，我们根据用户输入的语句自动判断其起">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-01-051304.png">
-<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-01-054527.png">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-12-032657.png">
 <meta property="article:published_time" content="2023-10-30T12:36:24.000Z">
-<meta property="article:modified_time" content="2023-12-03T08:04:15.044Z">
+<meta property="article:modified_time" content="2024-01-12T03:31:01.113Z">
 <meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="NLP">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="时序神经网络">
 <meta property="article:tag" content="RNN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-01-051304.png">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-12-032657.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>循环神经网络与 Seq2Seq - Yuanyang-Lee&#39;s Blog</title>
+  <title>循环神经网络 RNN - Yuanyang-Lee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +232,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">循环神经网络与 Seq2Seq</span>
+            <span id="subtitle">循环神经网络 RNN</span>
           
         </div>
 
@@ -253,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          3.3k 字
         
       </span>
     
@@ -264,7 +266,7 @@
         
         
         
-          14 分钟
+          28 分钟
         
       </span>
     
@@ -302,14 +304,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">循环神经网络与 Seq2Seq</h1>
+            <h1 style="display: none">循环神经网络 RNN</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="时序神经网络">时序神经网络</h4>
+                <p><strong>时序神经网络</strong></p>
 <p><strong>时序神经网络（Time Series Neural Networks,
-TSNN）</strong>并不是一个特定的神经网络类型，而是指那些用于处理时间序列数据的神经网络。这种数据具有<strong>时间顺序</strong>的特点，如自然语言、股票价格、气象数据、音频信号、视频帧等。</p>
+TSNN）</strong>并不是一个特定的神经网络类型，而是指那些用于处理时间序列数据的神经网络。这种数据具有<strong>时间顺序</strong>的特点，如自然语言、股票价格、气象数据、音频信号、视频帧等。常见的时序神经网络有
+RNN、LSTM、GRU、1D CNN 等等。</p>
 <p>设想接下来一个场景：我们设计了一个自动购票系统，我们根据用户输入的语句自动判断其起点、终点以及出发时间。</p>
 <blockquote>
 <p>Input：</p>
@@ -327,8 +330,7 @@ TSNN）</strong>并不是一个特定的神经网络类型，而是指那些用�
 <p>在该系统中，用户的输入被认为是具有时序性的，即 3
 个关键词通过不同的组合或使用句势语法结构可能影响到输出的结果。</p>
 <p>因此，我们需要一个能够处理时序信息的神经网络。</p>
-<p>接下来我们介绍两种常见的时序性神经网络。</p>
-<h5 id="传统-rnn">传统 RNN</h5>
+<h4 id="rnn">RNN</h4>
 <p><strong>循环神经网络（Recurrent Neural Networks,
 RNN）</strong>，也叫递归神经网络，它的关键思想是利用网络的循环链接来储存之前时间步的信息。</p>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2023-11-01-051304.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
@@ -354,8 +356,65 @@ class="math inline">\(\sigma\)</span> 在这里是一个激活函数。</p>
 Jordan
 网络中，输出层的值被反馈到上下文单元，然后这些上下文单元作为额外的输入提供给隐藏层。</li>
 </ul>
-<p><strong>传统 RNN 面临的问题</strong></p>
-<p>难以捕获长期的依赖关系，存在<strong>梯度消失</strong>和<strong>梯度爆炸</strong>的问题。</p>
+<h4 id="bptt">BPTT</h4>
+<p>BPTT（Backpropagation Through
+Time）是一种特殊的反向传播算法，用于训练时间序列数据上的循环神经网络（RNN）。由于
+RNN 的特殊结构，标准的反向传播算法不能直接应用于它们。BPTT
+是对反向传播的一个扩展，使其适用于处理 RNN 的时间依赖性。</p>
+<p>接下来我们举一个具体的例子，来说说 BPTT 是如何计算的。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-12-021505.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>假设在上述 RNN 网络中，输入层、输出层、隐藏层和参数矩阵 <span
+class="math inline">\(U\)</span>、<span
+class="math inline">\(W\)</span>、<span class="math inline">\(V\)</span>
+的大小定义如下： <span class="math display">\[
+\begin{array}{}
+x_t \in R ^ n \\
+h_t \in R ^ d \\
+\hat y_t \in R ^ k \\
+U \in R ^ {n \times d} \\
+V \in R ^ {d \times k} \\
+W \in R ^ {d \times d}
+\end{array}
+\]</span> 其中： <span class="math display">\[
+\begin{array}{}
+h_t = \delta(x_t U + h_{t - 1} W + b_W) \\
+\hat y_t = \delta(h_t V + b_V)
+\end{array}
+\]</span> <span class="math inline">\(\delta(\cdot)\)</span>
+在这里是激活函数。</p>
+<p>假设损失函数是 <span class="math inline">\(f(\hat y_t,
+y_t)\)</span>，则我们可以认为到 <span class="math inline">\(T\)</span>
+时刻为止，总损失值 <span class="math inline">\(L = \frac{\sum_{t = 0} ^
+T L_t}{T + 1} =\frac{\sum_{t = 0} ^ T f(\hat y_t, y_t)}{T +
+1}\)</span>。</p>
+<p>在上图中可学习参数一共有 5 个：<span
+class="math inline">\(U\)</span>、<span
+class="math inline">\(W\)</span>、<span
+class="math inline">\(V\)</span>、<span
+class="math inline">\(b_W\)</span> 和 <span
+class="math inline">\(b_V\)</span>。</p>
+<p>其中，<span class="math inline">\(V\)</span> 和 <span
+class="math inline">\(b_V\)</span>
+的梯度计算与经典的梯度下降算法没有什么区别，其只在输出层使用，不参与隐藏层的计算。</p>
+<p>而对于 <span class="math inline">\(U\)</span>、<span
+class="math inline">\(W\)</span> 和 <span
+class="math inline">\(b_W\)</span>
+而言，其梯度的计算则会复杂很多。这里我们以 <span
+class="math inline">\(\nabla_{W} L_t\)</span> 为例，来介绍 BPTT
+的具体计算过程：</p>
+<p>根据 RNN 网络的计算规则，我们可以得到隐藏层和输出层的计算图：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-12-025400.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>根据链式法则，<span class="math inline">\(L_t\)</span> 关于 <span
+class="math inline">\(W\)</span> 的偏导等于计算图上所有 <span
+class="math inline">\(W\)</span> 到 <span
+class="math inline">\(L_t\)</span> 的路径偏导之和： <span
+class="math display">\[
+\nabla_W L_t = \frac{\partial L_t}{\partial y_t} \frac{\partial
+y_t}{\partial h_t} \sum_{k = 0} ^ {t - 1} \frac{\partial h_k}{\partial
+W} \prod_{i = k} ^ {t - 1} \frac{\partial h_{i + 1}}{\partial h_i}
+\]</span> 由此可见，BPTT 的计算中会引入大量的矩阵连乘，这使得传统 RNN
+在长距离依赖序列的梯度计算上容易出现<strong>梯度消失</strong>和<strong>梯度爆炸</strong>的问题。</p>
+<h4 id="传统-rnn-面临的问题">传统 RNN 面临的问题</h4>
 <ol type="1">
 <li><strong>梯度消失（Vanishing Gradients）</strong>
 <ul>
@@ -379,13 +438,29 @@ class="math inline">\(M\)</span>，若梯度的模长超过了该阈值，则减
 <p>不难发现：上述提及的梯度消失和梯度爆炸都是由一个原因导致的，那就是传统
 RNN
 神经网络中，<strong>如果时间序列过长，可能造成隐藏层中大梯度值的连乘</strong>，指数级的增长或衰减很可能造成梯度爆炸或梯度消失。</p>
-<h5 id="lstm">LSTM</h5>
-<p><strong>LSTM（Long Short-Term
-Memory）</strong>是一种特殊的循环神经网络（RNN）结构，由 Sepp Hochreiter
-和 Jürgen Schmidhuber 于 1997 年提出。LSTM 旨在解决传统 RNN
-在处理长时间依赖关系时的困难，尤其是梯度消失和梯度爆炸问题。</p>
-<h5 id="bptt">BPTT</h5>
-<h4 id="seq2seq">Seq2Seq</h4>
+<h4 id="代码实现">代码实现</h4>
+<p>PyTorch 提供了 <code>nn.RNN</code>
+模块，用于构建循环神经网络（RNN）。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleRNN</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, input_size, hidden_size, output_size</span>):<br>        <span class="hljs-built_in">super</span>(SimpleRNN, self).__init__()<br>        self.rnn = nn.RNN(input_size, hidden_size, batch_first=<span class="hljs-literal">True</span>)<br>        self.fc = nn.Linear(hidden_size, output_size)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-comment"># x shape: (batch, seq_length, input_size)</span><br>        out, hidden = self.rnn(x)<br>        <span class="hljs-comment"># 只使用最后一个时间步的输出</span><br>        out = self.fc(out[:, -<span class="hljs-number">1</span>, :])<br>        <span class="hljs-keyword">return</span> out<br></code></pre></td></tr></table></figure>
+<p><strong>主要参数</strong></p>
+<p><code>nn.RNN</code> 的主要参数包括：</p>
+<ul>
+<li><code>input_size</code> ：输入特征的维度。</li>
+<li><code>hidden_size</code> ：隐藏层的维度，即隐藏状态的大小。</li>
+<li><code>num_layers</code> ：RNN 的层数，默认为1。</li>
+<li><code>nonlinearity</code> ：激活函数的类型，可以是
+<code>'tanh'</code> 或 <code>'relu'</code>，默认是
+<code>'tanh'</code>。</li>
+<li><code>batch_first</code> ：如果为
+<code>True</code>，则输入和输出的张量的形状为
+<code>(batch, seq, feature)</code>，默认为 <code>False</code>，即
+<code>(seq, batch, feature)</code>。</li>
+<li><code>dropout</code>
+：如果不为零，则在除最后一层外的每层后添加一个Dropout层。</li>
+<li><code>bidirectional</code> ：如果为 <code>True</code>，则使用双向
+RNN，默认为 <code>False</code>。</li>
+</ul>
 
                 
               </div>
@@ -419,7 +494,13 @@ Memory）</strong>是一种特殊的循环神经网络（RNN）结构，由 Sepp
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+      
         <a href="/tags/NLP/">#NLP</a>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
+      
+        <a href="/tags/%E6%97%B6%E5%BA%8F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">#时序神经网络</a>
       
         <a href="/tags/RNN/">#RNN</a>
       
@@ -433,8 +514,8 @@ Memory）</strong>是一种特殊的循环神经网络（RNN）结构，由 Sepp
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>循环神经网络与 Seq2Seq</div>
-      <div>http://example.com/2023/10/30/循环神经网络与 Seq2Seq/</div>
+      <div>循环神经网络 RNN</div>
+      <div>http://example.com/2023/10/30/循环神经网络/</div>
     </div>
     <div class="license-meta">
       
@@ -479,6 +560,29 @@ Memory）</strong>是一种特殊的循环神经网络（RNN）结构，由 Sepp
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/01/N-gram-%E6%9C%80%E6%97%A9%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" title="N-gram: 最早的语言模型">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">N-gram: 最早的语言模型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/29/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E2%80%94%E2%80%94%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6/" title="数据链路层——流量控制">
+                        <span class="hidden-mobile">数据链路层——流量控制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
