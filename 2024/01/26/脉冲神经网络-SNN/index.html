@@ -1,0 +1,869 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi_pi.png">
+  <link rel="icon" href="/img/pi_pi.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Captain_Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第三代神经网络 SNN 尖峰神经网络（SNN，Spike Neural Network）是一种神经网络模型，它在模拟人脑处理信息方式方面比传统的人工神经网络更为接近。 SNN 的独特之处在于其神经元之间的交流是通过“尖峰”（Spike），即短暂的电信号脉冲来实现的，类似于生物神经元的通信方式。这种方式允许 SNN 以一种高效的时间编码方式处理信息，使得网络能够响应快速变化的输入信号并在更低的功耗下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="脉冲神经网络 SNN">
+<meta property="og:url" content="http://example.com/2024/01/26/%E8%84%89%E5%86%B2%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-SNN/index.html">
+<meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
+<meta property="og:description" content="第三代神经网络 SNN 尖峰神经网络（SNN，Spike Neural Network）是一种神经网络模型，它在模拟人脑处理信息方式方面比传统的人工神经网络更为接近。 SNN 的独特之处在于其神经元之间的交流是通过“尖峰”（Spike），即短暂的电信号脉冲来实现的，类似于生物神经元的通信方式。这种方式允许 SNN 以一种高效的时间编码方式处理信息，使得网络能够响应快速变化的输入信号并在更低的功耗下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-165317.png">
+<meta property="article:published_time" content="2024-01-26T09:00:42.000Z">
+<meta property="article:modified_time" content="2024-01-29T16:53:38.254Z">
+<meta property="article:author" content="Captain_Lee">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="SNN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-165317.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>脉冲神经网络 SNN - Yuanyang-Lee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yuanyang-Lee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post-page.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">脉冲神经网络 SNN</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-26 17:00" pubdate>
+          2024年1月26日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">脉冲神经网络 SNN</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="第三代神经网络-snn">第三代神经网络 SNN</h4>
+<p>尖峰神经网络（SNN，Spike Neural
+Network）是一种神经网络模型，它在模拟人脑处理信息方式方面比传统的人工神经网络更为接近。
+SNN
+的独特之处在于其神经元之间的交流是通过<strong>“尖峰”（Spike）</strong>，即短暂的电信号脉冲来实现的，类似于生物神经元的通信方式。这种方式允许
+SNN
+以一种高效的时间编码方式处理信息，使得网络能够响应快速变化的输入信号并在更低的功耗下运行。</p>
+<p>如下图，这项由 J. Krüger 和 F. Aiple 在 1988
+年进行的研究集中在猴子的视皮层下层的神经元之间的相互作用。研究通过使用多个紧密排列的微电极记录尖峰并分析交叉相关图，旨在理解这些皮层层次中神经元的交互作用及其相关结构。其中两条竖线标记了
+100ms 的间隔。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-032237.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<p>SNN
+通常被视为第三代神经网络模型，它在模拟神经元动态行为、处理时间序列数据以及学习时空模式方面表现出独特优势。由于其生物学上的真实性和能效高的特点，SNN
+在神经形态计算领域尤为受到关注。神经形态计算旨在模仿人脑的处理方式，开发出更高效的计算模型和硬件架构。</p>
+<h4 id="神经元">神经元</h4>
+<p>相比第二代神经网络，也就是基于传统的线性变换和非线性激活函数的 ANN
+而言，SNN
+将激活函数替换成了一种动态的时序敏感的<strong>神经元（Neuron）</strong>。</p>
+<h5 id="基本特性">基本特性</h5>
+<ol type="1">
+<li><strong>脉冲机制</strong>：SNN
+神经元通过尖峰进行通信。这些脉冲是离散的事件，通常在模拟神经元的<strong>电压达到某个阈值</strong>时发生。</li>
+<li><strong>时间动力学</strong>：SNN
+神经元具有显著的时间动力学特性。它们的状态不仅取决于当前的输入，还取决于<strong>历史输入的积累效应</strong>，这是通过内部状态变量（例如<strong>膜电位</strong>）来实现的。</li>
+<li><strong>生物学上的仿真性</strong>：SNN
+更贴近于模拟真实生物神经系统的方式。它们试图通过模拟生物神经元的动态特性（如脉冲编码和神经元的时变动态）来处理信息。</li>
+</ol>
+<p>接下来我们以两种神经元为例，讲解其工作原理。</p>
+<h5 id="if-神经元">IF 神经元</h5>
+<p>IF 神经元（Integrate-and-Fire
+Neuron）是脉冲神经网络（SNNs）中最基本的神经元模型之一。它的设计模拟了生物神经元的基本行为，特别是如何积累输入信号，并在达到特定阈值时产生脉冲。</p>
+<p><strong>积分（Integrate）</strong>：IF
+神经元首先会积累其输入信号。这些输入可能来自网络中的其他神经元，或者是外部的刺激。积分过程实际上是对输入信号（通常是电流）随时间的累加，这在生物学上对应于神经元膜电位的变化。
+<span class="math display">\[
+U_i^{(l)}(t) = U_i^{(l)}(t - 1) + RI_{i}^{(l)}(t)
+\]</span> 这里 <span class="math inline">\(U_i^{(l)}(t)\)</span> 表示
+<span class="math inline">\(t\)</span> 时刻神经元的膜电位，<span
+class="math inline">\(RI_i^{(l)}(t)\)</span> 表示 <span
+class="math inline">\(t\)</span> 时刻该神经元接收的输入信号的大小，其中
+<span class="math inline">\(I_i^{(l)}(t)\)</span> 表示输入电流，由 <span
+class="math inline">\(t\)</span> 时刻神经元接收到的尖峰累加而成，<span
+class="math inline">\(R\)</span> 在这里表示膜电阻。</p>
+<p><strong>触发（Fire）</strong>：当积累的信号（即膜电位）达到特定的阈值时，<strong>神经元会发射一个脉冲</strong>，并且将这个信号传递给其它神经元。发射脉冲后，神经元的膜电位通常会被重置到一个较低的初始值，准备接受下一轮的信号积累。
+<span class="math display">\[
+S_i^{(l)}(t) = \Theta(U_i^{(l)}(t) - U_{\text{threshold}})
+\]</span></p>
+<p><span class="math display">\[
+U_i^{(l)}(t) := U_{\text{rest}}\ \ \text{if}\ \ U_i^{(l)}(t) \geq
+U_{\text{threshold}}
+\]</span></p>
+<p>这里 <span class="math inline">\(\Theta(\cdot)\)</span>
+表示阶跃函数，<span class="math inline">\(U_{\text{threshold}}\)</span>
+表示阈值电压，<span class="math inline">\(U_{\text{rest}}\)</span>
+表示静息电压。</p>
+<p><strong>可视化</strong></p>
+<p>如下图，假设 IF 神经元 15
+个时刻的输入信号大小为：<code>[0.2, 0, 0, 0, 0, 0.79, 0.02, 0, 0, 0, 0.9, 0, 0, 0, 0.09, 0.01]</code>
+：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-153442.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>膜电位在 <code>t = 6</code> 和 <code>t = 15</code>
+时达到阈值并迅速恢复到静息电位，同时神经元的后端突出释放尖峰。</p>
+<h5 id="lif-神经元">LIF 神经元</h5>
+<p>LIF（Leaky
+Integrate-and-Fire）神经元是脉冲神经网络（SNNs）中的一个重要和常见的神经元模型。与最简单的
+IF（Integrate-and-Fire）神经元模型不同，LIF
+模型增加了对生物神经元电位衰减特性的模拟，使之更贴近真实的生物神经元行为。</p>
+<p>其微分方程形式表示如下： <span class="math display">\[
+\tau_{\text{mem}} \frac{dU_{i}^{(l)}}{dt} = -(U_i^{(l)} -
+U_{\text{rest}}) + RI_{i}^{(l)}
+\]</span></p>
+<p>其中 <span class="math inline">\(\tau_{\text{mem}}\)</span>
+是膜时间常数，它决定了膜电位因泄漏而衰减的速率。</p>
+<p><strong>可视化</strong></p>
+<p>如下图，假设 LIF 神经元 20
+个时刻的输入信号大小为：<code>[0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0.9, 0, 1.5, 0, 0, 0, 0, 0, 0, 1.5, 1.5]</code></p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-154200.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>该 LIF 神经元在 <code>t = 20</code> 时被触发。</p>
+<h4 id="前向传播">前向传播</h4>
+<p>许多时序神经元在一起就组成了一个完整的 SNN
+网络模型，以尖峰组成的时序编码信息在不同神经元之间的<strong>突触（Synapse）</strong>上进行传播。如下图所示：</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-155618.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>对于一个全连接网络而言，第 <span class="math inline">\(l + 1\)</span>
+层第 <span class="math inline">\(i\)</span> 个神经元而言，其 <span
+class="math inline">\(t\)</span> 时刻的输入电流大小满足： <span
+class="math display">\[
+I_i^{(l + 1)}(t) = \sum_j w_{ji} S_{j}^{(l)}(t) = \sum_{j \in
+E^{(l)}(t)} w_{ji}
+\]</span> 其中 <span class="math inline">\(w_{ji}\)</span>
+表示该神经元每个后突触的权重，<span
+class="math inline">\(E^{(l)}(t)\)</span> 表示 <span
+class="math inline">\(t\)</span> 时刻第 <span
+class="math inline">\(l\)</span> 层触发的神经元的集合。</p>
+<h4 id="梯度替代">梯度替代</h4>
+<p>在 SNN
+中，由于脉冲的二进制特性（神经元要么发射脉冲，要么不发射），这导致了神经元激活函数的不连续性，使得传统的梯度反向传播方法不适用。</p>
+<p>为了解决这个问题，研究者们提出了<strong>“梯度替代”（Surrogate
+Gradient）</strong>方法。这个方法的核心思想是用一个连续可微的函数来近似原本不连续的激活函数的导数。这个近似的函数被称为“替代梯度”或“伪梯度”。梯度替代的步骤通常包括：</p>
+<ol type="1">
+<li><strong>前向传播</strong>：在网络的前向传播过程中，使用真实的脉冲激活函数。</li>
+<li><strong>反向传播</strong>：在计算梯度并进行反向传播时，将不可微的激活函数替换为可微的替代梯度函数。</li>
+<li><strong>参数更新</strong>：使用这些近似梯度来更新网络的参数。</li>
+</ol>
+<p>这种方法的一个常见例子是在 SNN 中使用 Heaviside
+阶跃函数作为激活函数，该函数在脉冲发射时是不可微的。为了进行梯度反向传播，研究者们可能会使用
+Sigmoid 函数或是带有平滑过渡的阶跃函数来近似 Heaviside 函数的导数。</p>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-163009.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="简单案例">简单案例</h4>
+<p>接下来我们将使用 <a
+target="_blank" rel="noopener" href="https://spikingjelly.readthedocs.io/zh-cn/latest/#index-en">SpikingJelly
+框架</a> 实现一个 SNN 全连接识别 MNIST 手写数字的简单案例：</p>
+<p><strong>导包</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn, optim<br><span class="hljs-keyword">from</span> torch.nn <span class="hljs-keyword">import</span> functional <span class="hljs-keyword">as</span> F<br><span class="hljs-keyword">from</span> torch.utils.data <span class="hljs-keyword">import</span> DataLoader<br><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> datasets, transforms<br><span class="hljs-keyword">from</span> spikingjelly.activation_based <span class="hljs-keyword">import</span> neuron, encoding, surrogate, functional<br><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br></code></pre></td></tr></table></figure>
+<p><strong>模型定义</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">model = nn.Sequential(<br>    nn.Flatten(),<br>    nn.Linear(<span class="hljs-number">28</span> * <span class="hljs-number">28</span>, <span class="hljs-number">10</span>, bias=<span class="hljs-literal">False</span>),<br>    neuron.LIFNode(tau=<span class="hljs-number">2.0</span>, surrogate_function=surrogate.ATan())<br>)<br></code></pre></td></tr></table></figure>
+<p>由于 SNN
+接收的信号是尖峰组成的时序编码，所以我们还需要一个编码器将静态的图片（<span
+class="math inline">\(C \times H \times
+W\)</span>）转化为时序尖峰信号（<span class="math inline">\(T \times C
+\times H \times W\)</span>），这里我们使用<strong>泊松编码器（Poisson
+Encoder）</strong>。泊松编码器认为图像每个像素的尖峰发射事件服从泊松分布，其强度
+<span class="math inline">\(\lambda\)</span> 与像素强度相关。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">encoder = encoding.PoissonEncoder()<br></code></pre></td></tr></table></figure>
+<p><strong>加载数据集</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">transform = transforms.Compose([transforms.ToTensor()])<br><br>train_set = datasets.MNIST(root=<span class="hljs-string">&#x27;./data&#x27;</span>, train=<span class="hljs-literal">True</span>, download=<span class="hljs-literal">True</span>, transform=transform)<br>val_set = datasets.MNIST(root=<span class="hljs-string">&#x27;./data&#x27;</span>, train=<span class="hljs-literal">False</span>, download=<span class="hljs-literal">True</span>, transform=transform)<br><br>batch_size = <span class="hljs-number">64</span><br><br>train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=<span class="hljs-literal">True</span>)<br>val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>训练</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs python">num_epochs = <span class="hljs-number">16</span><br>T = <span class="hljs-number">32</span><br><br>device = <span class="hljs-string">&#x27;cuda&#x27;</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;cpu&#x27;</span><br>model.to(device=device)<br>optimizer = optim.Adam(model.parameters(), lr=<span class="hljs-number">1e-3</span>)<br>criterion = nn.MSELoss()<br><br>train_loss_rec = []<br>train_acc_rec = []<br><br>val_loss_rec = []<br>val_acc_rec = []<br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, num_epochs + <span class="hljs-number">1</span>):<br>    avg_loss = <span class="hljs-number">0</span><br>    avg_acc = <span class="hljs-number">0</span><br>    model.train()<br>    <span class="hljs-keyword">for</span> img, label <span class="hljs-keyword">in</span> tqdm(train_loader, desc=<span class="hljs-string">f&#x27;Training Epoch [<span class="hljs-subst">&#123;epoch&#125;</span>/<span class="hljs-subst">&#123;num_epochs&#125;</span>]&#x27;</span>, unit=<span class="hljs-string">&#x27;batch&#x27;</span>):<br>        optimizer.zero_grad()<br>        img = img.to(device=device)<br>        label = label.to(device=device)<br>        fr_out = <span class="hljs-number">0.0</span><br>        <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(T):<br>            encoded_img = encoder(img)<br>            fr_out += model(encoded_img)<br>        fr_out /= T<br>        loss = criterion(fr_out, F.one_hot(label, <span class="hljs-number">10</span>).<span class="hljs-built_in">float</span>())<br>        loss.backward()<br>        optimizer.step()<br>        functional.reset_net(model)<br>        <br>        avg_loss += loss.data.item()<br>        acc = (torch.argmax(fr_out, dim=<span class="hljs-number">1</span>) == label).<span class="hljs-built_in">sum</span>() / label.size(<span class="hljs-number">0</span>)<br>        avg_acc += acc.data.item()    <br>    avg_loss /= <span class="hljs-built_in">len</span>(train_loader)<br>    avg_acc /= <span class="hljs-built_in">len</span>(train_loader)<br>    train_loss_rec.append(avg_loss)<br>    train_acc_rec.append(avg_acc)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Training Loss: <span class="hljs-subst">&#123;avg_loss :<span class="hljs-number">.4</span>&#125;</span>&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Training Accuracy: <span class="hljs-subst">&#123;avg_acc :<span class="hljs-number">.4</span>&#125;</span>&#x27;</span>)<br>    <br>    avg_loss = <span class="hljs-number">0</span><br>    avg_acc = <span class="hljs-number">0</span><br>    model.<span class="hljs-built_in">eval</span>()<br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        <span class="hljs-keyword">for</span> img, label <span class="hljs-keyword">in</span> val_loader:<br>            img = img.to(device=device)<br>            label = label.to(device=device)<br>            fr_out = <span class="hljs-number">0.0</span><br>            <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(T):<br>                encoded_img = encoder(img)<br>                fr_out += model(encoded_img)<br>            fr_out /= T<br>            functional.reset_net(model)<br>            loss = criterion(fr_out, F.one_hot(label, <span class="hljs-number">10</span>))<br>            avg_loss += loss.data.item()<br>            <br>            acc = (torch.argmax(fr_out, dim=<span class="hljs-number">1</span>) == label).<span class="hljs-built_in">sum</span>() / label.size(<span class="hljs-number">0</span>)<br>            avg_acc += acc.data.item()<br>        avg_loss /= <span class="hljs-built_in">len</span>(val_loader)<br>        avg_acc /= <span class="hljs-built_in">len</span>(val_loader)<br>        <br>        val_loss_rec.append(avg_loss)<br>        val_acc_rec.append(avg_acc)<br>        <br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Validation Loss: <span class="hljs-subst">&#123;avg_loss :<span class="hljs-number">.4</span>&#125;</span>&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Validation Accuracy: <span class="hljs-subst">&#123;avg_acc :<span class="hljs-number">.4</span>&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>训练结果可视化</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python">epoch_t = <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, num_epochs + <span class="hljs-number">1</span>)<br>plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>))<br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>plt.title(<span class="hljs-string">&#x27;Loss-Epoch&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Loss(MSE)&#x27;</span>)<br>plt.plot(epoch_t, train_loss_rec, label=<span class="hljs-string">&#x27;Training&#x27;</span>)<br>plt.plot(epoch_t, val_loss_rec, label=<span class="hljs-string">&#x27;Validation&#x27;</span>)<br>best_idx = torch.argmin(torch.tensor(val_loss_rec)).item()<br>plt.scatter(best_idx + <span class="hljs-number">1</span>, val_loss_rec[best_idx], color=<span class="hljs-string">&#x27;red&#x27;</span>, marker=<span class="hljs-string">&#x27;*&#x27;</span>)<br>plt.text(best_idx + <span class="hljs-number">1</span>, val_loss_rec[best_idx], <span class="hljs-string">f&#x27;epoch-<span class="hljs-subst">&#123;best_idx + <span class="hljs-number">1</span>&#125;</span>&#x27;</span>)<br>plt.legend()<br><br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>plt.title(<span class="hljs-string">&#x27;Accuracy-Epoch&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Accuracy&#x27;</span>)<br>plt.plot(epoch_t, train_acc_rec, label=<span class="hljs-string">&#x27;Training&#x27;</span>)<br>plt.plot(epoch_t, val_acc_rec, label=<span class="hljs-string">&#x27;Validation&#x27;</span>)<br>best_idx = torch.argmax(torch.tensor(val_acc_rec)).item()<br>plt.scatter(best_idx + <span class="hljs-number">1</span>, val_acc_rec[best_idx], color=<span class="hljs-string">&#x27;red&#x27;</span>, marker=<span class="hljs-string">&#x27;*&#x27;</span>)<br>plt.text(best_idx + <span class="hljs-number">1</span>, val_acc_rec[best_idx], <span class="hljs-string">f&#x27;epoch-<span class="hljs-subst">&#123;best_idx + <span class="hljs-number">1</span>&#125;</span>&#x27;</span>)<br>plt.legend()<br><br>plt.show()<br></code></pre></td></tr></table></figure>
+<p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-165042.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+      
+        <a href="/tags/SNN/">#SNN</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>脉冲神经网络 SNN</div>
+      <div>http://example.com/2024/01/26/脉冲神经网络-SNN/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Captain_Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/11/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E2%80%94%E2%80%94MAC-%E5%AD%90%E5%B1%82/" title="数据链路层——MAC 子层">
+                        <span class="hidden-mobile">数据链路层——MAC 子层</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
