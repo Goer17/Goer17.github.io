@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-165317.png">
 <meta property="article:published_time" content="2024-01-26T09:00:42.000Z">
-<meta property="article:modified_time" content="2024-01-29T16:53:38.254Z">
+<meta property="article:modified_time" content="2024-01-30T16:51:10.010Z">
 <meta property="article:author" content="Captain_Lee">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="SNN">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.5k 字
+          7.6k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          55 分钟
+          64 分钟
         
       </span>
     
@@ -313,8 +313,8 @@ SNN
 的独特之处在于其神经元之间的交流是通过<strong>“尖峰”（Spike）</strong>，即短暂的电信号脉冲来实现的，类似于生物神经元的通信方式。这种方式允许
 SNN
 以一种高效的时间编码方式处理信息，使得网络能够响应快速变化的输入信号并在更低的功耗下运行。</p>
-<p>如下图，这项由 J. Krüger 和 F. Aiple 在 1988
-年进行的研究集中在猴子的视皮层下层的神经元之间的相互作用。研究通过使用多个紧密排列的微电极记录尖峰并分析交叉相关图，旨在理解这些皮层层次中神经元的交互作用及其相关结构。其中两条竖线标记了
+<p>如下图，这这是一项由 J. Krüger 和 F. Aiple 在 1988
+年进行的集中在猴子的视皮层下层的神经元之间的相互作用的研究。研究通过使用多个紧密排列的微电极记录尖峰并分析交叉相关图，旨在理解这些皮层层次中神经元的交互作用及其相关结构。其中两条竖线标记了
 100ms 的间隔。</p>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-032237.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
 <p>SNN
@@ -435,6 +435,47 @@ Encoder）</strong>。泊松编码器认为图像每个像素的尖峰发射事�
 <p><strong>训练结果可视化</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python">epoch_t = <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, num_epochs + <span class="hljs-number">1</span>)<br>plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>))<br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>plt.title(<span class="hljs-string">&#x27;Loss-Epoch&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Loss(MSE)&#x27;</span>)<br>plt.plot(epoch_t, train_loss_rec, label=<span class="hljs-string">&#x27;Training&#x27;</span>)<br>plt.plot(epoch_t, val_loss_rec, label=<span class="hljs-string">&#x27;Validation&#x27;</span>)<br>best_idx = torch.argmin(torch.tensor(val_loss_rec)).item()<br>plt.scatter(best_idx + <span class="hljs-number">1</span>, val_loss_rec[best_idx], color=<span class="hljs-string">&#x27;red&#x27;</span>, marker=<span class="hljs-string">&#x27;*&#x27;</span>)<br>plt.text(best_idx + <span class="hljs-number">1</span>, val_loss_rec[best_idx], <span class="hljs-string">f&#x27;epoch-<span class="hljs-subst">&#123;best_idx + <span class="hljs-number">1</span>&#125;</span>&#x27;</span>)<br>plt.legend()<br><br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>plt.title(<span class="hljs-string">&#x27;Accuracy-Epoch&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Accuracy&#x27;</span>)<br>plt.plot(epoch_t, train_acc_rec, label=<span class="hljs-string">&#x27;Training&#x27;</span>)<br>plt.plot(epoch_t, val_acc_rec, label=<span class="hljs-string">&#x27;Validation&#x27;</span>)<br>best_idx = torch.argmax(torch.tensor(val_acc_rec)).item()<br>plt.scatter(best_idx + <span class="hljs-number">1</span>, val_acc_rec[best_idx], color=<span class="hljs-string">&#x27;red&#x27;</span>, marker=<span class="hljs-string">&#x27;*&#x27;</span>)<br>plt.text(best_idx + <span class="hljs-number">1</span>, val_acc_rec[best_idx], <span class="hljs-string">f&#x27;epoch-<span class="hljs-subst">&#123;best_idx + <span class="hljs-number">1</span>&#125;</span>&#x27;</span>)<br>plt.legend()<br><br>plt.show()<br></code></pre></td></tr></table></figure>
 <p><img src="https://typora-1313035735.cos.ap-nanjing.myqcloud.com/img/2024-01-29-165042.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="stdp-学习">STDP 学习</h4>
+<p>STDP（Spike-Timing-Dependent
+Plasticity，时序依赖性可塑性）是一种在生物神经系统中发现的神经元之间连接强度调整的机制，也被广泛应用于
+SNN 中。STDP
+是一种启发自生物学的学习规则，它根据输入和输出神经元的脉冲时序来调整突触权重。</p>
+<p>在 STDP
+中，突触的强度调整依赖于前后神经元的脉冲发放时间差。具体来说：</p>
+<ol type="1">
+<li><p><strong>前突触先于后突触发放</strong>：如果一个神经元（前突触）的脉冲发放早于它所连接的另一个神经元（后突触），突触的强度会增加（Long-Term
+Potentiation，LTP）。这种增强反映了一种因果关系，即前突触的活动似乎是导致后突触活动的原因。</p></li>
+<li><p><strong>后突触先于前突触发放</strong>：相反，如果后突触神经元先于前突触神经元发放脉冲，突触的强度会减弱（Long-Term
+Depression，LTD）。这种削弱意味着前突触的活动与后突触的活动之间没有直接的因果联系。</p></li>
+</ol>
+<p><strong>数学描述</strong>： <span class="math display">\[
+\Delta w =
+\begin{cases}{}
+\ A_+ \text{exp}(-\frac{\Delta t}{\tau_+}) &amp; \Delta t &gt; 0 \\
+\ -A_- \text{exp}(\frac{\Delta t}{\tau_-}) &amp; \Delta t &lt; 0
+\end{cases}
+\]</span> 这里 <span class="math inline">\(\Delta t\)</span>
+表示脉冲时间差，满足：<span class="math inline">\(\Delta t =
+t_{\text{post}} - t_{\text{pre}}\)</span>，其中 <span
+class="math inline">\(t_{\text{post}}\)</span>
+是后突触神经元发放脉冲的时间，<span
+class="math inline">\(t_{\text{pre}}\)</span>
+是前突触神经元发放脉冲的时间。<span class="math inline">\(A_+\)</span>
+和 <span class="math inline">\(A_-\)</span>
+都是正常数，表示突触权重增加或减少的幅度系数。</p>
+<blockquote>
+<p>如果 <span class="math inline">\(\Delta t = 0\)</span> 呢？</p>
+<p>实际上，由于生物神经元的动态特性和噪音，完全同步的脉冲在生物神经系统中极为罕见。因此，在许多
+STDP 研究和实际应用中，<span class="math inline">\(\Delta t = 0\)</span>
+这种极端情况通常不是主要关注的焦点。</p>
+</blockquote>
+<p>STDP 是一个动态的过程，它允许神经网络通过经验学习和适应。在 SNN
+中，这种机制可以用来捕捉和处理时序信息，使得 SNN
+在处理类似于生物神经系统的时序依赖性任务时更加有效。</p>
+<p>STDP
+属于无监督学习，与传统深度学习中的学习规则（如反向传播）有本质的不同。STDP
+<strong>依赖于局部的时序信息</strong>而不是全局的误差信号，这使其在某些方面更接近生物神经系统的学习方式。STDP
+的这些特性使其在模仿生物神经系统方面具有潜力，尤其是在处理时序数据和进行无监督学习方面。</p>
 
                 
               </div>
