@@ -19,7 +19,7 @@
     <meta name="description" content="本文是笔者根据 2017 年由 Google 的研究者发表的论文《Attention is all you need》与 深蓝学院的 LLM 课程 总结的一份 Transformer 框架的技术文档。 Transformer 是当下非常流行的深度学习模型，自从其提出来后，它迅速成为了许多 NLP 任务的基础架构，比如机器翻译、文本摘要、情感分析和问答系统，大名鼎鼎的 ChatGPT 系列其实也是基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Transfomer 框架 | 逐层剖析，从原理到代码">
-<meta property="og:url" content="http://example.com/2023/11/15/Transfomer%20%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:url" content="https://goer17.github.io/2023/11/15/Transfomer%20%E6%A1%86%E6%9E%B6/index.html">
 <meta property="og:site_name" content="Yuanyang-Lee&#39;s Blog">
 <meta property="og:description" content="本文是笔者根据 2017 年由 Google 的研究者发表的论文《Attention is all you need》与 深蓝学院的 LLM 课程 总结的一份 Transformer 框架的技术文档。 Transformer 是当下非常流行的深度学习模型，自从其提出来后，它迅速成为了许多 NLP 任务的基础架构，比如机器翻译、文本摘要、情感分析和问答系统，大名鼎鼎的 ChatGPT 系列其实也是基">
 <meta property="og:locale" content="zh_CN">
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"goer17.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -662,7 +662,7 @@ Autoencoders）技术是一种自监督学习方法，它是通过预训练一�
   <div class="license-box my-3">
     <div class="license-title">
       <div>Transfomer 框架 | 逐层剖析，从原理到代码</div>
-      <div>http://example.com/2023/11/15/Transfomer 框架/</div>
+      <div>https://goer17.github.io/2023/11/15/Transfomer 框架/</div>
     </div>
     <div class="license-meta">
       
